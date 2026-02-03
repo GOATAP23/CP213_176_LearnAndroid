@@ -30,22 +30,24 @@ class ListActivity : ComponentActivity() {
 
 @Composable
 fun ListScreen() {
+
+    // Background
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFB71C1C)) // พื้นหลังแดงแบบ Pokédex
+            .background(Color(0xFFB71C1C))
             .padding(16.dp)
     ) {
 
-        // กล่องจอสีขาว
+        // White Screen Box
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(
                     color = Color.White,
-                    shape = RoundedCornerShape(16.dp)
+                    shape = RoundedCornerShape(20.dp)
                 )
-                .padding(12.dp)
+                .padding(20.dp)
         ) {
             LazyColumn {
                 items(allKantoPokemon) { item ->
@@ -69,11 +71,6 @@ fun PokemonRow(pokemon: Pokemon) {
             color = Color.DarkGray
         )
 
-        Divider(
-            color = Color.LightGray,
-            thickness = 1.dp,
-            modifier = Modifier.padding(top = 8.dp)
-        )
     }
 }
 
