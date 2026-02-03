@@ -5,12 +5,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Scaffold
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,7 +17,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.a176lablearnandroid.ui.theme._176LabLearnAndroidTheme
 
 class ListActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,14 +30,50 @@ class ListActivity : ComponentActivity() {
 
 @Composable
 fun ListScreen() {
-    Column(modifier = Modifier.background(Color.Red).padding(16.dp)) {
-        Column(modifier = Modifier.background(Color.Gray).padding(16.dp)) {
-            LazyColumn(modifier = Modifier.fillMaxSize().background(Color.White).padding(16.dp)) {
-                items(allKantoPokemon){ item ->
-                    Text(text = item.number.toString() + " " + item.name, fontSize = 30.sp)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFB71C1C)) // พื้นหลังแดงแบบ Pokédex
+            .padding(16.dp)
+    ) {
+
+        // กล่องจอสีขาว
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    color = Color.White,
+                    shape = RoundedCornerShape(16.dp)
+                )
+                .padding(12.dp)
+        ) {
+            LazyColumn {
+                items(allKantoPokemon) { item ->
+                    PokemonRow(item)
                 }
             }
         }
+    }
+}
+
+@Composable
+fun PokemonRow(pokemon: Pokemon) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp)
+    ) {
+        Text(
+            text = "#${pokemon.number}  ${pokemon.name.lowercase()}",
+            fontSize = 20.sp,
+            color = Color.DarkGray
+        )
+
+        Divider(
+            color = Color.LightGray,
+            thickness = 1.dp,
+            modifier = Modifier.padding(top = 8.dp)
+        )
     }
 }
 
@@ -47,6 +81,7 @@ data class Pokemon(
     val name: String,
     val number: Int
 )
+
 val allKantoPokemon = listOf(
     Pokemon("Bulbasaur", 1),
     Pokemon("Ivysaur", 2),
@@ -87,6 +122,6 @@ val allKantoPokemon = listOf(
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun PreviewListScreen() {
     ListScreen()
 }
