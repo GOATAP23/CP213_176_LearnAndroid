@@ -54,12 +54,12 @@ class MainActivity : ComponentActivity() {
                     .background(color = Color.Gray)
             ) {
                 Text(
-                    text = "hp",
+                    text = "HP",
                     modifier = Modifier
                         .align(alignment = Alignment.CenterStart)
-                        .fillMaxWidth(fraction = 0.71f)
+                        .fillMaxWidth(fraction = 0.76f)
                         .background(color = Color.Red)
-                        .padding(8.dp)
+                        .padding(5.dp)
                 )
             }
 
