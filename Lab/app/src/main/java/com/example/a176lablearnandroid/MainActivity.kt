@@ -68,7 +68,7 @@ class MainActivity : ComponentActivity() {
                 painter = painterResource(id = R.drawable.profile),
                 contentDescription = "profile",
                 modifier = Modifier
-                    .size(300.dp)
+                    .size(350.dp)
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 8.dp)
                     .clickable { // Now resolved
@@ -76,9 +76,9 @@ class MainActivity : ComponentActivity() {
                     }
             )
 
-            var str by remember { mutableIntStateOf(90) }
-            var agi by remember { mutableIntStateOf(10) }
-            var int by remember { mutableIntStateOf(10) }
+            var str by remember { mutableIntStateOf(8) }
+            var agi by remember { mutableIntStateOf(24) }
+            var int by remember { mutableIntStateOf(23) }
 
             // status
             Row(
