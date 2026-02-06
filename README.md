@@ -1,10 +1,8 @@
 # Project Plan
 
-# Car Maintenance App
-
 ```mermaid
 graph TD
-    A["Car Maintenance & Expense Tracker App"] --> B["MVP Features"]
+    A["Car Maintenance App"] --> B["MVP Features"]
     A --> C["Future Features"]
     
     B --> B1["1. Add Vehicle"]
