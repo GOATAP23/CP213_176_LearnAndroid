@@ -10,46 +10,30 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme._176LabLearnAndroid">
-        <activity
-            android:name=".ListActivity"
-            android:exported="false"
-            android:label="@string/title_activity_list"
-            android:theme="@style/Theme._176LabLearnAndroid" />
-        <activity
-            android:name=".ui.theme.ListActivity"
-            android:exported="false"
-            android:label="@string/title_activity_list"
-            android:theme="@style/Theme._176LabLearnAndroid" />
-        <activity
-            android:name=".MainActivity3"
-            android:exported="false"
-            android:label="@string/title_activity_main3"
-            android:theme="@style/Theme._176LabLearnAndroid" />
-        <activity
-            android:name=".MainActivity2"
-            android:exported="true"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/Theme._176LabLearnAndroid">
+        android:theme="@style/Theme._176LabLearnAndroid"
+        tools:targetApi="31">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
         <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme._176LabLearnAndroid">
+            android:name=".MenuActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".PokedexActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".RPGCardActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".LifeCycleComposeActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

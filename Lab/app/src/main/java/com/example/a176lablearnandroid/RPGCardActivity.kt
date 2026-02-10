@@ -9,8 +9,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable // Added (Fixes your specific error)
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton // Added
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -26,7 +24,7 @@ import androidx.compose.ui.unit.sp
 // Check if this path is correct based on your folder structure
 import com.example.a176lablearnandroid.ui.theme._176LabLearnAndroidTheme
 
-class MainActivity : ComponentActivity() {
+class RPGCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -72,7 +70,7 @@ class MainActivity : ComponentActivity() {
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 8.dp)
                     .clickable { // Now resolved
-                        startActivity(Intent(this@MainActivity, ListActivity::class.java))
+                        startActivity(Intent(this@RPGCardActivity, PokedexActivity::class.java))
                     }
             )
 
