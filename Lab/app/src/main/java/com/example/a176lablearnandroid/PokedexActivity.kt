@@ -6,61 +6,28 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 class PokedexActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.i("Lifecyble", "PokedexActivity : onCreate")
+        Log.i("Lifecycle", "PokedexActivity : onCreate")
         enableEdgeToEdge()
         setContent {
             ListScreen()
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.i("Lifecycle", "PokedexActivity : onStart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.i("Lifecycle", "PokedexActivity : onResume")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.i("Lifecycle", "PokedexActivity : onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.i("Lifecycle", "PokedexActivity : onStop")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.i("Lifecycle", "PokedexActivity : onDestroy")
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        Log.i("Lifecycle", "PokedexActivity : onRestart")
     }
 }
 
@@ -108,21 +75,52 @@ val allKantoPokemon = listOf(
 )
 
 @Composable
-fun ListScreen(){
-    Column(modifier = Modifier.fillMaxSize().background(Color.Red).padding(16.dp)) {
+fun ListScreen() {
 
-        Row {
-            var inputText by remember { mutableStateOf("") }
-            TextField(value = inputText, onValueChange = { inputText = it },)
-        }
-        Column(modifier = Modifier.fillMaxSize().background(Color.Gray).padding(16.dp)) {
-            LazyColumn(modifier = Modifier.fillMaxSize().background(Color.White).padding(16.dp)) {
-                items(allKantoPokemon.size){index ->
-                    val item = allKantoPokemon[index]
-                    Text(text = item.name)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFD32F2F))
+            .padding(16.dp)
+    ) {
+
+        // White Card
+        Card(
+            modifier = Modifier.fillMaxSize(),
+            shape = RoundedCornerShape(20.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.White)
+        ) {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(12.dp)
+            ) {
+                items(allKantoPokemon) { pokemon ->
+                    PokemonRow(pokemon)
                 }
             }
         }
+    }
+}
+
+@Composable
+fun PokemonRow(pokemon: Pokemon) {
+    Column {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 10.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            Text(
+                text = "#${pokemon.number}  ${pokemon.name.lowercase()}",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Medium
+            )
+        }
+
+        Divider(color = Color.LightGray, thickness = 1.dp)
     }
 }
 
