@@ -1,6 +1,5 @@
-package com.example.a176lablearnandroid.ui.theme.ui.theme
+package com.example.a176lablearnandroid.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

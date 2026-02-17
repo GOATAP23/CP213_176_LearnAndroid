@@ -50,6 +50,14 @@ class MenuActivity : ComponentActivity() {
                 }) {
                     Text(text = "LifeCycleComposeActivity")
                 }
+
+                Button(onClick = {
+                    startActivity(
+                        Intent(this@MenuActivity, SharedPreferencesActivity::class.java)
+                    )
+                }) {
+                    Text(text = "SharedPreferencesActivity")
+                }
             }
         }
     }

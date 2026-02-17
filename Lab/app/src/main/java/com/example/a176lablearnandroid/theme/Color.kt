@@ -1,4 +1,4 @@
-package com.example.a176lablearnandroid.ui.theme.ui.theme
+package com.example.a176lablearnandroid.theme
 
 import androidx.compose.ui.graphics.Color
 
