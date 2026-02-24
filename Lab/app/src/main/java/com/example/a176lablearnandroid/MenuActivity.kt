@@ -1,3 +1,5 @@
+// checking 24/2/2026
+
 package com.example.a176lablearnandroid
 
 import android.content.Intent
