@@ -31,6 +31,22 @@ class MenuActivity : ComponentActivity() {
 
                 Button(onClick = {
                     startActivity(
+                        Intent(this@MenuActivity, SensorActivity::class.java)
+                    )
+                }) {
+                    Text(text = "Sensor and Location")
+                }
+
+                Button(onClick = {
+                    startActivity(
+                        Intent(this@MenuActivity, GalleryActivity::class.java)
+                    )
+                }) {
+                    Text(text = "GalleryActivity")
+                }
+
+                Button(onClick = {
+                    startActivity(
                         Intent(this@MenuActivity, RPGCardActivity::class.java)
                     )
                 }) {
