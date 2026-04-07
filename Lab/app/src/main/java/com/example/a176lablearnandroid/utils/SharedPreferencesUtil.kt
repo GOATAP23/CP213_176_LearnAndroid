@@ -2,6 +2,7 @@ package com.example.a176lablearnandroid.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.annotation.VisibleForTesting
 
 /**
  * SharedPreferencesUtil: เครื่องมือช่วยจัดการการเก็บข้อมูลขนาดเล็กในเครื่อง
@@ -11,6 +12,15 @@ object SharedPreferencesUtil {
 
     private const val PREF_NAME = "my_app_prefs"
     private var sharedPreferences: SharedPreferences? = null
+
+    /**
+     * รีเซ็ตสถานะ Singleton สำหรับ Unit Test เท่านั้น
+     * เพื่อให้สามารถ init ใหม่ด้วย Mock Context ได้ในแต่ละเทส
+     */
+    @VisibleForTesting
+    fun resetForTesting() {
+        sharedPreferences = null
+    }
 
     // ฟังก์ชันสำหรับเตรียมการใช้งาน (ต้องเรียกครั้งเดียวใน MainActivity หรือ Application)
     fun init(context: Context) {

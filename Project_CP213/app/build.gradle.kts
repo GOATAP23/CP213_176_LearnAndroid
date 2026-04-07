@@ -5,11 +5,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.a176lablearnandroid"
-    compileSdk = 36
+    namespace = "com.example.project_cp213"
+    compileSdk {
+        version = release(36)
+    }
 
     defaultConfig {
-        applicationId = "com.example.a176lablearnandroid"
+        applicationId = "com.example.project_cp213"
         minSdk = 36
         targetSdk = 36
         versionCode = 1
@@ -40,25 +42,6 @@ android {
 }
 
 dependencies {
-    // Coil สำหรับโหลดรูปภาพ
-    implementation("io.coil-kt:coil-compose:2.5.0")
-
-    // Retrofit สำหรับคุยกับ Server
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    // Converter สำหรับแปลง JSON เป็น Data Class (Gson)
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-
-    // Lifecycle & ViewModel สำหรับ Compose
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0")
-
-    // GPS & Location
-    implementation("com.google.android.gms:play-services-location:21.0.1")
-
-    // Jetpack Glance (App Widget with Compose-style API)
-    implementation("androidx.glance:glance:1.1.1")
-    implementation("androidx.glance:glance-appwidget:1.1.1")
-
-    // AndroidX Core
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -67,22 +50,11 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.camera.camera2.pipe)
-
-    // Unit Test
     testImplementation(libs.junit)
-    // สำหรับทำ Mock Object แบบง่ายใน Kotlin (เช่น Mock Network, Mock API)
-    testImplementation("io.mockk:mockk:1.13.10")
-    // สำหรับจำลอง Coroutine Dispatcher เวลารันเทส (สำคัญมากเวลา Test ViewModel)
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
-
-    // Android Instrumented Test
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-
-    // Debug
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 }

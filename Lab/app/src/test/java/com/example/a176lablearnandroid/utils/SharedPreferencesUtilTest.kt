@@ -32,6 +32,9 @@ class SharedPreferencesUtilTest {
         every { mockEditor.putInt(any(), any()) } returns mockEditor
         every { mockEditor.putBoolean(any(), any()) } returns mockEditor
 
+        // เรียกใช้งาน function resetForTesting ก่อน เพื่อให้ singleton เริ่มต้นใหม่ในแต่ละเทส
+        SharedPreferencesUtil.resetForTesting()
+
         // เรียกใช้งาน function init จาก SharedPreferencesUtil ก่อนแต่ละเทส
         SharedPreferencesUtil.init(mockContext)
     }
