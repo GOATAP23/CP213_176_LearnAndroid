@@ -33,6 +33,10 @@ class AddRecordViewModel(
     var expType by mutableStateOf(expenseOptions[0])
     var expAmount by mutableStateOf("")
 
+    // เก็บ ID ของรายการล่าสุดที่ถูก Insert เพื่อใช้ใน Undo
+    private var lastInsertedId: Long? = null
+    private var lastInsertedType: RecordType? = null
+
     fun saveRecord(onSuccess: () -> Unit) {
         viewModelScope.launch {
             if (selectedTab == RecordType.MAINTENANCE) {
@@ -44,7 +48,8 @@ class AddRecordViewModel(
                     cost = maintCost.toDoubleOrNull() ?: 0.0,
                     notes = notes.ifBlank { null }
                 )
-                maintenanceDao.insertMaintenance(entity)
+                lastInsertedId = maintenanceDao.insertMaintenance(entity)
+                lastInsertedType = RecordType.MAINTENANCE
             } else {
                 val entity = ExpenseEntity(
                     carId = carId,
@@ -53,9 +58,34 @@ class AddRecordViewModel(
                     amount = expAmount.toDoubleOrNull() ?: 0.0,
                     notes = notes.ifBlank { null }
                 )
-                expenseDao.insertExpense(entity)
+                lastInsertedId = expenseDao.insertExpense(entity)
+                lastInsertedType = RecordType.EXPENSE
             }
             onSuccess()
+        }
+    }
+
+    /**
+     * Undo — ลบรายการล่าสุดที่เพิ่งบันทึกไป
+     */
+    fun undoLastRecord(onComplete: () -> Unit) {
+        val id = lastInsertedId ?: return
+        val type = lastInsertedType ?: return
+
+        viewModelScope.launch {
+            when (type) {
+                RecordType.MAINTENANCE -> {
+                    val entity = maintenanceDao.getMaintenanceById(id)
+                    entity?.let { maintenanceDao.deleteMaintenance(it) }
+                }
+                RecordType.EXPENSE -> {
+                    val entity = expenseDao.getExpenseById(id)
+                    entity?.let { expenseDao.deleteExpense(it) }
+                }
+            }
+            lastInsertedId = null
+            lastInsertedType = null
+            onComplete()
         }
     }
 }

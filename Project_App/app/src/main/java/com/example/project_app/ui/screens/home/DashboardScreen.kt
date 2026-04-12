@@ -16,25 +16,35 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DirectionsCar
+import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.LocalGasStation
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Speed
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.project_app.R
+import com.example.project_app.ui.screens.settings.SettingsViewModel
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -43,24 +53,71 @@ import java.util.*
 @Composable
 fun DashboardScreen(
     viewModel: DashboardViewModel,
+    settingsViewModel: SettingsViewModel,
     onNavigateToAddRecord: (carId: Int) -> Unit,
-    onNavigateToAddCar: () -> Unit
+    onNavigateToAddCar: () -> Unit,
+    onNavigateToSettings: () -> Unit
 ) {
     val car by viewModel.currentCar.collectAsState(initial = null)
     val state by viewModel.dashboardState.collectAsState()
+    val isDarkMode by settingsViewModel.isDarkMode.collectAsState()
+    var showDeleteDialog by remember { mutableStateOf(false) }
 
     val currencyFormatter = NumberFormat.getCurrencyInstance(Locale("th", "TH"))
 
+    if (showDeleteDialog && car != null) {
+        AlertDialog(
+            onDismissRequest = { showDeleteDialog = false },
+            title = { Text(stringResource(R.string.delete_car_title), fontWeight = FontWeight.Bold) },
+            text = { Text(stringResource(R.string.delete_car_confirmation)) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        car?.let { viewModel.deleteCurrentCar(it.id) }
+                        showDeleteDialog = false
+                    }
+                ) {
+                    Text(stringResource(R.string.delete), color = MaterialTheme.colorScheme.error)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDeleteDialog = false }) {
+                    Text(stringResource(R.string.cancel_btn))
+                }
+            }
+        )
+    }
+
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("ภาพรวมรถของคุณ", fontWeight = FontWeight.Bold) })
+            TopAppBar(
+                title = { Text(stringResource(R.string.dashboard_title), fontWeight = FontWeight.Bold) },
+                actions = {
+                    if (car != null) {
+                        IconButton(onClick = { showDeleteDialog = true }) {
+                            Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.delete_car))
+                        }
+                    }
+                    // ปุ่มสลับ Dark Mode
+                    IconButton(onClick = { settingsViewModel.toggleDarkMode() }) {
+                        Icon(
+                            imageVector = if (isDarkMode) Icons.Default.LightMode else Icons.Default.DarkMode,
+                            contentDescription = "Toggle Theme"
+                        )
+                    }
+                    // ปุ่มไปหน้า Settings
+                    IconButton(onClick = onNavigateToSettings) {
+                        Icon(Icons.Default.Settings, contentDescription = "Settings")
+                    }
+                }
+            )
         },
         floatingActionButton = {
             if (car != null) {
                 ExtendedFloatingActionButton(
                     onClick = { car?.let { onNavigateToAddRecord(it.id) } },
                     icon = { Icon(Icons.Default.Add, "add") },
-                    text = { Text("บันทึกข้อมูล") },
+                    text = { Text(stringResource(R.string.add_record_btn)) },
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onPrimary
                 )
@@ -138,7 +195,7 @@ fun DashboardScreen(
                                 Icon(Icons.Default.Speed, contentDescription = null, tint = Color.White, modifier = Modifier.size(20.dp))
                                 Spacer(modifier = Modifier.width(6.dp))
                                 Text(
-                                    text = "${NumberFormat.getNumberInstance().format(c.currentMileage)} กม.",
+                                    text = "${NumberFormat.getNumberInstance().format(c.currentMileage)} ${stringResource(R.string.km_unit)}",
                                     color = Color.White,
                                     fontSize = 18.sp,
                                     fontWeight = FontWeight.Medium
@@ -148,13 +205,33 @@ fun DashboardScreen(
                     }
                 }
 
-                // 2. Middle Section - Predictive Alert Card
-                val isWarning = (c.currentMileage % 10000) > 8500
-                val cardColor = if (isWarning) MaterialTheme.colorScheme.errorContainer else MaterialTheme.colorScheme.tertiaryContainer
-                val iconColor = if (isWarning) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.tertiary
-                val icon = if (isWarning) Icons.Default.Warning else Icons.Default.CheckCircle
-                val title = if (isWarning) "ใกล้ถึงระยะเช็คระยะ/เปลี่ยนถ่ายน้ำมันเครื่องแล้ว!" else "สภาพรถสมบูรณ์ พร้อมลุยทุกเส้นทาง!"
-                val subText = if (isWarning) "กรุณาตรวจสอบของเหลวและนัดหมายศูนย์บริการล่วงหน้า" else "รักษาสภาพการขับขี่ที่ยอดเยี่ยมนี้ต่อไป"
+                // 2. Middle Section - Predictive Alert Card (Wow Factor!)
+                val alert = state.predictiveAlert
+                val cardColor = when (alert.level) {
+                    AlertLevel.GOOD -> MaterialTheme.colorScheme.tertiaryContainer
+                    AlertLevel.WARNING -> MaterialTheme.colorScheme.secondaryContainer
+                    AlertLevel.DANGER -> MaterialTheme.colorScheme.errorContainer
+                }
+                val iconColor = when (alert.level) {
+                    AlertLevel.GOOD -> MaterialTheme.colorScheme.tertiary
+                    AlertLevel.WARNING -> MaterialTheme.colorScheme.secondary
+                    AlertLevel.DANGER -> MaterialTheme.colorScheme.error
+                }
+                val icon = when (alert.level) {
+                    AlertLevel.GOOD -> Icons.Default.CheckCircle
+                    AlertLevel.WARNING -> Icons.Default.Warning
+                    AlertLevel.DANGER -> Icons.Default.Warning
+                }
+                val title = when (alert.level) {
+                    AlertLevel.GOOD -> stringResource(R.string.alert_good_title)
+                    AlertLevel.WARNING -> stringResource(R.string.alert_warning_title)
+                    AlertLevel.DANGER -> stringResource(R.string.alert_danger_title)
+                }
+                val subText = when (alert.level) {
+                    AlertLevel.GOOD -> stringResource(R.string.alert_good_subtitle)
+                    AlertLevel.WARNING -> stringResource(R.string.alert_warning_subtitle)
+                    AlertLevel.DANGER -> stringResource(R.string.alert_danger_subtitle)
+                }
 
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -175,7 +252,7 @@ fun DashboardScreen(
                 }
 
                 // 3. Bottom Section - Expense Columns
-                Text("สรุปค่าใช้จ่าย", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.expense_summary), fontSize = 20.sp, fontWeight = FontWeight.Bold)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -187,7 +264,7 @@ fun DashboardScreen(
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
                     ) {
                         Column(modifier = Modifier.padding(16.dp)) {
-                            Text("เดือนนี้", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
+                            Text(stringResource(R.string.this_month), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
                                 text = currencyFormatter.format(state.monthlyTotal),
@@ -205,7 +282,7 @@ fun DashboardScreen(
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
                     ) {
                         Column(modifier = Modifier.padding(16.dp)) {
-                            Text("ปีนี้", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
+                            Text(stringResource(R.string.this_year), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
                                 text = currencyFormatter.format(state.yearlyTotal),
@@ -218,9 +295,9 @@ fun DashboardScreen(
                 }
 
                 // Recent Transactions
-                Text("รายการทำล่าสุด", fontSize = 20.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 8.dp))
+                Text(stringResource(R.string.recent_transactions), fontSize = 20.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 8.dp))
                 if (state.recentTransactions.isEmpty()) {
-                    Text("ยังไม่มีการบันทึกประวัติ", color = Color.Gray)
+                    Text(stringResource(R.string.no_records_yet), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 } else {
                     state.recentTransactions.forEach { trx ->
                         TransactionRow(trx)
@@ -263,7 +340,7 @@ fun EmptyDashboardState(modifier: Modifier = Modifier, onNavigateToAddCar: () ->
         Spacer(modifier = Modifier.height(24.dp))
 
         Text(
-            text = "ยังไม่มีข้อมูลอู่รถของคุณ",
+            text = stringResource(R.string.empty_state_title),
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onSurface,
@@ -273,9 +350,9 @@ fun EmptyDashboardState(modifier: Modifier = Modifier, onNavigateToAddCar: () ->
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "มาเริ่มดูแลรถคันโปรดของคุณกันเถอะ!\nบันทึกข้อมูลวันนี้เพื่อการขับขี่ที่ประหยัดและปลอดภัยยิ่งขึ้น",
+            text = stringResource(R.string.empty_state_subtitle),
             style = MaterialTheme.typography.bodyMedium,
-            color = Color.Gray,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center
         )
 
@@ -295,7 +372,7 @@ fun EmptyDashboardState(modifier: Modifier = Modifier, onNavigateToAddCar: () ->
         ) {
             Icon(Icons.Default.Add, contentDescription = "Add")
             Spacer(modifier = Modifier.width(8.dp))
-            Text("เพิ่มรถยนต์คันแรกเลย!", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            Text(stringResource(R.string.add_first_car), fontSize = 18.sp, fontWeight = FontWeight.Bold)
         }
     }
 }
@@ -320,7 +397,18 @@ fun TransactionRow(trx: TransactionUI) {
             )
             Spacer(modifier = Modifier.width(16.dp))
             Column(modifier = Modifier.weight(1f)) {
-                Text(trx.title, fontWeight = FontWeight.SemiBold)
+                val titleText = when (trx.title) {
+                    "น้ำมันเครื่อง" -> stringResource(R.string.oil_change)
+                    "ผ้าเบรก" -> stringResource(R.string.brake_pads)
+                    "ยาง" -> stringResource(R.string.tires)
+                    "แบตเตอรี่" -> stringResource(R.string.battery)
+                    "ค่าน้ำมัน" -> stringResource(R.string.fuel)
+                    "ค่าทางด่วน" -> stringResource(R.string.toll)
+                    "ค่าที่จอดรถ" -> stringResource(R.string.parking)
+                    "อื่นๆ" -> stringResource(R.string.other)
+                    else -> trx.title
+                }
+                Text(titleText, fontWeight = FontWeight.SemiBold)
                 Text(formatter.format(Date(trx.dateMillis)), style = MaterialTheme.typography.bodySmall)
             }
             Text(

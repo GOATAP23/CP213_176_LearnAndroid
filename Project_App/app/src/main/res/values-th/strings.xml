@@ -1,0 +1,83 @@
+<resources>
+    <string name="app_name">Car Tracker</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_title">ภาพรวมรถของคุณ</string>
+    <string name="empty_state_title">ยังไม่มีข้อมูลรถของคุณ</string>
+    <string name="empty_state_subtitle">มาเริ่มดูแลรถคันโปรดของคุณกันเถอะ!\nบันทึกข้อมูลวันนี้เพื่อการขับขี่ที่ประหยัดและปลอดภัยยิ่งขึ้น</string>
+    <string name="add_first_car">เพิ่มรถยนต์คันแรกเลย!</string>
+    <string name="add_record_btn">บันทึกข้อมูล</string>
+    <string name="expense_summary">สรุปค่าใช้จ่าย</string>
+    <string name="this_month">เดือนนี้</string>
+    <string name="this_year">ปีนี้</string>
+    <string name="recent_transactions">รายการทำล่าสุด</string>
+    <string name="no_records_yet">ยังไม่มีการบันทึกประวัติ</string>
+    <string name="km_unit">กม.</string>
+
+    <!-- Predictive Alert -->
+    <string name="alert_good_title">สภาพรถสมบูรณ์ พร้อมลุยทุกเส้นทาง!</string>
+    <string name="alert_good_subtitle">รักษาสภาพการขับขี่ที่ยอดเยี่ยมนี้ต่อไป</string>
+    <string name="alert_warning_title">ใกล้ถึงระยะเช็คระยะ/เปลี่ยนถ่ายน้ำมันเครื่องแล้ว!</string>
+    <string name="alert_warning_subtitle">กรุณาตรวจสอบของเหลวและนัดหมายศูนย์บริการล่วงหน้า</string>
+    <string name="alert_danger_title">เกินกำหนดระยะบำรุงรักษาแล้ว!</string>
+    <string name="alert_danger_subtitle">รถของคุณเกินระยะบำรุงรักษาที่แนะนำแล้ว กรุณานำเข้าศูนย์โดยเร็ว</string>
+
+    <!-- Add Car -->
+    <string name="add_car_title">เพิ่มรถยนต์คันใหม่</string>
+    <string name="brand_label">ยี่ห้อ (เช่น Toyota, Honda)</string>
+    <string name="model_label">รุ่น (เช่น Civic, Yaris)</string>
+    <string name="year_label">ปีจดทะเบียน</string>
+    <string name="mileage_label">ไมล์ปัจจุบัน (km)</string>
+    <string name="tap_to_upload">แตะเพื่ออัปโหลดรูปรถของคุณ</string>
+    <string name="save_car">บันทึกข้อมูลรถ</string>
+    <string name="field_required">ข้อมูลบังคับ</string>
+    <string name="car_saved_success">บันทึกข้อมูลรถเรียบร้อย!</string>
+
+    <!-- Delete Car -->
+    <string name="delete_car">ลบรถ</string>
+    <string name="delete_car_title">ยืนยันการลบ?</string>
+    <string name="delete_car_confirmation">คุณแน่ใจหรือไม่ว่าต้องการลบรถคันนี้ ข้อมูลการดูแลและค่าใช้จ่ายทั้งหมดจะถูกลบอย่างถาวร</string>
+    <string name="delete">ลบข้อมูล</string>
+    
+    <!-- Add Record -->
+    <string name="add_record_title">บันทึกข้อมูล</string>
+    <string name="tab_maintenance">การดูแลรักษารถ</string>
+    <string name="tab_expense">ค่าใช้จ่ายทั่วไป</string>
+    <string name="maintenance_type_label">ประเภทการเปลี่ยน/บำรุงรักษา</string>
+    <string name="expense_type_label">หมวดหมู่ค่าใช้จ่าย</string>
+    <string name="mileage_field">เลขไมล์</string>
+    <string name="cost_field">ราคา(บาท)</string>
+    <string name="amount_field">จำนวนเงิน (บาท)</string>
+    <string name="date_field">วันที่บันทึก (กดเพื่อเปลี่ยน)</string>
+    <string name="notes_field">โน้ตเพิ่มเติม (ถ้ามี)</string>
+    <string name="save_record">บันทึกข้อมูล</string>
+    <string name="confirm_btn">ตกลง</string>
+    <string name="cancel_btn">ยกเลิก</string>
+    <string name="undo_btn">เลิกทำ (Undo)</string>
+    <string name="maintenance_saved">บันทึกการดูแลรถเรียบร้อย</string>
+    <string name="expense_saved">บันทึกค่าใช้จ่ายเรียบร้อย</string>
+    <string name="enter_amount_error">กรุณากรอกจำนวนเงิน</string>
+
+    <!-- Maintenance types -->
+    <string name="oil_change">น้ำมันเครื่อง</string>
+    <string name="brake_pads">ผ้าเบรก</string>
+    <string name="tires">ยาง</string>
+    <string name="battery">แบตเตอรี่</string>
+    <string name="other">อื่นๆ</string>
+
+    <!-- Expense types -->
+    <string name="fuel">ค่าน้ำมัน</string>
+    <string name="toll">ค่าทางด่วน</string>
+    <string name="parking">ค่าที่จอดรถ</string>
+
+    <!-- Settings -->
+    <string name="settings_title">ตั้งค่า</string>
+    <string name="dark_mode">โหมดมืด</string>
+    <string name="dark_mode_desc">สลับระหว่างธีมสว่างและธีมมืด</string>
+    <string name="language">ภาษา</string>
+    <string name="language_desc">เลือกภาษาที่ต้องการ</string>
+    <string name="thai">ไทย</string>
+    <string name="english">English</string>
+    <string name="app_version">เวอร์ชันแอป</string>
+    <string name="back">กลับ</string>
+</resources>

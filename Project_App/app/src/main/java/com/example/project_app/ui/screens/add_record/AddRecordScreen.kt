@@ -9,17 +9,20 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.project_app.R
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -30,8 +33,9 @@ fun AddRecordScreen(
     viewModel: AddRecordViewModel,
     onNavigateBack: () -> Unit
 ) {
-    val tabs = listOf("การดูแลรักษารถ", "ค่าใช้จ่ายทั่วไป")
+    val tabs = listOf(stringResource(R.string.tab_maintenance), stringResource(R.string.tab_expense))
     val selectedTabIndex = if (viewModel.selectedTab == RecordType.MAINTENANCE) 0 else 1
+    val context = LocalContext.current
 
     // State จัดการ Error และแจ้งเตือน
     var showErrorState by remember { mutableStateOf(false) }
@@ -41,17 +45,17 @@ fun AddRecordScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("บันทึกข้อมูล") },
+                title = { Text(stringResource(R.string.add_record_title)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "กลับ")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
                     }
                 }
             )
         },
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }, // เตรียมจุดโชว์ Snackbar
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         bottomBar = {
-            // ปุ่ม Sticky Bottom แช่ล่างสุด และลอยเหนือคีย์บอร์ดตอนพิมพ์
+            // ปุ่ม Sticky Bottom
             Surface(
                 color = MaterialTheme.colorScheme.background,
                 shadowElevation = 8.dp
@@ -75,24 +79,29 @@ fun AddRecordScreen(
                             if (isValid) {
                                 showErrorState = false
                                 viewModel.saveRecord {
-                                    // โชว์ Snackbar เมื่อบันทึกสำเร็จ
                                     coroutineScope.launch {
-                                        val message = if (viewModel.selectedTab == RecordType.MAINTENANCE) "บันทึกการดูแลรถเรียบร้อย" else "บันทึกค่าใช้จ่ายเรียบร้อย"
+                                        val message = if (viewModel.selectedTab == RecordType.MAINTENANCE) {
+                                            context.getString(R.string.maintenance_saved)
+                                        } else {
+                                            context.getString(R.string.expense_saved)
+                                        }
                                         val result = snackbarHostState.showSnackbar(
                                             message = message,
-                                            actionLabel = "เลิกทำ (Undo)",
+                                            actionLabel = context.getString(R.string.undo_btn),
                                             duration = SnackbarDuration.Short
                                         )
                                         if (result == SnackbarResult.ActionPerformed) {
-                                            // TODO: ในสถานการณ์จริงสามารถเรียก viewModel.undoRecord() เพื่อลบออกจาก RoomDB ได้ 
-                                            // แต่สำหรับตอนนี้เราแค่กดแล้วรอกรอกใหม่
+                                            // กด Undo → ลบรายการที่เพิ่งบันทึกออก
+                                            viewModel.undoLastRecord {
+                                                // ไม่ต้องทำอะไร — อยู่หน้าเดิมให้กรอกใหม่
+                                            }
                                         } else {
-                                            onNavigateBack() // ถ้าระยะเวลา Timeout ไปตามปกติ ให้กลับหน้าหลัก
+                                            onNavigateBack()
                                         }
                                     }
                                 }
                             } else {
-                                showErrorState = true // เซ็ตค่าว่ามี Error เพื่อให้ขอบช่องกรอกข้อมูลกลายเป็นสีแดง
+                                showErrorState = true
                             }
                         },
                         modifier = Modifier
@@ -100,20 +109,20 @@ fun AddRecordScreen(
                             .height(56.dp),
                         shape = RoundedCornerShape(16.dp)
                     ) {
-                        Text("บันทึกข้อมูล", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                        Text(stringResource(R.string.save_record), fontSize = 18.sp, fontWeight = FontWeight.Bold)
                     }
                 }
             }
         }
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
-            // PrimaryTabRow ออกแบบมาเพื่อหน้านี้โดยเฉพาะ ให้เห็นชัดเจนตัดเส้นใต้ Tab
+            // PrimaryTabRow
             PrimaryTabRow(selectedTabIndex = selectedTabIndex) {
                 tabs.forEachIndexed { index, title ->
                     Tab(
                         selected = selectedTabIndex == index,
                         onClick = { 
-                            showErrorState = false // ล้างระวังค้างตอนสลับ Tab
+                            showErrorState = false
                             viewModel.selectedTab = if(index == 0) RecordType.MAINTENANCE else RecordType.EXPENSE 
                         },
                         text = { Text(title, fontWeight = FontWeight.Bold, fontSize = 16.sp) }
@@ -126,7 +135,7 @@ fun AddRecordScreen(
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
                     .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(24.dp) // เว้นระยะให้โล่งขึ้น
+                verticalArrangement = Arrangement.spacedBy(24.dp)
             ) {
                 // ส่วนของช่องวันที่
                 DatePickerField(
@@ -134,7 +143,7 @@ fun AddRecordScreen(
                     onDateSelected = { viewModel.selectedDateMillis = it }
                 )
 
-                // ใส่ Animation Crossfade ตอนสลับ Tab เนื้อหาจะเฟดเข้าออกแบบสมูธ
+                // Animation Crossfade ตอนสลับ Tab
                 Crossfade(
                     targetState = viewModel.selectedTab,
                     animationSpec = tween(durationMillis = 300),
@@ -143,19 +152,25 @@ fun AddRecordScreen(
                     
                     if (currentTab == RecordType.MAINTENANCE) {
                         Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                            // UX: นำ Filter Chip แบบเม็ดยามาใช้แทน Dropdown (ผู้ใช้กดจิ้มได้เลยใน 1 คลิก)
                             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                                Text("ประเภทการเปลี่ยน/บำรุงรักษา", style = MaterialTheme.typography.labelLarge)
+                                Text(stringResource(R.string.maintenance_type_label), style = MaterialTheme.typography.labelLarge)
                                 Row(
                                     modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
                                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                                 ) {
                                     viewModel.maintenanceOptions.forEach { option ->
                                         val selected = viewModel.maintType == option
+                                        val labelText = when (option) {
+                                            "น้ำมันเครื่อง" -> stringResource(R.string.oil_change)
+                                            "ผ้าเบรก" -> stringResource(R.string.brake_pads)
+                                            "ยาง" -> stringResource(R.string.tires)
+                                            "แบตเตอรี่" -> stringResource(R.string.battery)
+                                            else -> stringResource(R.string.other)
+                                        }
                                         FilterChip(
                                             selected = selected,
                                             onClick = { viewModel.maintType = option },
-                                            label = { Text(option) },
+                                            label = { Text(labelText) },
                                             leadingIcon = if (selected) {
                                                 { Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize)) }
                                             } else null
@@ -164,7 +179,6 @@ fun AddRecordScreen(
                                 }
                             }
 
-                            // UX: ยกระดับ Error Handling ถ้ายื่นข้อมูลขอบจะแดงพร้อมมี Supporting Text
                             Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                                 val isMileageError = showErrorState && viewModel.maintMileage.isBlank()
                                 val isCostError = showErrorState && viewModel.maintCost.isBlank()
@@ -172,39 +186,45 @@ fun AddRecordScreen(
                                 OutlinedTextField(
                                     value = viewModel.maintMileage,
                                     onValueChange = { viewModel.maintMileage = it },
-                                    label = { Text("เลขไมล์") },
+                                    label = { Text(stringResource(R.string.mileage_field)) },
                                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Next),
                                     modifier = Modifier.weight(1f),
                                     shape = RoundedCornerShape(12.dp),
                                     isError = isMileageError,
-                                    supportingText = if (isMileageError) { { Text("ข้อมูลบังคับ", color = MaterialTheme.colorScheme.error) } } else null
+                                    supportingText = if (isMileageError) { { Text(stringResource(R.string.field_required), color = MaterialTheme.colorScheme.error) } } else null
                                 )
                                 OutlinedTextField(
                                     value = viewModel.maintCost,
                                     onValueChange = { viewModel.maintCost = it },
-                                    label = { Text("ราคา(บาท)") },
+                                    label = { Text(stringResource(R.string.cost_field)) },
                                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done),
                                     modifier = Modifier.weight(1f),
                                     shape = RoundedCornerShape(12.dp),
                                     isError = isCostError,
-                                    supportingText = if (isCostError) { { Text("ข้อมูลบังคับ", color = MaterialTheme.colorScheme.error) } } else null
+                                    supportingText = if (isCostError) { { Text(stringResource(R.string.field_required), color = MaterialTheme.colorScheme.error) } } else null
                                 )
                             }
                         }
                     } else {
                         Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                                Text("หมวดหมู่ค่าใช้จ่าย", style = MaterialTheme.typography.labelLarge)
+                                Text(stringResource(R.string.expense_type_label), style = MaterialTheme.typography.labelLarge)
                                 Row(
                                     modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
                                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                                 ) {
                                     viewModel.expenseOptions.forEach { option ->
                                         val selected = viewModel.expType == option
+                                        val labelText = when (option) {
+                                            "ค่าน้ำมัน" -> stringResource(R.string.fuel)
+                                            "ค่าทางด่วน" -> stringResource(R.string.toll)
+                                            "ค่าที่จอดรถ" -> stringResource(R.string.parking)
+                                            else -> stringResource(R.string.other)
+                                        }
                                         FilterChip(
                                             selected = selected,
                                             onClick = { viewModel.expType = option },
-                                            label = { Text(option) },
+                                            label = { Text(labelText) },
                                             leadingIcon = if (selected) {
                                                 { Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize)) }
                                             } else null
@@ -217,23 +237,23 @@ fun AddRecordScreen(
                             OutlinedTextField(
                                 value = viewModel.expAmount,
                                 onValueChange = { viewModel.expAmount = it },
-                                label = { Text("จำนวนเงิน (บาท)") },
+                                label = { Text(stringResource(R.string.amount_field)) },
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done),
                                 modifier = Modifier.fillMaxWidth(),
                                 shape = RoundedCornerShape(12.dp),
                                 isError = isAmountError,
-                                supportingText = if (isAmountError) { { Text("กรุณากรอกจำนวนเงิน", color = MaterialTheme.colorScheme.error) } } else null
+                                supportingText = if (isAmountError) { { Text(stringResource(R.string.enter_amount_error), color = MaterialTheme.colorScheme.error) } } else null
                             )
                         }
                     }
-                } // สิ้นสุด Crossfade
+                }
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 OutlinedTextField(
                     value = viewModel.notes,
                     onValueChange = { viewModel.notes = it },
-                    label = { Text("โน้ตเพิ่มเติม (ถ้ามี)") },
+                    label = { Text(stringResource(R.string.notes_field)) },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -246,7 +266,7 @@ fun AddRecordScreen(
     }
 }
 
-// Custom DatePicker หรูๆ สไตล์ Material 3
+// Custom DatePicker สไตล์ Material 3
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DatePickerField(dateMillis: Long, onDateSelected: (Long) -> Unit) {
@@ -258,11 +278,11 @@ fun DatePickerField(dateMillis: Long, onDateSelected: (Long) -> Unit) {
         value = dateString,
         onValueChange = {},
         readOnly = true, 
-        label = { Text("วันที่บันทึก (กดเพื่อเปลี่ยน)") },
+        label = { Text(stringResource(R.string.date_field)) },
         shape = RoundedCornerShape(12.dp),
         trailingIcon = {
             IconButton(onClick = { showDialog = true }) {
-                Icon(Icons.Default.DateRange, contentDescription = "เลือกวันที่")
+                Icon(Icons.Default.DateRange, contentDescription = stringResource(R.string.date_field))
             }
         },
         modifier = Modifier.fillMaxWidth()
@@ -276,10 +296,10 @@ fun DatePickerField(dateMillis: Long, onDateSelected: (Long) -> Unit) {
                 TextButton(onClick = {
                     datePickerState.selectedDateMillis?.let { onDateSelected(it) }
                     showDialog = false
-                }) { Text("ตกลง") }
+                }) { Text(stringResource(R.string.confirm_btn)) }
             },
             dismissButton = {
-                TextButton(onClick = { showDialog = false }) { Text("ยกเลิก") }
+                TextButton(onClick = { showDialog = false }) { Text(stringResource(R.string.cancel_btn)) }
             }
         ) {
             DatePicker(state = datePickerState) 

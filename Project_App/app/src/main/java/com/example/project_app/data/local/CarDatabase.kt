@@ -34,6 +34,7 @@ abstract class CarDatabase : RoomDatabase() {
                     CarDatabase::class.java,
                     "car_tracker_database"
                 )
+                .fallbackToDestructiveMigration()
                 .build()
                 
                 INSTANCE = instance

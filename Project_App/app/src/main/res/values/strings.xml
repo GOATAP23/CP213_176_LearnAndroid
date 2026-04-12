@@ -1,3 +1,83 @@
 <resources>
-    <string name="app_name">Project_App</string>
+    <string name="app_name">Car Tracker</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_title">Your Car Overview</string>
+    <string name="empty_state_title">No car data yet</string>
+    <string name="empty_state_subtitle">Let\'s start taking care of your favorite car!\nTrack your expenses today for a safer, more economical drive.</string>
+    <string name="add_first_car">Add Your First Car!</string>
+    <string name="add_record_btn">Add Record</string>
+    <string name="expense_summary">Expense Summary</string>
+    <string name="this_month">This Month</string>
+    <string name="this_year">This Year</string>
+    <string name="recent_transactions">Recent Transactions</string>
+    <string name="no_records_yet">No records yet</string>
+    <string name="km_unit">km</string>
+
+    <!-- Predictive Alert -->
+    <string name="alert_good_title">Car is in great shape!</string>
+    <string name="alert_good_subtitle">Keep up the excellent driving habits.</string>
+    <string name="alert_warning_title">Service check coming up soon!</string>
+    <string name="alert_warning_subtitle">Please check fluids and schedule a service appointment.</string>
+    <string name="alert_danger_title">Overdue for maintenance!</string>
+    <string name="alert_danger_subtitle">Your car has exceeded the recommended service interval.</string>
+
+    <!-- Add Car -->
+    <string name="add_car_title">Add New Car</string>
+    <string name="brand_label">Brand (e.g. Toyota, Honda)</string>
+    <string name="model_label">Model (e.g. Civic, Yaris)</string>
+    <string name="year_label">Registration Year</string>
+    <string name="mileage_label">Current Mileage (km)</string>
+    <string name="tap_to_upload">Tap to upload your car photo</string>
+    <string name="save_car">Save Car</string>
+    <string name="field_required">This field is required</string>
+    <string name="car_saved_success">Car saved successfully!</string>
+    
+    <!-- Delete Car -->
+    <string name="delete_car">Delete Car</string>
+    <string name="delete_car_title">Delete Car?</string>
+    <string name="delete_car_confirmation">Are you sure you want to delete this car? All maintenance and expense records will also be permanently deleted.</string>
+    <string name="delete">Delete</string>
+
+    <!-- Add Record -->
+    <string name="add_record_title">Add Record</string>
+    <string name="tab_maintenance">Maintenance</string>
+    <string name="tab_expense">Expense</string>
+    <string name="maintenance_type_label">Maintenance Type</string>
+    <string name="expense_type_label">Expense Category</string>
+    <string name="mileage_field">Mileage</string>
+    <string name="cost_field">Cost (Baht)</string>
+    <string name="amount_field">Amount (Baht)</string>
+    <string name="date_field">Date (tap to change)</string>
+    <string name="notes_field">Additional notes (optional)</string>
+    <string name="save_record">Save Record</string>
+    <string name="confirm_btn">OK</string>
+    <string name="cancel_btn">Cancel</string>
+    <string name="undo_btn">Undo</string>
+    <string name="maintenance_saved">Maintenance record saved!</string>
+    <string name="expense_saved">Expense record saved!</string>
+    <string name="enter_amount_error">Please enter the amount</string>
+
+    <!-- Maintenance types -->
+    <string name="oil_change">Engine Oil</string>
+    <string name="brake_pads">Brake Pads</string>
+    <string name="tires">Tires</string>
+    <string name="battery">Battery</string>
+    <string name="other">Other</string>
+
+    <!-- Expense types -->
+    <string name="fuel">Fuel</string>
+    <string name="toll">Toll</string>
+    <string name="parking">Parking</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="dark_mode_desc">Switch between light and dark theme</string>
+    <string name="language">Language</string>
+    <string name="language_desc">Choose your preferred language</string>
+    <string name="thai">Thai</string>
+    <string name="english">English</string>
+    <string name="app_version">App Version</string>
+    <string name="back">Back</string>
 </resources>

@@ -42,15 +42,19 @@ fun Project_AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+ (ปรับสีตามเครื่องของผู้ใช้) เราปิดไว้เพื่อให้ใช้ธีมสีรถของเราเอง
     dynamicColor: Boolean = false,
+    // Override จาก DataStore — ถ้า null จะ fallback ใช้ค่า darkTheme (จากระบบ)
+    overrideDarkMode: Boolean? = null,
     content: @Composable () -> Unit
 ) {
+    val useDarkTheme = overrideDarkMode ?: darkTheme
+
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+            if (useDarkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
 
-        darkTheme -> DarkColorScheme
+        useDarkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
     
@@ -60,7 +64,7 @@ fun Project_AppTheme(
         SideEffect {
             val window = (view.context as Activity).window
             window.statusBarColor = colorScheme.background.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !useDarkTheme
         }
     }
 

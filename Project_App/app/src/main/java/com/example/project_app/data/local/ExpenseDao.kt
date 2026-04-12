@@ -1,9 +1,11 @@
 package com.example.project_app.data.local
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.example.project_app.data.local.entity.ExpenseEntity
 import com.example.project_app.data.local.entity.MonthlySummary
 import com.example.project_app.data.local.entity.YearlySummary
@@ -12,10 +14,19 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ExpenseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertExpense(expense: ExpenseEntity)
+    suspend fun insertExpense(expense: ExpenseEntity): Long
+
+    @Update
+    suspend fun updateExpense(expense: ExpenseEntity)
+
+    @Delete
+    suspend fun deleteExpense(expense: ExpenseEntity)
 
     @Query("SELECT * FROM expenses WHERE carId = :carId ORDER BY date DESC")
     fun getExpensesForCar(carId: Int): Flow<List<ExpenseEntity>>
+
+    @Query("SELECT * FROM expenses WHERE id = :id LIMIT 1")
+    suspend fun getExpenseById(id: Long): ExpenseEntity?
 
     @Query("""
         SELECT strftime('%Y-%m', date / 1000, 'unixepoch', 'localtime') AS period, 
