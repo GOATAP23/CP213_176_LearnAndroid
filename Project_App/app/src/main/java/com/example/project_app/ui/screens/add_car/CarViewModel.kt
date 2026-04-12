@@ -17,6 +17,7 @@ class CarViewModel(private val carDao: CarDao) : ViewModel() {
     var year by mutableStateOf("")
     var mileage by mutableStateOf("")
     var imageUri by mutableStateOf<Uri?>(null)
+    var imageUrl by mutableStateOf("")
 
     // Validation error states
     var brandError by mutableStateOf(false)
@@ -43,12 +44,14 @@ class CarViewModel(private val carDao: CarDao) : ViewModel() {
         val yearInt = year.toIntOrNull() ?: 0
         val mileageInt = mileage.toIntOrNull() ?: 0
 
+        val imagePathToSave = if (imageUrl.isNotBlank()) imageUrl else imageUri?.toString()
+
         val newCar = CarEntity(
             brand = brand,
             model = model,
             year = yearInt,
             currentMileage = mileageInt,
-            imagePath = imageUri?.toString()
+            imagePath = imagePathToSave
         )
 
         viewModelScope.launch {

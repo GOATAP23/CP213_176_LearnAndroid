@@ -29,6 +29,8 @@
     <string name="year_label">ปีจดทะเบียน</string>
     <string name="mileage_label">ไมล์ปัจจุบัน (km)</string>
     <string name="tap_to_upload">แตะเพื่ออัปโหลดรูปรถของคุณ</string>
+    <string name="or_paste_url">หรือวาง URL รูปภาพด้านล่าง</string>
+    <string name="image_url_label">URL ข้อมูลรูปภาพ (ไม่บังคับ)</string>
     <string name="save_car">บันทึกข้อมูลรถ</string>
     <string name="field_required">ข้อมูลบังคับ</string>
     <string name="car_saved_success">บันทึกข้อมูลรถเรียบร้อย!</string>
@@ -57,6 +59,10 @@
     <string name="maintenance_saved">บันทึกการดูแลรถเรียบร้อย</string>
     <string name="expense_saved">บันทึกค่าใช้จ่ายเรียบร้อย</string>
     <string name="enter_amount_error">กรุณากรอกจำนวนเงิน</string>
+
+    <string name="tip_title">💡 เคล็ดลับการบันทึก</string>
+    <string name="tip_maintenance">Tip: บันทึกเลขไมล์ปัจจุบันที่แสดงบนหน้าปัดรถ และกรอกจำนวนเงินที่จ่ายจริงที่ศูนย์บริการ เพื่อให้แอปแจ้งเตือนรอบเช็คระยะได้แม่นยำ</string>
+    <string name="tip_expense">Tip: กรอกราคาที่จ่ายจริงตอนเติมน้ำมัน เพื่อให้แอปนำไปคำนวณอัตราสิ้นเปลือง (km/L) ในอนาคตได้สอดคล้องกับพฤติกรรมการขับขี่</string>
 
     <!-- Maintenance types -->
     <string name="oil_change">น้ำมันเครื่อง</string>

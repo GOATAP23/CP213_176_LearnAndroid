@@ -29,6 +29,8 @@
     <string name="year_label">Registration Year</string>
     <string name="mileage_label">Current Mileage (km)</string>
     <string name="tap_to_upload">Tap to upload your car photo</string>
+    <string name="or_paste_url">Or paste image URL below</string>
+    <string name="image_url_label">Image URL (Optional)</string>
     <string name="save_car">Save Car</string>
     <string name="field_required">This field is required</string>
     <string name="car_saved_success">Car saved successfully!</string>
@@ -57,6 +59,10 @@
     <string name="maintenance_saved">Maintenance record saved!</string>
     <string name="expense_saved">Expense record saved!</string>
     <string name="enter_amount_error">Please enter the amount</string>
+
+    <string name="tip_title">💡 Helpful Tip</string>
+    <string name="tip_maintenance">Tip: Record the current mileage shown on your dashboard and actual cost to track your maintenance intervals accurately.</string>
+    <string name="tip_expense">Tip: Enter the exact amount paid (e.g., fuel cost) to calculate your average fuel consumption accurately in the future.</string>
 
     <!-- Maintenance types -->
     <string name="oil_change">Engine Oil</string>

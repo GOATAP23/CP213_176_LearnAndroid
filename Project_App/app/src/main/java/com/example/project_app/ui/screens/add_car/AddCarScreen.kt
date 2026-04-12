@@ -108,6 +108,8 @@ fun AddCarScreen(
             verticalArrangement = Arrangement.spacedBy(20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            val displayImage = if (viewModel.imageUrl.isNotBlank()) viewModel.imageUrl else viewModel.imageUri
+
             // 1. กรอบใส่รูปขนาดใหญ่ (Image Placeholder)
             Box(
                 modifier = Modifier
@@ -122,9 +124,9 @@ fun AddCarScreen(
                     },
                 contentAlignment = Alignment.Center
             ) {
-                if (viewModel.imageUri != null) {
+                if (displayImage != null && displayImage.toString().isNotBlank()) {
                     AsyncImage(
-                        model = viewModel.imageUri,
+                        model = displayImage,
                         contentDescription = "Car image",
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Crop
@@ -148,6 +150,23 @@ fun AddCarScreen(
             }
 
             Spacer(modifier = Modifier.height(4.dp))
+
+            Text(
+                text = stringResource(R.string.or_paste_url),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            OutlinedTextField(
+                value = viewModel.imageUrl,
+                onValueChange = { viewModel.imageUrl = it },
+                label = { Text(stringResource(R.string.image_url_label)) },
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
+                shape = RoundedCornerShape(12.dp)
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
 
             // 2. ฟิลด์พร้อม Error Handling
             OutlinedTextField(

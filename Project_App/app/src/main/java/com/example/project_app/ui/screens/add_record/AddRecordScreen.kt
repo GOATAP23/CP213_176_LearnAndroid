@@ -204,6 +204,8 @@ fun AddRecordScreen(
                                     supportingText = if (isCostError) { { Text(stringResource(R.string.field_required), color = MaterialTheme.colorScheme.error) } } else null
                                 )
                             }
+                            
+                            TipCard(title = stringResource(R.string.tip_title), message = stringResource(R.string.tip_maintenance))
                         }
                     } else {
                         Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
@@ -244,6 +246,8 @@ fun AddRecordScreen(
                                 isError = isAmountError,
                                 supportingText = if (isAmountError) { { Text(stringResource(R.string.enter_amount_error), color = MaterialTheme.colorScheme.error) } } else null
                             )
+
+                            TipCard(title = stringResource(R.string.tip_title), message = stringResource(R.string.tip_expense))
                         }
                     }
                 }
@@ -303,6 +307,21 @@ fun DatePickerField(dateMillis: Long, onDateSelected: (Long) -> Unit) {
             }
         ) {
             DatePicker(state = datePickerState) 
+        }
+    }
+}
+
+@Composable
+fun TipCard(title: String, message: String) {
+    Card(
+        modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.5f)),
+        shape = RoundedCornerShape(12.dp)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(title, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onSecondaryContainer, style = MaterialTheme.typography.bodyMedium)
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(message, color = MaterialTheme.colorScheme.onSecondaryContainer, style = MaterialTheme.typography.bodySmall)
         }
     }
 }
