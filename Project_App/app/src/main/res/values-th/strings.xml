@@ -85,5 +85,20 @@
     <string name="thai">ไทย</string>
     <string name="english">English</string>
     <string name="app_version">เวอร์ชันแอป</string>
+    <!-- Home / Main -->
+    <string name="home_subtitle">Your Smart Car Companion</string>
+    <string name="home_btn_start">เริ่มต้นการใช้งาน / My Garage</string>
+    <string name="home_btn_tutorial">สอนการใช้งานแอพ</string>
+    <string name="home_btn_settings">ตั้งค่าแอพ</string>
+
+    <!-- Tutorial -->
+    <string name="tutorial_title">สอนการใช้งาน</string>
+    <string name="tutorial_step1_title">1. เพิ่มรถของคุณ</string>
+    <string name="tutorial_step1_desc">กดปุ่ม \'เริ่มต้นการใช้งาน\' เพื่อไปที่หน้ารวมรถ (My Garage) จากนั้นกดปุ่มรูปรถเล็กๆ ตรงมุมขวาบนเพื่อเพิ่มประวัติรถยนต์คันแรกของคุณ</string>
+    <string name="tutorial_step2_title">2. ดูสรุปค่าใช้จ่ายและบำรุงรักษา</string>
+    <string name="tutorial_step2_desc">หลังจากเพิ่มรถแล้ว จะมีเมนูขึ้นมาตรงหน้าจอสว่างๆ พอกดเข้าไปที่ตัวรถ จะเข้าสู่หน้าเมนูหลักของตัวรถ (ระบบ Dashboard) ให้คุณได้บันทึกประวัติค่าใช้จ่าย การเติมน้ำมัน เปลี่ยนแบต เปลี่ยนน้ำมันเครื่อง</string>
+    <string name="tutorial_step3_title">3. รับการแจ้งเตือนพยากรณ์ล่วงหน้า</string>
+    <string name="tutorial_step3_desc">เมื่อระบบมีข้อมูลการเช็คระยะและเปลี่ยนน้ำมันเครื่องอย่างครบถ้วนแล้ว เมื่อถึงเวลาที่คุณครบกำหนดหรือใกล้จะครบ จะมีการเตือนให้เอาไปเข้าศูนย์ล่วงหน้าเพื่อความปลอดภัย</string>
+    
     <string name="back">กลับ</string>
 </resources>

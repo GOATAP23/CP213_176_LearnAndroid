@@ -85,5 +85,20 @@
     <string name="thai">Thai</string>
     <string name="english">English</string>
     <string name="app_version">App Version</string>
+    <!-- Home / Main -->
+    <string name="home_subtitle">Your Smart Car Companion</string>
+    <string name="home_btn_start">Get Started / My Garage</string>
+    <string name="home_btn_tutorial">How to use</string>
+    <string name="home_btn_settings">Settings</string>
+
+    <!-- Tutorial -->
+    <string name="tutorial_title">How to use iDrive</string>
+    <string name="tutorial_step1_title">1. Add Your Car</string>
+    <string name="tutorial_step1_desc">Press \'Get Started\' to go to My Garage, then tap the small car icon with a plus on the top right to add your first car.</string>
+    <string name="tutorial_step2_title">2. Track Expenses &amp; Maintenance</string>
+    <string name="tutorial_step2_desc">After adding a car, tap on it to enter its Dashboard. You can record your fuel costs, battery change, oil change, and more.</string>
+    <string name="tutorial_step3_title">3. Predictive Maintenance Alerts</string>
+    <string name="tutorial_step3_desc">Once you have recorded your current mileage and oil change data, the app will alert you when your next service is due.</string>
+    
     <string name="back">Back</string>
 </resources>

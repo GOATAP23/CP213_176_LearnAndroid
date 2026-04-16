@@ -5,8 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.project_app.data.local.CarDao
 import com.example.project_app.data.local.ExpenseDao
 import com.example.project_app.data.local.MaintenanceDao
+import com.example.project_app.data.local.entity.CarEntity
 import com.example.project_app.data.local.entity.MaintenanceEntity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -49,9 +51,21 @@ class DashboardViewModel(
     private val expenseDao: ExpenseDao
 ) : ViewModel() {
 
-    // ใช้ getLatestCar() แทนการ hardcode carId=1
-    val currentCar = carDao.getLatestCar()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
+    val allCars = carDao.getAllCars()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    private val _selectedCarId = MutableStateFlow<Int?>(null)
+
+    private val _isGarageView = MutableStateFlow(true)
+    val isGarageView: StateFlow<Boolean> = _isGarageView
+
+    val currentCar = combine(allCars, _selectedCarId) { cars, selectedId ->
+        if (selectedId != null) {
+            cars.find { it.id == selectedId } ?: cars.firstOrNull()
+        } else {
+            cars.firstOrNull()
+        }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     // Reactive: เมื่อรถเปลี่ยน ข้อมูลทุกอย่างจะอัพเดตตาม
     val dashboardState: StateFlow<DashboardState> = currentCar.flatMapLatest { car ->
@@ -101,12 +115,17 @@ class DashboardViewModel(
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), DashboardState())
 
+    fun selectCar(carId: Int) {
+        _selectedCarId.value = carId
+        _isGarageView.value = false
+    }
+
+    fun openGarage() {
+        _isGarageView.value = true
+    }
+
     /**
      * คำนวณ Predictive Alert จากเลขไมล์ปัจจุบัน vs ไมล์ตอนเปลี่ยนน้ำมันเครื่องล่าสุด
-     * - ทุก 10,000 กม. ควรเปลี่ยนน้ำมันเครื่อง
-     * - < 8000 กม. = เขียว (ปลอดภัย)
-     * - 8000-10000 กม. = เหลือง (ใกล้ถึงระยะ)
-     * - > 10000 กม. = แดง (เกินกำหนด)
      */
     private fun calculatePredictiveAlert(
         currentMileage: Int,
@@ -129,13 +148,15 @@ class DashboardViewModel(
     }
 
     /**
-     * ลบรถปัจจุบันออกจากฐานข้อมูล (ประวัติที่เกี่ยวข้องจะถูกลบด้วยจาก CASCADE)
+     * ลบรถปัจจุบันออกจากฐานข้อมูล
      */
     fun deleteCurrentCar(carId: Int) {
         viewModelScope.launch {
             val car = currentCar.value
             if (car != null && car.id == carId) {
                 carDao.deleteCar(car)
+                _selectedCarId.value = null // reset selection after delete
+                _isGarageView.value = true
             }
         }
     }

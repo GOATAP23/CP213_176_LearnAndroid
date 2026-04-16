@@ -17,6 +17,8 @@ import com.example.project_app.ui.screens.home.DashboardScreen
 import com.example.project_app.ui.screens.home.DashboardViewModel
 import com.example.project_app.ui.screens.settings.SettingsScreen
 import com.example.project_app.ui.screens.settings.SettingsViewModel
+import com.example.project_app.ui.screens.home.MainHomeScreen
+import com.example.project_app.ui.screens.tutorial.TutorialScreen
 
 @Composable
 fun AppNavigation(
@@ -30,7 +32,21 @@ fun AppNavigation(
         factory = AppViewModelFactory(database, settingsDataStore)
     )
 
-    NavHost(navController = navController, startDestination = "dashboard") {
+    NavHost(navController = navController, startDestination = "home") {
+        
+        composable("home") {
+            MainHomeScreen(
+                onNavigateToDashboard = { navController.navigate("dashboard") },
+                onNavigateToTutorial = { navController.navigate("tutorial") },
+                onNavigateToSettings = { navController.navigate("settings") }
+            )
+        }
+
+        composable("tutorial") {
+            TutorialScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
         
         composable("dashboard") {
             val viewModel: DashboardViewModel = viewModel(

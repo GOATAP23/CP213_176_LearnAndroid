@@ -24,6 +24,11 @@ import androidx.compose.material.icons.filled.LocalGasStation
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Speed
 import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -59,9 +64,12 @@ fun DashboardScreen(
     onNavigateToSettings: () -> Unit
 ) {
     val car by viewModel.currentCar.collectAsState(initial = null)
+    val allCars by viewModel.allCars.collectAsState()
     val state by viewModel.dashboardState.collectAsState()
+    val isGarageView by viewModel.isGarageView.collectAsState()
     val isDarkMode by settingsViewModel.isDarkMode.collectAsState()
     var showDeleteDialog by remember { mutableStateOf(false) }
+    var expandedCarMenu by remember { mutableStateOf(false) }
 
     val currencyFormatter = NumberFormat.getCurrencyInstance(Locale("th", "TH"))
 
@@ -88,48 +96,83 @@ fun DashboardScreen(
         )
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(stringResource(R.string.dashboard_title), fontWeight = FontWeight.Bold) },
-                actions = {
-                    if (car != null) {
+    if (car == null) {
+        // ---------------- Empty State ----------------
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text(stringResource(R.string.dashboard_title), fontWeight = FontWeight.Bold) },
+                    actions = {
+                        IconButton(onClick = onNavigateToSettings) {
+                            Icon(Icons.Default.Settings, contentDescription = "Settings")
+                        }
+                    }
+                )
+            }
+        ) { innerPadding ->
+            EmptyDashboardState(
+                modifier = Modifier.padding(innerPadding),
+                onNavigateToAddCar = onNavigateToAddCar
+            )
+        }
+    } else if (allCars.size > 1 && isGarageView) {
+        // ---------------- Garage State ----------------
+        GarageListScreen(
+            allCars = allCars,
+            onCarClick = { viewModel.selectCar(it) },
+            onNavigateToAddCar = onNavigateToAddCar,
+            isDarkMode = isDarkMode,
+            onToggleDarkMode = { settingsViewModel.toggleDarkMode() },
+            onNavigateToSettings = onNavigateToSettings
+        )
+    } else {
+        // ---------------- Dashboard State ----------------
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text("${car!!.brand} ${car!!.model}", fontWeight = FontWeight.Bold)
+                    },
+                    navigationIcon = {
+                        if (allCars.size > 1) {
+                            IconButton(onClick = { viewModel.openGarage() }) {
+                                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back to Garage")
+                            }
+                        }
+                    },
+                    actions = {
+                        IconButton(onClick = onNavigateToAddCar) {
+                            Box(contentAlignment = Alignment.BottomEnd) {
+                                Icon(Icons.Default.DirectionsCar, contentDescription = "Add New Car")
+                                Icon(
+                                    Icons.Default.Add,
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .size(12.dp)
+                                        .background(MaterialTheme.colorScheme.surface, androidx.compose.foundation.shape.CircleShape),
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                        }
                         IconButton(onClick = { showDeleteDialog = true }) {
                             Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.delete_car))
                         }
+                        IconButton(onClick = onNavigateToSettings) {
+                            Icon(Icons.Default.Settings, contentDescription = "Settings")
+                        }
                     }
-                    // ปุ่มสลับ Dark Mode
-                    IconButton(onClick = { settingsViewModel.toggleDarkMode() }) {
-                        Icon(
-                            imageVector = if (isDarkMode) Icons.Default.LightMode else Icons.Default.DarkMode,
-                            contentDescription = "Toggle Theme"
-                        )
-                    }
-                    // ปุ่มไปหน้า Settings
-                    IconButton(onClick = onNavigateToSettings) {
-                        Icon(Icons.Default.Settings, contentDescription = "Settings")
-                    }
-                }
-            )
-        },
-        floatingActionButton = {
-            if (car != null) {
+                )
+            },
+            floatingActionButton = {
                 ExtendedFloatingActionButton(
-                    onClick = { car?.let { onNavigateToAddRecord(it.id) } },
+                    onClick = { onNavigateToAddRecord(car!!.id) },
                     icon = { Icon(Icons.Default.Add, "add") },
                     text = { Text(stringResource(R.string.add_record_btn)) },
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onPrimary
                 )
             }
-        }
-    ) { innerPadding ->
-        if (car == null) {
-            EmptyDashboardState(
-                modifier = Modifier.padding(innerPadding),
-                onNavigateToAddCar = onNavigateToAddCar
-            )
-        } else {
+        ) { innerPadding ->
             val c = car!!
             Column(
                 modifier = Modifier
@@ -416,6 +459,119 @@ fun TransactionRow(trx: TransactionUI) {
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.error
             )
+        }
+        }
+    }
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun GarageListScreen(
+    allCars: List<com.example.project_app.data.local.entity.CarEntity>,
+    onCarClick: (Int) -> Unit,
+    onNavigateToAddCar: () -> Unit,
+    isDarkMode: Boolean,
+    onToggleDarkMode: () -> Unit,
+    onNavigateToSettings: () -> Unit
+) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource(R.string.dashboard_title), fontWeight = FontWeight.Bold) },
+                actions = {
+                    IconButton(onClick = onNavigateToAddCar) {
+                        Box(contentAlignment = Alignment.BottomEnd) {
+                            Icon(Icons.Default.DirectionsCar, contentDescription = "Add New Car")
+                            Icon(
+                                Icons.Default.Add,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .size(12.dp)
+                                    .background(MaterialTheme.colorScheme.surface, androidx.compose.foundation.shape.CircleShape),
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    }
+                    IconButton(onClick = onNavigateToSettings) {
+                        Icon(Icons.Default.Settings, contentDescription = "Settings")
+                    }
+                }
+            )
+        }
+    ) { paddingValues ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            items(allCars) { car ->
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(180.dp)
+                        .clickable { onCarClick(car.id) },
+                    shape = RoundedCornerShape(24.dp),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+                ) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        if (!car.imagePath.isNullOrEmpty()) {
+                            AsyncImage(
+                                model = Uri.parse(car.imagePath),
+                                contentDescription = "Car Image",
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = ContentScale.Crop
+                            )
+                        } else {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(MaterialTheme.colorScheme.secondaryContainer),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    Icons.Default.DirectionsCar,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(80.dp),
+                                    tint = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.3f)
+                                )
+                            }
+                        }
+
+                        // Gradient Overlay
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(
+                                    brush = Brush.verticalGradient(
+                                        colors = listOf(Color.Transparent, Color.Black.copy(alpha = 0.8f)),
+                                        startY = 100f
+                                    )
+                                )
+                        )
+
+                        Column(
+                            modifier = Modifier
+                                .align(Alignment.BottomStart)
+                                .padding(16.dp)
+                        ) {
+                            Text(
+                                text = "${car.brand} ${car.model}",
+                                color = Color.White,
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = "${NumberFormat.getNumberInstance().format(car.currentMileage)} ${stringResource(R.string.km_unit)}",
+                                color = Color.White.copy(alpha = 0.9f),
+                                fontSize = 16.sp
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 }

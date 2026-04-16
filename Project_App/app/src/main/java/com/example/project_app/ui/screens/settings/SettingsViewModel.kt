@@ -29,9 +29,12 @@ class SettingsViewModel(
     fun setLanguage(context: Context, languageTag: String) {
         viewModelScope.launch {
             settingsDataStore.setLanguage(languageTag)
-            // Android 13+ (API 33+) — ใช้ LocaleManager สำหรับเปลี่ยนภาษาแบบ Runtime
+            // แก้บัคคีย์บอร์ด (เช่น Samsung Keyboard) ที่จำกัดภาษาพิมพ์ตาม Locale ของแอป
+            // โดยการส่งภาษาที่ 2 พ่วงไปด้วย เพื่อให้คีย์บอร์ดอนุญาตให้สลับภาษาได้ 
+            val tags = if (languageTag.startsWith("th")) "th,en" else "en,th"
+            
             val localeManager = context.getSystemService(LocaleManager::class.java)
-            localeManager.applicationLocales = LocaleList.forLanguageTags(languageTag)
+            localeManager.applicationLocales = LocaleList.forLanguageTags(tags)
         }
     }
 }
