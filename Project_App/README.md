@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="https://img.icons8.com/color/120/car--v1.png" alt="iDrive Logo"/>
-</p>
-
 <h1 align="center">iDrive — Your Smart Car Companion</h1>
 
 <p align="center">
