@@ -2,25 +2,16 @@
   <img src="https://img.icons8.com/color/120/car--v1.png" alt="iDrive Logo"/>
 </p>
 
-<h1 align="center">🏎️ iDrive — Your Smart Car Companion</h1>
+<h1 align="center">iDrive — Your Smart Car Companion</h1>
 
 <p align="center">
   <strong>แอปพลิเคชัน Android สำหรับบริหารจัดการรถยนต์ส่วนตัวอย่างครบวงจร</strong><br/>
   ตั้งแต่การบันทึกค่าใช้จ่าย การดูแลรักษา ไปจนถึงระบบแจ้งเตือนพยากรณ์การเข้าศูนย์บริการล่วงหน้า
 </p>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Platform-Android-3DDC84?logo=android&logoColor=white" alt="Android"/>
-  <img src="https://img.shields.io/badge/Language-Kotlin-7F52FF?logo=kotlin&logoColor=white" alt="Kotlin"/>
-  <img src="https://img.shields.io/badge/UI-Jetpack%20Compose-4285F4?logo=jetpackcompose&logoColor=white" alt="Jetpack Compose"/>
-  <img src="https://img.shields.io/badge/Database-Room-FF6F00?logo=sqlite&logoColor=white" alt="Room"/>
-  <img src="https://img.shields.io/badge/Min%20SDK-36-blue" alt="Min SDK"/>
-  <img src="https://img.shields.io/badge/Version-1.0.0-green" alt="Version"/>
-</p>
-
 ---
 
-## 📖 เกี่ยวกับโปรเจ็ค
+## เกี่ยวกับโปรเจ็ค
 
 **iDrive** คือแอปพลิเคชัน Android ที่ช่วยให้ผู้ใช้สามารถบริหารจัดการรถยนต์ส่วนตัวได้อย่างมีประสิทธิภาพ ไม่ว่าจะเป็นการบันทึกข้อมูลการบำรุงรักษา (เปลี่ยนน้ำมันเครื่อง, ผ้าเบรก, ยาง, แบตเตอรี่) การบันทึกค่าใช้จ่ายทั่วไป (ค่าน้ำมัน, ค่าทางด่วน, ค่าที่จอดรถ) รวมถึง **ระบบ Predictive Alert** ที่จะวิเคราะห์เลขไมล์สะสมเพื่อแจ้งเตือนผู้ใช้ล่วงหน้าว่าถึงเวลาเข้าศูนย์บริการ
 
@@ -28,31 +19,31 @@
 
 ---
 
-## ✨ Features
+## Features
 
-### 🚗 การจัดการรถยนต์ (Car Management)
+### การจัดการรถยนต์ (Car Management)
 - เพิ่มรถยนต์ได้หลายคัน พร้อมข้อมูลยี่ห้อ, รุ่น, ปีจดทะเบียน, เลขไมล์ปัจจุบัน
 - อัปโหลดรูปภาพรถจากอุปกรณ์ผ่าน **Photo Picker API** หรือวาง URL รูปภาพ
 - ระบบ **Garage View** แสดงรายการรถทั้งหมดในรูปแบบ Card พร้อมรูปภาพ Hero
 - ลบรถยนต์ (พร้อมลบข้อมูลที่เกี่ยวข้องทั้งหมดอัตโนมัติ ด้วย **CASCADE Delete**)
 
-### 🔧 บันทึกการดูแลรักษา (Maintenance Tracking)
+### บันทึกการดูแลรักษา (Maintenance Tracking)
 - เลือกประเภทการบำรุงรักษาผ่าน **FilterChip**: น้ำมันเครื่อง, ผ้าเบรก, ยาง, แบตเตอรี่, อื่นๆ
 - บันทึกเลขไมล์ ณ วันที่เข้าเช็ค, ราคาค่าบริการ, และวันที่
 - ใช้ **Material 3 DatePicker** สำหรับเลือกวันที่
 
-### 💰 บันทึกค่าใช้จ่าย (Expense Tracking)
+### บันทึกค่าใช้จ่าย (Expense Tracking)
 - เลือกหมวดหมู่ค่าใช้จ่าย: ค่าน้ำมัน, ค่าทางด่วน, ค่าที่จอดรถ, อื่นๆ
 - บันทึกจำนวนเงิน, วันที่, และบันทึกเพิ่มเติม
 - รองรับ **Undo (เลิกทำ)** หลังบันทึกผ่าน Snackbar
 
-### 📊 Dashboard อัจฉริยะ
+### Dashboard อัจฉริยะ
 - แสดง **Hero Image Card** ของรถพร้อมชื่อยี่ห้อ/รุ่น และเลขไมล์สะสม
 - สรุปค่าใช้จ่ายรายเดือน/รายปี (แสดงเป็นสกุลเงินบาท ฿)
 - แสดง 5 รายการธุรกรรมล่าสุด (ทั้ง Maintenance + Expense)
 - สลับดูรถคันอื่นได้ง่ายผ่านระบบ Garage
 
-### 🔮 Predictive Alert — ระบบแจ้งเตือนพยากรณ์ *(Wow Factor!)*
+### Predictive Alert — ระบบแจ้งเตือนพยากรณ์ *(Wow Factor!)*
 - วิเคราะห์ระยะทางที่วิ่งตั้งแต่เปลี่ยนน้ำมันเครื่องครั้งล่าสุด
 - แจ้งเตือน **3 ระดับ** ด้วยระบบสี:
   - 🟢 **GOOD** — สภาพดี พร้อมลุยทุกเส้นทาง
@@ -60,17 +51,17 @@
   - 🔴 **DANGER** — เกินกำหนดระยะบำรุงรักษาแล้ว (> 10,000 km)
 - ช่วยให้ผู้ใช้ไม่พลาดรอบเช็คระยะ ลดความเสี่ยงเครื่องยนต์เสียหาย
 
-### ⚙️ ตั้งค่าแอปพลิเคชัน (Settings)
+### ตั้งค่าแอปพลิเคชัน (Settings)
 - 🌙 **Dark Mode** — สลับธีมสว่าง/มืดได้แบบ Real-time (บันทึกค่าผ่าน DataStore)
 - 🌐 **Multi-language** — รองรับ 2 ภาษา: ไทย 🇹🇭 และ English 🇺🇸
 - ℹ️ แสดงข้อมูลเวอร์ชันแอป
 
-### 📚 Tutorial ในแอป
+### Tutorial ในแอป
 - มีหน้าสอนการใช้งาน 3 ขั้นตอน ให้ผู้ใช้ใหม่เรียนรู้ได้ง่าย ไม่ต้องงม
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | เทคโนโลยี | รายละเอียด |
 |---|---|
@@ -90,7 +81,7 @@
 
 ---
 
-## 🏗️ Project Architecture
+## Project Architecture
 
 โปรเจ็คนี้ใช้สถาปัตยกรรม **MVVM (Model-View-ViewModel)** แยก Layer อย่างชัดเจน:
 
@@ -145,7 +136,7 @@
 
 ---
 
-## 🎨 Design Concept — *"Sporty Premium"*
+## Design Concept — *"Sporty Premium"*
 
 ธีมสีของแอปได้รับแรงบันดาลใจจากรถสปอร์ตระดับพรีเมียม:
 
@@ -195,7 +186,7 @@
 
 ---
 
-## 🚀 วิธีติดตั้งและรันโปรเจ็ค
+## วิธีติดตั้งและรันโปรเจ็ค
 
 ### Prerequisites
 - **Android Studio** Ladybug (2024.2+) หรือใหม่กว่า
@@ -212,12 +203,12 @@ git clone https://github.com/<your-username>/CP213_176_LearnAndroid.git
 
 # 3. Sync Gradle แล้วรอให้ดาวน์โหลด Dependencies เสร็จ
 
-# 4. เลือก Device/Emulator (API 36+) แล้วกด ▶️ Run
+# 4. เลือก Device/Emulator (API 36+) แล้วกด Run
 ```
 
 ---
 
-## 📸 Wireframe / App Flow
+## Wireframe / App Flow
 
 ```
 ┌───────────────┐
@@ -273,7 +264,7 @@ git clone https://github.com/<your-username>/CP213_176_LearnAndroid.git
 
 ---
 
-## 📝 สิ่งที่ได้เรียนรู้จากโปรเจ็คนี้
+## สิ่งที่ได้เรียนรู้จากโปรเจ็คนี้
 
 1. **Jetpack Compose** — สร้าง UI แบบ Declarative โดยไม่ใช้ XML Layout ทั้งโปรเจ็ค
 2. **Room Database** — ออกแบบ Schema, Entity, DAO, Foreign Key, CASCADE Delete
