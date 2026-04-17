@@ -285,19 +285,3 @@ git clone https://github.com/<your-username>/CP213_176_LearnAndroid.git
 8. **Localization (i18n)** — รองรับหลายภาษาด้วย `values/strings.xml` และ `values-th/strings.xml`
 9. **Coil** — โหลดรูปภาพแบบ Async ใน Compose
 10. **Photo Picker API** — เลือกรูปภาพจากอุปกรณ์อย่างปลอดภัย พร้อม Persistable URI Permission
-
----
-
-## 👤 ผู้พัฒนา
-
-| | |
-|---|---|
-| **ชื่อ** | นักศึกษา รหัส 176 |
-| **รายวิชา** | CP213 — Android Development |
-| **ปีการศึกษา** | 2568 |
-
----
-
-<p align="center">
-  Made with ❤️ and ☕ using Kotlin & Jetpack Compose
-</p>
