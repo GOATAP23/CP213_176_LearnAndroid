@@ -1,4 +1,4 @@
-<h1 align="center">iDrive — Your Smart Car Companion</h1>
+<h1 align="center">iDrive</h1>
 
 <p align="center">
   <strong>แอปพลิเคชัน Android สำหรับบริหารจัดการรถยนต์ส่วนตัวอย่างครบวงจร</strong><br/>
