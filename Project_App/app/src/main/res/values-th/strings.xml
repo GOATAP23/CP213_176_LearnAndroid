@@ -22,8 +22,9 @@
     <string name="alert_danger_title">เกินกำหนดระยะบำรุงรักษาแล้ว!</string>
     <string name="alert_danger_subtitle">รถของคุณเกินระยะบำรุงรักษาที่แนะนำแล้ว กรุณานำเข้าศูนย์โดยเร็ว</string>
 
-    <!-- Add Car -->
+    <!-- Add / Edit Car -->
     <string name="add_car_title">เพิ่มรถยนต์คันใหม่</string>
+    <string name="edit_car_title">แก้ไขข้อมูลรถ</string>
     <string name="brand_label">ยี่ห้อ (เช่น Toyota, Honda)</string>
     <string name="model_label">รุ่น (เช่น Civic, Yaris)</string>
     <string name="year_label">ปีจดทะเบียน</string>
@@ -34,6 +35,8 @@
     <string name="save_car">บันทึกข้อมูลรถ</string>
     <string name="field_required">ข้อมูลบังคับ</string>
     <string name="car_saved_success">บันทึกข้อมูลรถเรียบร้อย!</string>
+    <string name="car_edited_success">อัปเดตข้อมูลรถเรียบร้อย!</string>
+    <string name="edit_car">แก้ไขข้อมูลรถ</string>
 
     <!-- Delete Car -->
     <string name="delete_car">ลบรถ</string>

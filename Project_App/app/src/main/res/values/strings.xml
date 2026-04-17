@@ -22,8 +22,9 @@
     <string name="alert_danger_title">Overdue for maintenance!</string>
     <string name="alert_danger_subtitle">Your car has exceeded the recommended service interval.</string>
 
-    <!-- Add Car -->
+    <!-- Add / Edit Car -->
     <string name="add_car_title">Add New Car</string>
+    <string name="edit_car_title">Edit Car</string>
     <string name="brand_label">Brand (e.g. Toyota, Honda)</string>
     <string name="model_label">Model (e.g. Civic, Yaris)</string>
     <string name="year_label">Registration Year</string>
@@ -34,6 +35,8 @@
     <string name="save_car">Save Car</string>
     <string name="field_required">This field is required</string>
     <string name="car_saved_success">Car saved successfully!</string>
+    <string name="car_edited_success">Car updated successfully!</string>
+    <string name="edit_car">Edit Car</string>
     
     <!-- Delete Car -->
     <string name="delete_car">Delete Car</string>

@@ -62,18 +62,26 @@ fun AppNavigation(
                 onNavigateToAddCar = {
                     navController.navigate("add_car")
                 },
+                onNavigateToEditCar = { carId ->
+                    navController.navigate("add_car?carId=$carId")
+                },
                 onNavigateToSettings = {
                     navController.navigate("settings")
                 }
             )
         }
 
-        composable("add_car") {
+        composable(
+            route = "add_car?carId={carId}",
+            arguments = listOf(navArgument("carId") { type = NavType.IntType; defaultValue = -1 })
+        ) { backStackEntry ->
+            val passedCarId = backStackEntry.arguments?.getInt("carId") ?: -1
             val viewModel: CarViewModel = viewModel(
                 factory = AppViewModelFactory(database, settingsDataStore)
             )
             AddCarScreen(
                 viewModel = viewModel,
+                carId = passedCarId,
                 onNavigateBack = {
                     navController.popBackStack() 
                 }

@@ -34,11 +34,16 @@ import kotlinx.coroutines.launch
 @Composable
 fun AddCarScreen(
     viewModel: CarViewModel,
+    carId: Int = -1,
     onNavigateBack: () -> Unit 
 ) {
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(carId) {
+        viewModel.loadCar(carId)
+    }
 
     val photoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
@@ -54,7 +59,9 @@ fun AddCarScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.add_car_title)) },
+                title = { 
+                    Text(if (carId != -1) stringResource(R.string.edit_car_title) else stringResource(R.string.add_car_title)) 
+                },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
@@ -81,7 +88,7 @@ fun AddCarScreen(
                             viewModel.saveCar(onSuccess = {
                                 coroutineScope.launch {
                                     snackbarHostState.showSnackbar(
-                                        message = context.getString(R.string.car_saved_success),
+                                        message = context.getString(if (carId != -1) R.string.car_edited_success else R.string.car_saved_success),
                                         duration = SnackbarDuration.Short
                                     )
                                     onNavigateBack()

@@ -12,6 +12,8 @@ import kotlinx.coroutines.launch
 
 class CarViewModel(private val carDao: CarDao) : ViewModel() {
 
+    var currentCarId: Int? = null
+
     var brand by mutableStateOf("")
     var model by mutableStateOf("")
     var year by mutableStateOf("")
@@ -38,6 +40,21 @@ class CarViewModel(private val carDao: CarDao) : ViewModel() {
         return !brandError && !modelError && !yearError && !mileageError
     }
 
+    fun loadCar(id: Int) {
+        if (id == -1 || currentCarId == id) return
+        viewModelScope.launch {
+            val car = carDao.getCarByIdSync(id)
+            if (car != null) {
+                currentCarId = car.id
+                brand = car.brand
+                model = car.model
+                year = car.year.toString()
+                mileage = car.currentMileage.toString()
+                imageUrl = car.imagePath ?: ""
+            }
+        }
+    }
+
     fun saveCar(onSuccess: () -> Unit) {
         if (!validate()) return
 
@@ -47,6 +64,7 @@ class CarViewModel(private val carDao: CarDao) : ViewModel() {
         val imagePathToSave = if (imageUrl.isNotBlank()) imageUrl else imageUri?.toString()
 
         val newCar = CarEntity(
+            id = currentCarId ?: 0,
             brand = brand,
             model = model,
             year = yearInt,
@@ -55,7 +73,11 @@ class CarViewModel(private val carDao: CarDao) : ViewModel() {
         )
 
         viewModelScope.launch {
-            carDao.insertCar(newCar)
+            if (currentCarId == null) {
+                carDao.insertCar(newCar)
+            } else {
+                carDao.updateCar(newCar)
+            }
             onSuccess()
         }
     }

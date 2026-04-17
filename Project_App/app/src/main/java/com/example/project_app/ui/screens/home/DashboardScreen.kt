@@ -61,6 +61,7 @@ fun DashboardScreen(
     settingsViewModel: SettingsViewModel,
     onNavigateToAddRecord: (carId: Int) -> Unit,
     onNavigateToAddCar: () -> Unit,
+    onNavigateToEditCar: (carId: Int) -> Unit,
     onNavigateToSettings: () -> Unit
 ) {
     val car by viewModel.currentCar.collectAsState(initial = null)
@@ -131,7 +132,7 @@ fun DashboardScreen(
             topBar = {
                 TopAppBar(
                     title = {
-                        Text("${car!!.brand} ${car!!.model}", fontWeight = FontWeight.Bold)
+                        Text("${car!!.year} ${car!!.brand} ${car!!.model}", fontWeight = FontWeight.Bold)
                     },
                     navigationIcon = {
                         if (allCars.size > 1) {
@@ -184,7 +185,7 @@ fun DashboardScreen(
             ) {
                 // 1. Top Section - Hero Image Card
                 Card(
-                    modifier = Modifier.fillMaxWidth().height(220.dp),
+                    modifier = Modifier.fillMaxWidth().height(220.dp).clickable { onNavigateToEditCar(c.id) },
                     shape = RoundedCornerShape(24.dp),
                     elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
                 ) {
@@ -228,7 +229,7 @@ fun DashboardScreen(
                                 .padding(16.dp)
                         ) {
                             Text(
-                                text = "${c.brand} ${c.model}",
+                                text = "${c.year} ${c.brand} ${c.model}",
                                 color = Color.White,
                                 fontSize = 26.sp,
                                 fontWeight = FontWeight.ExtraBold
@@ -557,7 +558,7 @@ fun GarageListScreen(
                                 .padding(16.dp)
                         ) {
                             Text(
-                                text = "${car.brand} ${car.model}",
+                                text = "${car.year} ${car.brand} ${car.model}",
                                 color = Color.White,
                                 fontSize = 24.sp,
                                 fontWeight = FontWeight.Bold
