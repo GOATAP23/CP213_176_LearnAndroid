@@ -1,5 +1,8 @@
 package com.example.project_app.ui.screens.add_record
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.horizontalScroll
@@ -12,8 +15,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -22,7 +27,11 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.project_app.R
+import com.example.project_app.data.local.entity.MaintenanceTypes
+import com.example.project_app.data.local.entity.ExpenseTypes
+import com.example.project_app.ui.screens.history.getTypeLabel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -45,7 +54,7 @@ fun AddRecordScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.add_record_title)) },
+                title = { Text(if (viewModel.isEditMode) stringResource(R.string.edit_record_title) else stringResource(R.string.add_record_title)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
@@ -160,17 +169,10 @@ fun AddRecordScreen(
                                 ) {
                                     viewModel.maintenanceOptions.forEach { option ->
                                         val selected = viewModel.maintType == option
-                                        val labelText = when (option) {
-                                            "น้ำมันเครื่อง" -> stringResource(R.string.oil_change)
-                                            "ผ้าเบรก" -> stringResource(R.string.brake_pads)
-                                            "ยาง" -> stringResource(R.string.tires)
-                                            "แบตเตอรี่" -> stringResource(R.string.battery)
-                                            else -> stringResource(R.string.other)
-                                        }
                                         FilterChip(
                                             selected = selected,
                                             onClick = { viewModel.maintType = option },
-                                            label = { Text(labelText) },
+                                            label = { Text(getTypeLabel(option)) },
                                             leadingIcon = if (selected) {
                                                 { Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize)) }
                                             } else null
@@ -217,16 +219,10 @@ fun AddRecordScreen(
                                 ) {
                                     viewModel.expenseOptions.forEach { option ->
                                         val selected = viewModel.expType == option
-                                        val labelText = when (option) {
-                                            "ค่าน้ำมัน" -> stringResource(R.string.fuel)
-                                            "ค่าทางด่วน" -> stringResource(R.string.toll)
-                                            "ค่าที่จอดรถ" -> stringResource(R.string.parking)
-                                            else -> stringResource(R.string.other)
-                                        }
                                         FilterChip(
                                             selected = selected,
                                             onClick = { viewModel.expType = option },
-                                            label = { Text(labelText) },
+                                            label = { Text(getTypeLabel(option)) },
                                             leadingIcon = if (selected) {
                                                 { Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize)) }
                                             } else null
@@ -240,12 +236,34 @@ fun AddRecordScreen(
                                 value = viewModel.expAmount,
                                 onValueChange = { viewModel.expAmount = it },
                                 label = { Text(stringResource(R.string.amount_field)) },
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done),
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Next),
                                 modifier = Modifier.fillMaxWidth(),
                                 shape = RoundedCornerShape(12.dp),
                                 isError = isAmountError,
                                 supportingText = if (isAmountError) { { Text(stringResource(R.string.enter_amount_error), color = MaterialTheme.colorScheme.error) } } else null
                             )
+
+                            // Fuel Economy Fields — แสดงเฉพาะเมื่อเลือก "ค่าน้ำมัน"
+                            if (viewModel.expType == ExpenseTypes.FUEL) {
+                                Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                                    OutlinedTextField(
+                                        value = viewModel.fuelLiters,
+                                        onValueChange = { viewModel.fuelLiters = it },
+                                        label = { Text(stringResource(R.string.liters_field)) },
+                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal, imeAction = ImeAction.Next),
+                                        modifier = Modifier.weight(1f),
+                                        shape = RoundedCornerShape(12.dp)
+                                    )
+                                    OutlinedTextField(
+                                        value = viewModel.fuelMileage,
+                                        onValueChange = { viewModel.fuelMileage = it },
+                                        label = { Text(stringResource(R.string.mileage_at_fill)) },
+                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done),
+                                        modifier = Modifier.weight(1f),
+                                        shape = RoundedCornerShape(12.dp)
+                                    )
+                                }
+                            }
 
                             TipCard(title = stringResource(R.string.tip_title), message = stringResource(R.string.tip_expense))
                         }
@@ -263,6 +281,43 @@ fun AddRecordScreen(
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                     minLines = 3 
                 )
+
+                // Photo Attachment
+                val photoLauncher = rememberLauncherForActivityResult(
+                    contract = ActivityResultContracts.PickVisualMedia()
+                ) { uri: Uri? -> viewModel.imageUri = uri }
+
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(16.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        if (viewModel.imageUri != null) {
+                            AsyncImage(
+                                model = viewModel.imageUri,
+                                contentDescription = null,
+                                modifier = Modifier.size(56.dp)
+                            )
+                            Spacer(modifier = Modifier.width(12.dp))
+                        }
+                        Icon(Icons.Default.PhotoCamera, contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary)
+                        Spacer(modifier = Modifier.width(8.dp))
+                        TextButton(onClick = {
+                            photoLauncher.launch(
+                                androidx.activity.result.PickVisualMediaRequest(
+                                    ActivityResultContracts.PickVisualMedia.ImageOnly
+                                )
+                            )
+                        }) {
+                            Text(if (viewModel.imageUri != null) stringResource(R.string.change_photo) else stringResource(R.string.attach_photo))
+                        }
+                    }
+                }
 
                 Spacer(modifier = Modifier.height(60.dp))
             }
@@ -293,7 +348,19 @@ fun DatePickerField(dateMillis: Long, onDateSelected: (Long) -> Unit) {
     )
 
     if (showDialog) {
-        val datePickerState = rememberDatePickerState(initialSelectedDateMillis = dateMillis)
+        val datePickerState = rememberDatePickerState(
+            initialSelectedDateMillis = dateMillis,
+            // Bug #3 Fix: จำกัดไม่ให้เลือกวันที่ในอนาคต
+            selectableDates = object : SelectableDates {
+                override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+                    return utcTimeMillis <= System.currentTimeMillis()
+                }
+                override fun isSelectableYear(year: Int): Boolean {
+                    val currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)
+                    return year <= currentYear
+                }
+            }
+        )
         DatePickerDialog(
             onDismissRequest = { showDialog = false },
             confirmButton = {

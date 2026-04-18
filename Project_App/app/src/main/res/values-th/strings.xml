@@ -21,6 +21,7 @@
     <string name="alert_warning_subtitle">กรุณาตรวจสอบของเหลวและนัดหมายศูนย์บริการล่วงหน้า</string>
     <string name="alert_danger_title">เกินกำหนดระยะบำรุงรักษาแล้ว!</string>
     <string name="alert_danger_subtitle">รถของคุณเกินระยะบำรุงรักษาที่แนะนำแล้ว กรุณานำเข้าศูนย์โดยเร็ว</string>
+    <string name="alert_detail">วิ่งมาแล้ว %1$s กม. · ผ่านมา %2$d วัน ตั้งแต่เปลี่ยนน้ำมันเครื่องครั้งล่าสุด</string>
 
     <!-- Add / Edit Car -->
     <string name="add_car_title">เพิ่มรถยนต์คันใหม่</string>
@@ -46,6 +47,7 @@
     
     <!-- Add Record -->
     <string name="add_record_title">บันทึกข้อมูล</string>
+    <string name="edit_record_title">แก้ไขข้อมูล</string>
     <string name="tab_maintenance">การดูแลรักษารถ</string>
     <string name="tab_expense">ค่าใช้จ่ายทั่วไป</string>
     <string name="maintenance_type_label">ประเภทการเปลี่ยน/บำรุงรักษา</string>
@@ -62,6 +64,10 @@
     <string name="maintenance_saved">บันทึกการดูแลรถเรียบร้อย</string>
     <string name="expense_saved">บันทึกค่าใช้จ่ายเรียบร้อย</string>
     <string name="enter_amount_error">กรุณากรอกจำนวนเงิน</string>
+    <string name="liters_field">จำนวนลิตร</string>
+    <string name="mileage_at_fill">เลขไมล์ตอนเติม</string>
+    <string name="attach_photo">แนบรูปภาพ</string>
+    <string name="change_photo">เปลี่ยนรูปภาพ</string>
 
     <string name="tip_title">💡 เคล็ดลับการบันทึก</string>
     <string name="tip_maintenance">Tip: บันทึกเลขไมล์ปัจจุบันที่แสดงบนหน้าปัดรถ และกรอกจำนวนเงินที่จ่ายจริงที่ศูนย์บริการ เพื่อให้แอปแจ้งเตือนรอบเช็คระยะได้แม่นยำ</string>
@@ -88,9 +94,18 @@
     <string name="thai">ไทย</string>
     <string name="english">English</string>
     <string name="app_version">เวอร์ชันแอป</string>
+    <string name="maintenance_interval_title">รอบบำรุงรักษา</string>
+    <string name="oil_change_km_label">เปลี่ยนน้ำมันเครื่องทุก %1$d กม.</string>
+    <string name="oil_change_day_label">เปลี่ยนน้ำมันเครื่องทุก %1$d วัน</string>
+    <string name="auto_track_title">จับระยะทางอัตโนมัติ</string>
+    <string name="auto_track_desc">บันทึกระยะทางอัตโนมัติด้วย Activity Recognition</string>
+    <string name="export_data_title">ส่งออกข้อมูล</string>
+    <string name="export_data_desc">ส่งออกข้อมูลทั้งหมดเป็นไฟล์ CSV</string>
+    <string name="export_btn">ส่งออก</string>
+
     <!-- Home / Main -->
     <string name="home_subtitle">Your Smart Car Companion</string>
-    <string name="home_btn_start">เริ่มต้นการใช้งาน / My Garage</string>
+    <string name="home_btn_start">เริ่มต้นการใช้งาน</string>
     <string name="home_btn_tutorial">สอนการใช้งานแอพ</string>
     <string name="home_btn_settings">ตั้งค่าแอพ</string>
 
@@ -104,4 +119,44 @@
     <string name="tutorial_step3_desc">เมื่อระบบมีข้อมูลการเช็คระยะและเปลี่ยนน้ำมันเครื่องอย่างครบถ้วนแล้ว เมื่อถึงเวลาที่คุณครบกำหนดหรือใกล้จะครบ จะมีการเตือนให้เอาไปเข้าศูนย์ล่วงหน้าเพื่อความปลอดภัย</string>
     
     <string name="back">กลับ</string>
+
+    <!-- History -->
+    <string name="history_title">ประวัติ</string>
+    <string name="chart_title">แนวโน้มค่าใช้จ่าย (6 เดือน)</string>
+    <string name="search_records">ค้นหารายการ…</string>
+    <string name="filter_all">ทั้งหมด</string>
+    <string name="total_records">จำนวนรายการ</string>
+    <string name="delete_record_title">ลบรายการนี้?</string>
+    <string name="delete_record_confirm">คุณแน่ใจหรือไม่ว่าต้องการลบรายการนี้?</string>
+
+    <!-- Trips -->
+    <string name="trips_title">บันทึกการเดินทาง</string>
+    <string name="total_distance_tracked">ระยะทางรวมที่บันทึก</string>
+    <string name="trip_history">ประวัติการเดินทาง</string>
+    <string name="no_trips_yet">ยังไม่มีการบันทึกการเดินทาง</string>
+    <string name="trips_auto_hint">แอปจะบันทึกการเดินทางอัตโนมัติเมื่อตรวจพบการขับรถ</string>
+    <string name="trip_duration">ระยะเวลา: %1$d นาที</string>
+    <string name="trip_active">กำลังบันทึก…</string>
+
+    <!-- Calendar -->
+    <string name="calendar_title">ปฏิทิน</string>
+    <string name="calendar_legend">คำอธิบายสัญลักษณ์</string>
+
+    <!-- Fuel Economy -->
+    <string name="fuel_economy_title">อัตราสิ้นเปลือง</string>
+    <string name="fuel_economy_avg">เฉลี่ย: %1$s กม./ลิตร</string>
+    <string name="fuel_economy_last">ล่าสุด: %1$s กม./ลิตร</string>
+
+    <!-- Share -->
+    <string name="share_car_data">แชร์ข้อมูลรถ</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_name">การแจ้งเตือนบำรุงรักษา</string>
+    <string name="notification_channel_desc">แจ้งเตือนเมื่อถึงกำหนดบำรุงรักษารถ</string>
+    <string name="notification_title">%1$s ถึงเวลาเข้าศูนย์!</string>
+    <string name="notification_body_detail">วิ่งมาแล้ว %1$d กม. และ %2$d วัน ตั้งแต่เปลี่ยนน้ำมันเครื่องครั้งล่าสุด</string>
+    <string name="notification_body_no_record">ยังไม่มีประวัติเปลี่ยนน้ำมันเครื่อง กรุณาบันทึกข้อมูลการบำรุงรักษา</string>
+    <string name="trip_channel_name">การบันทึกการเดินทาง</string>
+    <string name="trip_tracking_title">กำลังบันทึกการเดินทาง</string>
+    <string name="trip_tracking_body">iDrive กำลังวัดระยะทางของคุณ…</string>
 </resources>

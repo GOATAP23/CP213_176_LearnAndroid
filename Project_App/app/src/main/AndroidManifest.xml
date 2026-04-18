@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -15,6 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Project_App"
         tools:targetApi="tiramisu">
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -22,10 +29,25 @@
             android:theme="@style/Theme.Project_App">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Activity Recognition Receiver -->
+        <receiver
+            android:name=".data.service.ActivityRecognitionReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.project_app.ACTION_ACTIVITY_UPDATE" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Trip Tracking Foreground Service -->
+        <service
+            android:name=".data.service.TripTrackingService"
+            android:foregroundServiceType="location"
+            android:exported="false" />
+
     </application>
 
 </manifest>

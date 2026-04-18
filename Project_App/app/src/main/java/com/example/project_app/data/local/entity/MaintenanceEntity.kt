@@ -24,5 +24,6 @@ data class MaintenanceEntity(
     val date: Long,
     val mileage: Int,
     val cost: Double,
-    val notes: String?
+    val notes: String?,
+    val imagePath: String? = null
 )

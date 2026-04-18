@@ -13,8 +13,8 @@ android {
         applicationId = "com.example.project_app"
         minSdk = 36
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -57,15 +57,37 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
+    // Navigation
     implementation("androidx.navigation:navigation-compose:2.8.2")
+
+    // Lifecycle / ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.6")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.6")
+
+    // Room Database
     val roomVersion = "2.6.1"
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")
+
+    // Image Loading
     implementation("io.coil-kt:coil-compose:2.7.0")
+
+    // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
+
+    // Material Icons Extended
     implementation("androidx.compose.material:material-icons-extended")
+
+    // DataStore Preferences
     implementation("androidx.datastore:datastore-preferences:1.1.1")
+
+    // WorkManager — Background Notification
+    implementation("androidx.work:work-runtime-ktx:2.10.0")
+
+    // Google Play Services — Activity Recognition + Location
+    implementation("com.google.android.gms:play-services-location:21.3.0")
+
+    // Vico — Chart Library (Compose M3)
+    implementation("com.patrykandpatrick.vico:compose-m3:2.0.0-beta.1")
 }

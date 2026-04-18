@@ -6,7 +6,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "expenses",
+    tableName = "trips",
     foreignKeys = [
         ForeignKey(
             entity = CarEntity::class,
@@ -17,14 +17,11 @@ import androidx.room.PrimaryKey
     ],
     indices = [Index("carId")]
 )
-data class ExpenseEntity(
+data class TripEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val carId: Int,
-    val type: String,
-    val date: Long,
-    val amount: Double,
-    val notes: String?,
-    val liters: Double? = null,
-    val mileageAtFill: Int? = null,
-    val imagePath: String? = null
+    val startTime: Long,
+    val endTime: Long? = null,
+    val distanceKm: Double = 0.0,
+    val isActive: Boolean = false
 )

@@ -15,13 +15,17 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DirectionsCar
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.LocalGasStation
+import androidx.compose.material.icons.filled.Route
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Speed
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -62,7 +66,11 @@ fun DashboardScreen(
     onNavigateToAddRecord: (carId: Int) -> Unit,
     onNavigateToAddCar: () -> Unit,
     onNavigateToEditCar: (carId: Int) -> Unit,
-    onNavigateToSettings: () -> Unit
+    onNavigateToSettings: () -> Unit,
+    onNavigateToHistory: (carId: Int) -> Unit = {},
+    onNavigateToTrips: (carId: Int) -> Unit = {},
+    onNavigateToCalendar: (carId: Int) -> Unit = {},
+    onShareCar: () -> Unit = {}
 ) {
     val car by viewModel.currentCar.collectAsState(initial = null)
     val allCars by viewModel.allCars.collectAsState()
@@ -291,6 +299,78 @@ fun DashboardScreen(
                         Column {
                             Text(title, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface, fontSize = 16.sp)
                             Text(subText, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            if (alert.mileageSinceLastOilChange > 0 || alert.daysSinceLastOilChange > 0) {
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(
+                                    text = stringResource(
+                                        R.string.alert_detail,
+                                        NumberFormat.getNumberInstance().format(alert.mileageSinceLastOilChange),
+                                        alert.daysSinceLastOilChange
+                                    ),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    fontWeight = FontWeight.Medium,
+                                    color = iconColor
+                                )
+                            }
+                        }
+                    }
+                }
+
+                // Quick Access Buttons
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    AssistChip(
+                        onClick = { c?.let { onNavigateToHistory(it.id) } },
+                        label = { Text(stringResource(R.string.history_title), fontSize = 12.sp) },
+                        leadingIcon = { Icon(Icons.Default.History, contentDescription = null, modifier = Modifier.size(18.dp)) },
+                        modifier = Modifier.weight(1f)
+                    )
+                    AssistChip(
+                        onClick = { c?.let { onNavigateToTrips(it.id) } },
+                        label = { Text(stringResource(R.string.trips_title), fontSize = 12.sp) },
+                        leadingIcon = { Icon(Icons.Default.Route, contentDescription = null, modifier = Modifier.size(18.dp)) },
+                        modifier = Modifier.weight(1f)
+                    )
+                    AssistChip(
+                        onClick = { c?.let { onNavigateToCalendar(it.id) } },
+                        label = { Text(stringResource(R.string.calendar_title), fontSize = 12.sp) },
+                        leadingIcon = { Icon(Icons.Default.CalendarMonth, contentDescription = null, modifier = Modifier.size(18.dp)) },
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+
+                // Fuel Economy Card
+                if (state.fuelEconomy.averageKmPerLiter != null) {
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer)
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(Icons.Default.LocalGasStation, contentDescription = null,
+                                tint = MaterialTheme.colorScheme.tertiary, modifier = Modifier.size(40.dp))
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Column {
+                                Text(stringResource(R.string.fuel_economy_title), fontWeight = FontWeight.Bold)
+                                Text(
+                                    stringResource(R.string.fuel_economy_avg,
+                                        String.format("%.1f", state.fuelEconomy.averageKmPerLiter)),
+                                    style = MaterialTheme.typography.bodySmall
+                                )
+                                if (state.fuelEconomy.lastKmPerLiter != null) {
+                                    Text(
+                                        stringResource(R.string.fuel_economy_last,
+                                            String.format("%.1f", state.fuelEconomy.lastKmPerLiter)),
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                }
+                            }
                         }
                     }
                 }

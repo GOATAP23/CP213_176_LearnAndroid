@@ -7,14 +7,16 @@ import androidx.room.RoomDatabase
 import com.example.project_app.data.local.entity.CarEntity
 import com.example.project_app.data.local.entity.ExpenseEntity
 import com.example.project_app.data.local.entity.MaintenanceEntity
+import com.example.project_app.data.local.entity.TripEntity
 
 @Database(
     entities = [
-        CarEntity::class, 
-        MaintenanceEntity::class, 
-        ExpenseEntity::class
+        CarEntity::class,
+        MaintenanceEntity::class,
+        ExpenseEntity::class,
+        TripEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class CarDatabase : RoomDatabase() {
@@ -22,6 +24,7 @@ abstract class CarDatabase : RoomDatabase() {
     abstract fun carDao(): CarDao
     abstract fun maintenanceDao(): MaintenanceDao
     abstract fun expenseDao(): ExpenseDao
+    abstract fun tripDao(): TripDao
 
     companion object {
         @Volatile
@@ -36,7 +39,7 @@ abstract class CarDatabase : RoomDatabase() {
                 )
                 .fallbackToDestructiveMigration()
                 .build()
-                
+
                 INSTANCE = instance
                 instance
             }
