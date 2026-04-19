@@ -209,53 +209,51 @@
 
 ## Database Schema (ERD)
 
-```
 erDiagram
-    cars ||--o{ maintenances : "1:N (CASCADE)"
-    cars ||--o{ expenses : "1:N (CASCADE)"
-    cars ||--o{ trips : "1:N (CASCADE)"
+    cars ||--o{ maintenances : &quot;1:N (CASCADE)&quot;
+    cars ||--o{ expenses : &quot;1:N (CASCADE)&quot;
+    cars ||--o{ trips : &quot;1:N (CASCADE)&quot;
 
     cars {
-        Int id PK "Auto"
+        Int id PK &quot;Auto&quot;
         String brand
         String model
         Int year
         Int currentMileage
-        String imagePath "nullable"
+        String imagePath &quot;nullable&quot;
     }
 
     maintenances {
-        Int id PK "Auto"
+        Int id PK &quot;Auto&quot;
         Int carId FK
         String type
         Long date
         Int mileage
         Double cost
-        String notes "nullable"
-        String imagePath "nullable"
+        String notes &quot;nullable&quot;
+        String imagePath &quot;nullable&quot;
     }
 
     expenses {
-        Int id PK "Auto"
+        Int id PK &quot;Auto&quot;
         Int carId FK
         String type
         Long date
         Double amount
-        String notes "nullable"
-        Double liters "nullable"
-        Int mileageAtFill "nullable"
-        String imagePath "nullable"
+        String notes &quot;nullable&quot;
+        Double liters &quot;nullable&quot;
+        Int mileageAtFill &quot;nullable&quot;
+        String imagePath &quot;nullable&quot;
     }
 
     trips {
-        Int id PK "Auto"
+        Int id PK &quot;Auto&quot;
         Int carId FK
         Long startTime
         Long endTime
         Double distanceKm
         Boolean isActive
     }
-```
 
 > ใช้ **Foreign Key** ผูกความสัมพันธ์ `carId` กับ `cars.id` และตั้ง **ON DELETE CASCADE** เพื่อให้ข้อมูลที่เกี่ยวข้องถูกลบอัตโนมัติเมื่อลบรถ
 
