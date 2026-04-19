@@ -207,7 +207,7 @@
 
 ---
 
-## 📱 Database Schema (ERD)
+## Database Schema (ERD)
 
 ```
 ┌─────────────────────────┐
