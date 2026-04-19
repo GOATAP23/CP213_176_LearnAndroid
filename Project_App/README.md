@@ -209,7 +209,7 @@
 
 ## Database Schema (ERD)
 
-```mermaid
+```
 erDiagram
     cars ||--o{ maintenances : &quot;1:N (CASCADE)&quot;
     cars ||--o{ expenses : &quot;1:N (CASCADE)&quot;
