@@ -297,60 +297,93 @@ git clone https://github.com/<your-username>/CP213_176_LearnAndroid.git
 
 ## Wireframe / App Flow
 
-```
-┌───────────────┐
-│  Home Screen  │  ← Landing Page (iDrive Branding)
-│               │
-│ ┌───────────┐ │
-│ │  Start    │─┼──►┌──────────────┐
-│ └───────────┘ │   │ Garage View  │  ← เลือกรถ (ถ้ามีหลายคัน)
-│ ┌───────────┐ │   │              │
-│ │ Tutorial  │─┼─┐ │  [Car 1]     │───►┌──────────────┐
-│ └───────────┘ │ │ │  [Car 2]     │    │  Dashboard   │
-│ ┌───────────┐ │ │ │  [+ Add]     │    │              │
-│ │ Settings  │─┼┐│ └──────────────┘    │ - Hero Image │
-│ └───────────┘ │││                     │ - Alert Card │
-└───────────────┘│││                     │ - Fuel Econ. │
-                 │││                     │ - Quick Nav  │─┬──►┌──────────┐
-                 │││                     │ - Expenses   │ │   │ History  │ ← กราฟ + ค้นหา + กรอง
-                 │││                     │ - Tx History │ │   └──────────┘
-                 │││                     │              │ ├──►┌──────────┐
-                 │││                     │ [+ Add Record]│ │   │  Trips   │ ← auto-tracked
-                 │││                     └──────┬───────┘ │   └──────────┘
-                 │││                            │         └──►┌──────────┐
-                 │││                    ┌───────▼───────┐     │ Calendar │ ← ปฏิทิน
-                 │││                    │ Add/Edit Record│     └──────────┘
-                 │││                    │               │
-                 │││                    │ Tab: Maint.   │
-                 │││                    │ Tab: Expense  │
-                 │││                    │ [Fuel Fields] │
-                 │││                    │ [Photo Pick]  │
-                 │││                    │ [Save Button] │
-                 │││                    └───────────────┘
-                 ││└►┌──────────────┐
-                 ││  │  Tutorial    │  ← 3 ขั้นตอนการใช้งาน
-                 ││  └──────────────┘
-                 │└─►┌──────────────┐
-                 │   │  Settings    │
-                 │   │              │
-                 │   │ 🌙 Dark Mode │
-                 │   │ 🌐 Language  │
-                 │   │ 🔧 Intervals│
-                 │   │ 🚗 AutoTrack│
-                 │   │ 💾 Export CSV│
-                 │   │ ℹ️ Version   │
-                 │   └──────────────┘
-                 │
-                 └──►┌──────────────┐
-                     │  Add Car     │  ← เพิ่มรถใหม่
-                     │              │
-                     │ [Photo/URL]  │
-                     │ [Brand]      │
-                     │ [Model]      │
-                     │ [Year]       │
-                     │ [Mileage]    │
-                     │ [Save]       │
-                     └──────────────┘
+```mermaid
+%%{init: { "flowchart": { "layout": "elk", "curve": "basis" } } }%%
+flowchart TD
+    %% --- Screens ---
+    Home["🏠 Home Screen<br/>(iDrive Branding)"]
+    Start["▶️ Start"]
+    Tutorial["📚 Tutorial"]
+    Settings["⚙️ Settings"]
+
+    GarageView["🚗 Garage View<br/>(เลือกหรือเพิ่มรถ)"]
+    Car1["🚘 Car 1"]
+    Car2["🚘 Car 2"]
+    AddCar["+ Add Car"]
+
+    Dashboard["📊 Dashboard"]
+    Hero["Hero Image"]
+    Alert["Alert Card"]
+    Fuel["Fuel Economy"]
+    QuickNav["Quick Nav"]
+    Expenses["Expenses"]
+    TxHistory["Tx History"]
+    AddRecord["+ Add Record"]
+
+    History["📈 History<br/>(กราฟ + ค้นหา + กรอง)"]
+    Trips["🛣️ Trips<br/>(Auto-tracked)"]
+    Calendar["📅 Calendar"]
+
+    AddEdit["✏️ Add/Edit Record"]
+    TabMaint["Tab: Maintenance"]
+    TabExp["Tab: Expense"]
+    FuelFields["Fuel Fields"]
+    PhotoPick["Photo Picker"]
+    SaveBtn["💾 Save Record"]
+
+    TutSteps["📖 Tutorial (3 ขั้นตอน)"]
+
+    SetDark["🌙 Dark Mode"]
+    SetLang["🌐 Language"]
+    SetIntervals["🔧 Intervals"]
+    SetAuto["🚗 AutoTrack"]
+    SetCSV["💾 Export CSV"]
+    SetVer["ℹ️ Version"]
+
+    AddCarForm["➕ Add Car"]
+    Photo["🖼️ Photo/URL"]
+    Brand["🏷️ Brand"]
+    Model["🚗 Model"]
+    Year["📅 Year"]
+    Mileage["🧭 Mileage"]
+    SaveCar["💾 Save Car"]
+
+    %% --- Links ---
+    Home --> Start --> GarageView
+    Home --> Tutorial --> TutSteps
+    Home --> Settings
+
+    GarageView --> Car1 & Car2 & AddCar
+    Car1 & Car2 --> Dashboard
+    AddCar --> AddCarForm
+
+    Dashboard --> Hero & Alert & Fuel & QuickNav & Expenses & TxHistory & AddRecord
+    QuickNav --> History & Trips & Calendar
+    AddRecord --> AddEdit
+    AddEdit --> TabMaint & TabExp & FuelFields & PhotoPick & SaveBtn
+
+    Settings --> SetDark & SetLang & SetIntervals & SetAuto & SetCSV & SetVer
+
+    AddCarForm --> Photo & Brand & Model & Year & Mileage & SaveCar
+
+    %% --- Color Setup ---
+    classDef home stroke:#fb923c,fill:#fff7ed,color:#000;
+    classDef garage stroke:#a78bfa,fill:#f5f3ff,color:#000;
+    classDef dash stroke:#818cf8,fill:#eef2ff,color:#000;
+    classDef form stroke:#fb7185,fill:#fff1f2,color:#000;
+    classDef nav stroke:#22d3ee,fill:#ecfeff,color:#000;
+    classDef set stroke:#2dd4bf,fill:#f0fdfa,color:#000;
+    classDef add stroke:#4ade80,fill:#f0fdf4,color:#000;
+    classDef tut stroke:#facc15,fill:#fefce8,color:#000;
+
+    class Home,Start,Settings home;
+    class GarageView,Car1,Car2,AddCar garage;
+    class Dashboard,Hero,Alert,Fuel,QuickNav,Expenses,TxHistory,AddRecord dash;
+    class AddEdit,TabMaint,TabExp,FuelFields,PhotoPick,SaveBtn form;
+    class History,Trips,Calendar nav;
+    class SetDark,SetLang,SetIntervals,SetAuto,SetCSV,SetVer set;
+    class AddCarForm,Photo,Brand,Model,Year,Mileage,SaveCar add;
+    class Tutorial,TutSteps tut;
 ```
 
 ---
