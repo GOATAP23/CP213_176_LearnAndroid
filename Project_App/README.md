@@ -209,6 +209,7 @@
 
 ## Database Schema (ERD)
 
+```mermaid
 erDiagram
     cars ||--o{ maintenances : &quot;1:N (CASCADE)&quot;
     cars ||--o{ expenses : &quot;1:N (CASCADE)&quot;
@@ -254,6 +255,7 @@ erDiagram
         Double distanceKm
         Boolean isActive
     }
+```
 
 > ใช้ **Foreign Key** ผูกความสัมพันธ์ `carId` กับ `cars.id` และตั้ง **ON DELETE CASCADE** เพื่อให้ข้อมูลที่เกี่ยวข้องถูกลบอัตโนมัติเมื่อลบรถ
 
