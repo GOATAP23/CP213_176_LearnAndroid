@@ -297,6 +297,8 @@ git clone https://github.com/<your-username>/CP213_176_LearnAndroid.git
 
 ## Wireframe / App Flow
 
+[![Android App Wireframe](./assets/wireframe.png)](https://www.figma.com/make/Y4TiGHUkDXxkPVDzhKaipi/%E0%B8%AA%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%87-Wireframe-%E0%B9%81%E0%B8%AD%E0%B8%9B-Android?t=Y0yITvN72i8iJzzC-1)
+
 ```mermaid
 %%{init: { "flowchart": { "layout": "elk", "curve": "basis" } } }%%
 flowchart TD
