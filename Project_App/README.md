@@ -210,36 +210,51 @@
 ## Database Schema (ERD)
 
 ```
-┌─────────────────────────┐
-│        cars              │
-├─────────────────────────┤
-│ id (PK, Auto)           │
-│ brand (String)           │
-│ model (String)           │
-│ year (Int)               │
-│ currentMileage (Int)     │
-│ imagePath (String?)      │
-└───────┬─────────────────┘
-        │ 1:N (CASCADE)
-        │
-  ┌─────┼──────────┬──────────────┐
-  │     │          │              │
-  ▼     │          ▼              ▼
-┌─────────────────┐  ┌──────────────────┐  ┌──────────────┐
-│  maintenances    │  │    expenses       │  │    trips      │
-├─────────────────┤  ├──────────────────┤  ├──────────────┤
-│ id (PK, Auto)   │  │ id (PK, Auto)    │  │ id (PK, Auto)│
-│ carId (FK)      │  │ carId (FK)       │  │ carId (FK)   │
-│ type (String)   │  │ type (String)    │  │ startTime    │
-│ date (Long)     │  │ date (Long)      │  │ endTime      │
-│ mileage (Int)   │  │ amount (Double)  │  │ distanceKm   │
-│ cost (Double)   │  │ notes (String?)  │  │ isActive     │
-│ notes (String?) │  │ liters (Double?) │  └──────────────┘
-│ imagePath       │  │ mileageAtFill    │
-│  (String?)      │  │  (Int?)          │
-└─────────────────┘  │ imagePath        │
-                     │  (String?)       │
-                     └──────────────────┘
+erDiagram
+    cars ||--o{ maintenances : "1:N (CASCADE)"
+    cars ||--o{ expenses : "1:N (CASCADE)"
+    cars ||--o{ trips : "1:N (CASCADE)"
+
+    cars {
+        Int id PK "Auto"
+        String brand
+        String model
+        Int year
+        Int currentMileage
+        String imagePath "nullable"
+    }
+
+    maintenances {
+        Int id PK "Auto"
+        Int carId FK
+        String type
+        Long date
+        Int mileage
+        Double cost
+        String notes "nullable"
+        String imagePath "nullable"
+    }
+
+    expenses {
+        Int id PK "Auto"
+        Int carId FK
+        String type
+        Long date
+        Double amount
+        String notes "nullable"
+        Double liters "nullable"
+        Int mileageAtFill "nullable"
+        String imagePath "nullable"
+    }
+
+    trips {
+        Int id PK "Auto"
+        Int carId FK
+        Long startTime
+        Long endTime
+        Double distanceKm
+        Boolean isActive
+    }
 ```
 
 > ใช้ **Foreign Key** ผูกความสัมพันธ์ `carId` กับ `cars.id` และตั้ง **ON DELETE CASCADE** เพื่อให้ข้อมูลที่เกี่ยวข้องถูกลบอัตโนมัติเมื่อลบรถ
