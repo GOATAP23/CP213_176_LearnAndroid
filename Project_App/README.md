@@ -209,51 +209,51 @@
 
 ## Database Schema (ERD)
 
-```
+```mermaid
 erDiagram
-    cars ||--o{ maintenances : &quot;1:N (CASCADE)&quot;
-    cars ||--o{ expenses : &quot;1:N (CASCADE)&quot;
-    cars ||--o{ trips : &quot;1:N (CASCADE)&quot;
+    CARS ||--o{ MAINTENANCES : has
+    CARS ||--o{ EXPENSES : has
+    CARS ||--o{ TRIPS : has
 
-    cars {
-        Int id PK &quot;Auto&quot;
-        String brand
-        String model
-        Int year
-        Int currentMileage
-        String imagePath &quot;nullable&quot;
+    CARS {
+        int id PK
+        string brand
+        string model
+        int year
+        int currentMileage
+        string imagePath "nullable"
     }
 
-    maintenances {
-        Int id PK &quot;Auto&quot;
-        Int carId FK
-        String type
-        Long date
-        Int mileage
-        Double cost
-        String notes &quot;nullable&quot;
-        String imagePath &quot;nullable&quot;
+    MAINTENANCES {
+        int id PK
+        int carId FK
+        string type
+        long date
+        int mileage
+        double cost
+        string notes "nullable"
+        string imagePath "nullable"
     }
 
-    expenses {
-        Int id PK &quot;Auto&quot;
-        Int carId FK
-        String type
-        Long date
-        Double amount
-        String notes &quot;nullable&quot;
-        Double liters &quot;nullable&quot;
-        Int mileageAtFill &quot;nullable&quot;
-        String imagePath &quot;nullable&quot;
+    EXPENSES {
+        int id PK
+        int carId FK
+        string type
+        long date
+        double amount
+        string notes "nullable"
+        double liters "nullable"
+        int mileageAtFill "nullable"
+        string imagePath "nullable"
     }
 
-    trips {
-        Int id PK &quot;Auto&quot;
-        Int carId FK
-        Long startTime
-        Long endTime
-        Double distanceKm
-        Boolean isActive
+    TRIPS {
+        int id PK
+        int carId FK
+        long starttime
+        long endTime
+        int distanceKm
+        boolean isActive
     }
 ```
 
