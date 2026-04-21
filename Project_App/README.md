@@ -45,7 +45,11 @@
 - ปุ่มลัด **History / Trips / Calendar** เข้าถึงฟีเจอร์ใหม่ได้ทันที
 - สลับดูรถคันอื่นได้ง่ายผ่านระบบ Garage
 
+<<<<<<< Updated upstream
 ### Predictive Alert ระบบแจ้งเตือนพยากรณ์
+=======
+### Predictive Alert — ระบบแจ้งเตือนพยากรณ์ *(Wow Factor!)*
+>>>>>>> Stashed changes
 - วิเคราะห์ระยะทางที่วิ่ง + จำนวนวันตั้งแต่เปลี่ยนน้ำมันเครื่องครั้งล่าสุด
 - รองรับ **รอบ Maintenance แบบ Custom** (ตั้งค่าได้ใน Settings)
 - แจ้งเตือน **3 ระดับ** ด้วยระบบสี:
@@ -69,7 +73,7 @@
 
 ### ปฏิทิน (Calendar View)
 - ปฏิทินแบบ Monthly Navigation พร้อม **จุดสี** บนวันที่มี event
-- 🟢 จุดสำหรับ Maintenance / 🔵 จุดสำหรับ Expense
+- จุดสำหรับ Maintenance / จุดสำหรับ Expense
 - ไฮไลท์วันปัจจุบัน, แสดง Legend สัญลักษณ์
 
 ### ตั้งค่าแอปพลิเคชัน (Settings)
@@ -297,7 +301,65 @@ git clone https://github.com/<your-username>/CP213_176_LearnAndroid.git
 
 ## Wireframe / App Flow
 
+<<<<<<< Updated upstream
 [คลิกเพื่อดู Wireframe การออกแบบแอปบน Figma](https://www.figma.com/make/Y4TiGHUkDXxkPVDzhKaipi/%E0%B8%AA%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%87-Wireframe-%E0%B9%81%E0%B8%AD%E0%B8%9B-Android?t=Y0yITvN72i8iJzzC-1)
+=======
+```
+┌───────────────┐
+│  Home Screen  │  ← Landing Page (iDrive Branding)
+│               │
+│ ┌───────────┐ │
+│ │  Start    │─┼──►┌──────────────┐
+│ └───────────┘ │   │ Garage View  │  ← เลือกรถ (ถ้ามีหลายคัน)
+│ ┌───────────┐ │   │              │
+│ │ Tutorial  │─┼─┐ │  [Car 1]     │───►┌──────────────┐
+│ └───────────┘ │ │ │  [Car 2]     │    │  Dashboard   │
+│ ┌───────────┐ │ │ │  [+ Add]     │    │              │
+│ │ Settings  │─┼┐│ └──────────────┘    │ - Hero Image │
+│ └───────────┘ │││                     │ - Alert Card │
+└───────────────┘│││                     │ - Fuel Econ. │
+                 │││                     │ - Quick Nav  │─┬──►┌──────────┐
+                 │││                     │ - Expenses   │ │   │ History  │ ← กราฟ + ค้นหา + กรอง
+                 │││                     │ - Tx History │ │   └──────────┘
+                 │││                     │              │ ├──►┌──────────┐
+                 │││                     │ [+ Add Record]│ │   │  Trips   │ ← auto-tracked
+                 │││                     └──────┬───────┘ │   └──────────┘
+                 │││                            │         └──►┌──────────┐
+                 │││                    ┌───────▼───────┐     │ Calendar │ ← ปฏิทิน
+                 │││                    │ Add/Edit Record│     └──────────┘
+                 │││                    │               │
+                 │││                    │ Tab: Maint.   │
+                 │││                    │ Tab: Expense  │
+                 │││                    │ [Fuel Fields] │
+                 │││                    │ [Photo Pick]  │
+                 │││                    │ [Save Button] │
+                 │││                    └───────────────┘
+                 ││└►┌──────────────┐
+                 ││  │  Tutorial    │  ← 3 ขั้นตอนการใช้งาน
+                 ││  └──────────────┘
+                 │└─►┌──────────────┐
+                 │   │  Settings    │
+                 │   │              │
+                 │   │ Dark Mode    │
+                 │   │ Language     │
+                 │   │ Intervals    │
+                 │   │ AutoTrack    │
+                 │   │ Export CSV   │
+                 │   │ Version      │
+                 │   └──────────────┘
+                 │
+                 └──►┌──────────────┐
+                     │  Add Car     │  ← เพิ่มรถใหม่
+                     │              │
+                     │ [Photo/URL]  │
+                     │ [Brand]      │
+                     │ [Model]      │
+                     │ [Year]       │
+                     │ [Mileage]    │
+                     │ [Save]       │
+                     └──────────────┘
+```
+>>>>>>> Stashed changes
 
 ---
 
