@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e460b679-38b6-4b0c-962a-ea6abb2b50d2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Project_App/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../Project_App/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetSelector.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deploymentTargetSelector.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KMPProject/composeApp/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/KMPProject/composeApp/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KMPProject/composeApp/src/commonMain/kotlin/org/ananchanon/project/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/KMPProject/composeApp/src/commonMain/kotlin/org/ananchanon/project/App.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KMPProject/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/KMPProject/gradle/libs.versions.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +46,7 @@
   }
 }]]></component>
   <component name="RunManager">
-    <configuration name="Unnamed" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false" nameIsGenerated="true">
+    <configuration name="KMPProject" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
       <option name="ANDROID_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
       <option name="DEPLOY" value="true" />
       <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
