@@ -295,49 +295,60 @@ git clone https://github.com/<your-username>/CP213_176_LearnAndroid.git
 
 **ภาพรวมการทำงานของแอป (App Flow Diagram):**
 
-```
-┌───────────────┐
-│  Home Screen  │  ← Landing Page (iDrive Branding)
-│               │
-│ ┌───────────┐ │
-│ │  Start    │─┼──►┌──────────────┐
-│ └───────────┘ │   │ Garage View  │  ← เลือกรถ (ถ้ามีหลายคัน)
-│ ┌───────────┐ │   │              │
-│ │ Tutorial  │─┼─┐ │  [Car 1]     │───►┌──────────────┐
-│ └───────────┘ │ │ │  [Car 2]     │    │  Dashboard   │
-│ ┌───────────┐ │ │ │  [+ Add]     │    │              │
-│ │ Settings  │─┼┐│ └──────────────┘    │ - Hero Image │
-│ └───────────┘ │││                     │ - Alert Card │
-└───────────────┘││                     │ - Fuel Econ. │
-                 ││                     │ - Quick Nav  │─┬──►┌──────────┐
-                 ││                     │ - Expenses   │ │   │ History  │ ← กราฟ + ค้นหา + กรอง
-                 ││                     │ - Tx History │ │   └──────────┘
-                 ││                     │              │ ├──►┌──────────┐
-                 ││                     │ [+ Add Record]│ │   │  Trips   │ ← auto-tracked
-                 ││                     └──────┬───────┘ │   └──────────┘
-                 ││                            │         └──►┌──────────┐
-                 ││                    ┌───────▼───────┐     │ Calendar │ ← ปฏิทิน
-                 ││                    │ Add/Edit Record│     └──────────┘
-                 ││                    │               │
-                 ││                    │ Tab: Maint.   │
-                 ││                    │ Tab: Expense  │
-                 ││                    │ [Fuel Fields] │
-                 ││                    │ [Photo Pick]  │
-                 ││                    │ [Save Button] │
-                 ││                    └───────────────┘
-                 │└►┌──────────────┐
-                 │  │  Tutorial    │  ← 3 ขั้นตอนการใช้งาน
-                 │  └──────────────┘
-                 └─►┌──────────────┐
-                    │  Settings    │
-                    │              │
-                    │ Dark Mode    │
-                    │ Language     │
-                    │ Intervals    │
-                    │ AutoTrack    │
-                    │ Export CSV   │
-                    │ Version      │
-                    └──────────────┘
+```mermaid
+---
+config:
+  layout: elk
+---
+graph TD
+    HomeScreen["🏠 Home Screen<br/>(iDrive Branding)"]
+    
+    HomeScreen -->|Start| GarageView["🚗 Garage View<br/>(Select Car)"]
+    HomeScreen -->|Tutorial| TutorialPage["📚 Tutorial<br/>(3 Steps)"]
+    HomeScreen -->|Settings| SettingsPage["⚙️ Settings"]
+    
+    GarageView -->|Select Car| Dashboard["📊 Dashboard"]
+    
+    Dashboard -->|Hero Image| DashboardContent["Dashboard Content"]
+    DashboardContent -->|Alert Card| AlertCard["⚠️ Alerts"]
+    DashboardContent -->|Fuel Economy| FuelEcon["⛽ Fuel Economy"]
+    DashboardContent -->|Quick Nav| QuickNav{"Quick Navigation"}
+    DashboardContent -->|Add Record| AddRecord["➕ Add/Edit Record"]
+    
+    QuickNav -->|History| HistoryPage["📈 History<br/>(Graphs, Search, Filter)"]
+    QuickNav -->|Trips| TripsPage["🛣️ Trips<br/>(Auto-tracked)"]
+    QuickNav -->|Calendar| CalendarPage["📅 Calendar"]
+    
+    AddRecord -->|Tab: Maintenance| MaintenanceTab["🔧 Maintenance Tab"]
+    AddRecord -->|Tab: Expense| ExpenseTab["💰 Expense Tab"]
+    MaintenanceTab -->|Fuel Fields| FuelFields["⛽ Fuel Fields"]
+    ExpenseTab -->|Photo Pick| PhotoPicker["📷 Photo Picker"]
+    FuelFields -->|Save| SaveButton["✅ Save Record"]
+    PhotoPicker -->|Save| SaveButton
+    
+    TutorialPage -->|Info| TutorialContent["3 Steps Guide"]
+    
+    SettingsPage -->|Options| SettingsContent["Settings Options"]
+    SettingsContent -->|Dark Mode| DarkMode["🌙 Dark Mode"]
+    SettingsContent -->|Language| Language["🌐 Language"]
+    SettingsContent -->|Intervals| Intervals["⏱️ Intervals"]
+    SettingsContent -->|AutoTrack| AutoTrack["📍 AutoTrack"]
+    SettingsContent -->|Export| ExportCSV["📤 Export CSV"]
+    SettingsContent -->|Version| Version["ℹ️ Version Info"]
+    
+    classDef home fill:#eef2ff,stroke:#818cf8,color:#1e1b4b
+    classDef garage fill:#f0fdfa,stroke:#2dd4bf,color:#1e1b4b
+    classDef main fill:#f0f9ff,stroke:#38bdf8,color:#1e1b4b
+    classDef secondary fill:#f5f3ff,stroke:#a78bfa,color:#1e1b4b
+    classDef action fill:#fdf4ff,stroke:#e879f9,color:#1e1b4b
+    classDef settings fill:#fff7ed,stroke:#fb923c,color:#1e1b4b
+    
+    class HomeScreen home
+    class GarageView garage
+    class Dashboard main
+    class HistoryPage,TripsPage,CalendarPage secondary
+    class AddRecord,SaveButton action
+    class SettingsPage,TutorialPage settings
 ```
 
 ---
