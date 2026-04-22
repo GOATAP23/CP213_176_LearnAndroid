@@ -105,37 +105,37 @@
 <summary><b>คลิกเพื่อดูโครงสร้างโฟลเดอร์</b></summary>
 
 ```text
-com.example.project_app
-├── MainActivity.kt
+📦 com.example.project_app
+├── 📄 MainActivity.kt
 │
-├── data/                               # -- Data Layer --
-│   ├── local/
-│   │   ├── CarDatabase.kt              # Room Database v2 (Singleton)
-│   │   ├── CarDao.kt, MaintenanceDao.kt, ExpenseDao.kt, TripDao.kt
-│   │   ├── SettingsDataStore.kt        # DataStore Preferences
-│   │   └── entity/                     # Entities (Car, Maintenance, Expense, Trip)
+├── 📁 data/                               # -- Data Layer --
+│   ├── 📁 local/
+│   │   ├── 📄 CarDatabase.kt              # Room Database v2 (Singleton)
+│   │   ├── 📄 CarDao.kt, MaintenanceDao.kt, ExpenseDao.kt, TripDao.kt
+│   │   ├── 📄 SettingsDataStore.kt        # DataStore Preferences
+│   │   └── 📁 entity/                     # Entities (Car, Maintenance, Expense, Trip)
 │   │
-│   ├── service/
-│   │   ├── ActivityRecognitionReceiver.kt
-│   │   └── TripTrackingService.kt      # Foreground Service
+│   ├── 📁 service/
+│   │   ├── 📄 ActivityRecognitionReceiver.kt
+│   │   └── 📄 TripTrackingService.kt      # Foreground Service
 │   │
-│   ├── worker/
-│   │   └── MaintenanceCheckWorker.kt   # WorkManager Notification
+│   ├── 📁 worker/
+│   │   └── 📄 MaintenanceCheckWorker.kt   # WorkManager Notification
 │   │
-│   └── export/
-│       ├── CsvExporter.kt              # CSV Export
-│       └── ShareHelper.kt              # Share Intent
+│   └── 📁 export/
+│       ├── 📄 CsvExporter.kt              # CSV Export
+│       └── 📄 ShareHelper.kt              # Share Intent
 │
-└── ui/                                 # -- Presentation Layer --
-    ├── navigation/
-    │   ├── AppNavigation.kt            # NavHost
-    │   └── AppViewModelFactory.kt
+└── 📁 ui/                                 # -- Presentation Layer --
+    ├── 📁 navigation/
+    │   ├── 📄 AppNavigation.kt            # NavHost
+    │   └── 📄 AppViewModelFactory.kt
     │
-    ├── screens/
-    │   ├── home/, add_car/, add_record/, history/, trips/, calendar/, settings/, tutorial/
+    ├── 📁 screens/
+    │   ├── 📁 home/, add_car/, add_record/, history/, trips/, calendar/, settings/, tutorial/
     │
-    └── theme/
-        ├── Color.kt, Theme.kt, Type.kt # Material 3 Theme & Typography
+    └── 📁 theme/
+        ├── 📄 Color.kt, Theme.kt, Type.kt # Material 3 Theme & Typography
 ```
 </details>
 
