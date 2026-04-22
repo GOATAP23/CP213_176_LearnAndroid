@@ -1,9 +1,7 @@
-<h1 align="center">iDrive</h1>
+# iDrive
 
-<p align="center">
-  <strong>แอปพลิเคชัน Android สำหรับบริหารจัดการรถยนต์ส่วนตัวอย่างครบวงจร</strong><br/>
-  ตั้งแต่การบันทึกค่าใช้จ่าย การดูแลรักษา ระบบแจ้งเตือนพยากรณ์ การจับระยะทางอัตโนมัติ ไปจนถึงกราฟวิเคราะห์ค่าใช้จ่ายและการส่งออกข้อมูล
-</p>
+**แอปพลิเคชัน Android สำหรับบริหารจัดการรถยนต์ส่วนตัวอย่างครบวงจร**
+ตั้งแต่การบันทึกค่าใช้จ่าย การดูแลรักษา ระบบแจ้งเตือนพยากรณ์ การจับระยะทางอัตโนมัติ ไปจนถึงกราฟวิเคราะห์ค่าใช้จ่ายและการส่งออกข้อมูล
 
 ---
 
@@ -13,83 +11,78 @@
 
 แอปรองรับ **Activity Recognition API** สำหรับจับระยะทางอัตโนมัติ, **Notification ผ่าน WorkManager**, **กราฟสรุปค่าใช้จ่าย**, **ปฏิทินดูแลรักษา**, **อัตราสิ้นเปลืองน้ำมัน (km/L)**, และ **ส่งออกข้อมูลเป็น CSV**
 
-โดยแอปนี้ถูกพัฒนาด้วย **Kotlin** และ **Jetpack Compose** ตามแนวทาง Modern Android Development อย่างเต็มรูปแบบ — ไม่ใช้ XML Layout เลยแม้แต่หน้าเดียว
+แอปนี้ถูกพัฒนาด้วย **Kotlin** และ **Jetpack Compose** ตามแนวทาง Modern Android Development อย่างเต็มรูปแบบ (ไม่ใช้ XML Layout เลยแม้แต่หน้าเดียว)
 
 ---
 
-## Features
+## ฟีเจอร์หลัก (Features)
 
 ### การจัดการรถยนต์ (Car Management)
 - เพิ่มรถยนต์ได้หลายคัน พร้อมข้อมูลยี่ห้อ, รุ่น, ปีจดทะเบียน, เลขไมล์ปัจจุบัน
-- อัปโหลดรูปภาพรถจากอุปกรณ์ผ่าน **Photo Picker API** หรือวาง URL รูปภาพ
-- ระบบ **Garage View** แสดงรายการรถทั้งหมดในรูปแบบ Card พร้อมรูปภาพ Hero
-- ลบรถยนต์ (พร้อมลบข้อมูลที่เกี่ยวข้องทั้งหมดอัตโนมัติ ด้วย **CASCADE Delete**)
+- อัปโหลดรูปภาพรถจากอุปกรณ์ผ่าน Photo Picker API หรือแนบ URL รูปภาพ
+- ระบบ Garage View แสดงรายการรถทั้งหมดในรูปแบบ Card พร้อมรูปภาพ Hero
+- ลบรถยนต์ (พร้อมลบข้อมูลที่เกี่ยวข้องทั้งหมดอัตโนมัติ ด้วย CASCADE Delete)
 
 ### บันทึกการดูแลรักษา (Maintenance Tracking)
-- เลือกประเภทการบำรุงรักษาผ่าน **FilterChip**: น้ำมันเครื่อง, ผ้าเบรก, ยาง, แบตเตอรี่, อื่นๆ
+- เลือกประเภทการบำรุงรักษา: น้ำมันเครื่อง, ผ้าเบรก, ยาง, แบตเตอรี่, อื่นๆ
 - บันทึกเลขไมล์ ณ วันที่เข้าเช็ค, ราคาค่าบริการ, และวันที่
-- ใช้ **Material 3 DatePicker** สำหรับเลือกวันที่ (ไม่อนุญาตเลือกวันในอนาคต)
-- แนบรูปภาพใบเสร็จ/สภาพรถได้ผ่าน **Photo Picker**
+- ใช้ Material 3 DatePicker สำหรับเลือกวันที่ (ไม่อนุญาตเลือกวันในอนาคต)
+- แนบรูปภาพใบเสร็จหรือสภาพรถได้ผ่าน Photo Picker
 
 ### บันทึกค่าใช้จ่าย (Expense Tracking)
 - เลือกหมวดหมู่ค่าใช้จ่าย: ค่าน้ำมัน, ค่าทางด่วน, ค่าที่จอดรถ, อื่นๆ
 - บันทึกจำนวนเงิน, วันที่, และบันทึกเพิ่มเติม
-- **Fuel Economy** — เมื่อเลือก "ค่าน้ำมัน" สามารถกรอกจำนวนลิตรและเลขไมล์ตอนเติม เพื่อคำนวณอัตราสิ้นเปลือง (km/L)
-- รองรับ **Undo (เลิกทำ)** หลังบันทึกผ่าน Snackbar
+- Fuel Economy: เมื่อเลือก "ค่าน้ำมัน" สามารถกรอกจำนวนลิตรและเลขไมล์ตอนเติม เพื่อคำนวณอัตราสิ้นเปลือง (km/L)
+- รองรับ Undo เลิกทำหลังบันทึกผ่าน Snackbar
 
 ### Dashboard อัจฉริยะ
-- แสดง **Hero Image Card** ของรถพร้อมชื่อยี่ห้อ/รุ่น และเลขไมล์สะสม
-- สรุปค่าใช้จ่ายรายเดือน/รายปี (แสดงเป็นสกุลเงินบาท ฿)
-- แสดง 5 รายการธุรกรรมล่าสุด (ทั้ง Maintenance + Expense)
-- **Fuel Economy Card** — แสดงอัตราสิ้นเปลืองเฉลี่ยและล่าสุด (km/L)
-- ปุ่มลัด **History / Trips / Calendar** เข้าถึงฟีเจอร์ใหม่ได้ทันที
+- แสดง Hero Image Card ของรถพร้อมชื่อยี่ห้อ รุ่น และเลขไมล์สะสม
+- สรุปค่าใช้จ่ายรายเดือนและรายปี
+- แสดง 5 รายการธุรกรรมล่าสุด (Maintenance และ Expense)
+- Fuel Economy Card: แสดงอัตราสิ้นเปลืองเฉลี่ยและล่าสุด (km/L)
+- ปุ่มลัดเข้าสู่ History, Trips และ Calendar ได้ทันที
 - สลับดูรถคันอื่นได้ง่ายผ่านระบบ Garage
 
-<<<<<<< Updated upstream
-### Predictive Alert ระบบแจ้งเตือนพยากรณ์
-=======
-### Predictive Alert — ระบบแจ้งเตือนพยากรณ์ *(Wow Factor!)*
->>>>>>> Stashed changes
-- วิเคราะห์ระยะทางที่วิ่ง + จำนวนวันตั้งแต่เปลี่ยนน้ำมันเครื่องครั้งล่าสุด
-- รองรับ **รอบ Maintenance แบบ Custom** (ตั้งค่าได้ใน Settings)
-- แจ้งเตือน **3 ระดับ** ด้วยระบบสี:
-  - **GOOD** — สภาพดี พร้อมลุยทุกเส้นทาง
-  - **WARNING** — ใกล้ถึงระยะเช็ค/เปลี่ยนถ่ายน้ำมันแล้ว
-  - **DANGER** — เกินกำหนดระยะบำรุงรักษาแล้ว
-- **Push Notification** — แจ้งเตือนอัตโนมัติทุก 24 ชม. ผ่าน **WorkManager**
+### Predictive Alert — ระบบแจ้งเตือนพยากรณ์
+- วิเคราะห์ระยะทางที่วิ่งและจำนวนวันตั้งแต่เปลี่ยนน้ำมันเครื่องครั้งล่าสุด
+- รองรับรอบ Maintenance แบบ Custom (ตั้งค่าได้ใน Settings)
+- แจ้งเตือน 3 ระดับด้วยระบบสี:
+  - GOOD: สภาพดี พร้อมลุยทุกเส้นทาง
+  - WARNING: ใกล้ถึงระยะเช็คหรือเปลี่ยนถ่ายน้ำมันแล้ว
+  - DANGER: เกินกำหนดระยะบำรุงรักษาแล้ว
+- Push Notification: แจ้งเตือนอัตโนมัติทุก 24 ชั่วโมงผ่าน WorkManager
 
 ### ประวัติ (History Screen)
-- ดูประวัติ **Maintenance + Expense** ทั้งหมดในหน้าจอเดียว
-- **กราฟแท่ง** สรุปค่าใช้จ่าย 6 เดือนย้อนหลัง (แยกสี Maintenance/Expense)
-- **ค้นหา** รายการจาก notes หรือประเภท
-- **กรอง** ตามประเภท (FilterChip)
-- กดเพื่อ **แก้ไข** หรือ **ลบ** รายการได้
+- ดูประวัติ Maintenance และ Expense ทั้งหมดในหน้าจอเดียว
+- กราฟแท่งสรุปค่าใช้จ่าย 6 เดือนย้อนหลัง (แยกสีชัดเจน)
+- ค้นหารายการจากบันทึกช่วยจำ (notes) หรือประเภท
+- กรองข้อมูลตามประเภทได้
+- สามารถกดเพื่อแก้ไขหรือลบรายการได้
 
 ### บันทึกการเดินทางอัตโนมัติ (Trip Tracking)
-- ใช้ **Activity Recognition API** ตรวจจับเมื่อผู้ใช้อยู่ในรถ (`IN_VEHICLE`)
-- จับ **GPS Location** ด้วย Foreground Service เพื่อคำนวณระยะทาง
-- แสดงประวัติ Trips พร้อมระยะทาง, ระยะเวลา, วันที่
-- อัปเดตเลขไมล์ของรถอัตโนมัติเมื่อจบ Trip
+- ใช้ Activity Recognition API ตรวจจับเมื่อผู้ใช้อยู่ในรถ (IN_VEHICLE)
+- จับ GPS Location ด้วย Foreground Service เพื่อคำนวณระยะทาง
+- แสดงประวัติ Trips พร้อมระยะทาง, ระยะเวลา, และวันที่
+- อัปเดตเลขไมล์ของรถอัตโนมัติเมื่อสิ้นสุด Trip
 
 ### ปฏิทิน (Calendar View)
-- ปฏิทินแบบ Monthly Navigation พร้อม **จุดสี** บนวันที่มี event
-- จุดสำหรับ Maintenance / จุดสำหรับ Expense
-- ไฮไลท์วันปัจจุบัน, แสดง Legend สัญลักษณ์
+- ปฏิทินแบบ Monthly Navigation พร้อมจุดสีบนวันที่มีเหตุการณ์
+- ไฮไลท์วันปัจจุบันและแสดงคำอธิบายสัญลักษณ์ (Legend)
 
 ### ตั้งค่าแอปพลิเคชัน (Settings)
-- **Dark Mode** — สลับธีมสว่าง/มืดได้แบบ Real-time (บันทึกค่าผ่าน DataStore)
-- **Multi-language** — รองรับ 2 ภาษา: ไทย 🇹🇭 และ English 🇺🇸
-- **รอบ Maintenance** — ตั้งค่ารอบเปลี่ยนน้ำมันเครื่องได้ (กม. + วัน)
-- **Auto-Track** — เปิด/ปิดการจับระยะทางอัตโนมัติ
-- **Export Data** — ส่งออกข้อมูลทั้งหมดเป็นไฟล์ CSV
+- Dark Mode: สลับธีมสว่างและมืดได้แบบ Real-time (บันทึกค่าผ่าน DataStore)
+- Multi-language: รองรับ 2 ภาษา (ไทย และ English)
+- การตั้งค่ารอบ Maintenance (กม. และ จำนวนวัน)
+- เปิด/ปิดการจับระยะทางอัตโนมัติ (Auto-Track)
+- ส่งออกข้อมูลทั้งหมดเป็นไฟล์ CSV
 - แสดงข้อมูลเวอร์ชันแอป
 
 ### แชร์ข้อมูล (Share)
-- สร้าง Text Summary ของประวัติรถพร้อมค่าใช้จ่ายรวม
+- สร้างข้อความสรุปประวัติรถและค่าใช้จ่ายรวม
 - แชร์ผ่าน LINE, Messenger, Email หรือแอปอื่นๆ ได้ทันที
 
 ### Tutorial ในแอป
-- มีหน้าสอนการใช้งาน 3 ขั้นตอน ให้ผู้ใช้ใหม่เรียนรู้ได้ง่าย ไม่ต้องงม
+- หน้าสอนการใช้งาน 3 ขั้นตอน ให้ผู้ใช้ใหม่เรียนรู้ได้ง่าย
 
 ---
 
@@ -98,7 +91,7 @@
 | เทคโนโลยี | รายละเอียด |
 |---|---|
 | **Language** | Kotlin |
-| **UI Framework** | Jetpack Compose (Material 3 / Material Design 3) |
+| **UI Framework** | Jetpack Compose (Material Design 3) |
 | **Architecture** | MVVM (Model-View-ViewModel) |
 | **Local Database** | Room Database (SQLite) |
 | **Preferences** | DataStore Preferences |
@@ -107,12 +100,11 @@
 | **Navigation** | Navigation Compose |
 | **Async** | Kotlin Coroutines + Flow |
 | **Background Worker** | WorkManager (Periodic Maintenance Check) |
-| **Activity Recognition** | Google Play Services Location (Activity Recognition Transition API) |
+| **Activity Recognition** | Google Play Services Location |
 | **Charts** | Compose Canvas (Custom Bar Chart) |
 | **Build Tool** | Gradle Kotlin DSL (KTS) |
 | **Annotation Processing** | KSP (Kotlin Symbol Processing) |
-| **Min SDK** | API 36 |
-| **Target SDK** | API 36 |
+| **Min/Target SDK** | API 36 |
 
 ---
 
@@ -121,82 +113,51 @@
 โปรเจ็คนี้ใช้สถาปัตยกรรม **MVVM (Model-View-ViewModel)** แยก Layer อย่างชัดเจน:
 
 ```
-📂 com.example.project_app
-├── 📄 MainActivity.kt                    # Entry Point + WorkManager Setup
+com.example.project_app
+├── MainActivity.kt
 │
-├── 📂 data/                               # ── Data Layer ──
-│   ├── 📂 local/
-│   │   ├── 📄 CarDatabase.kt              # Room Database v2 (Singleton)
-│   │   ├── 📄 CarDao.kt                   # DAO — CRUD รถยนต์
-│   │   ├── 📄 MaintenanceDao.kt           # DAO — CRUD การบำรุงรักษา
-│   │   ├── 📄 ExpenseDao.kt               # DAO — CRUD ค่าใช้จ่าย
-│   │   ├── 📄 TripDao.kt                  # DAO — CRUD การเดินทาง
-│   │   ├── 📄 SettingsDataStore.kt         # DataStore — ค่าตั้งค่าแอป + Intervals
-│   │   └── 📂 entity/
-│   │       ├── 📄 CarEntity.kt            # Entity — ข้อมูลรถยนต์
-│   │       ├── 📄 MaintenanceEntity.kt    # Entity — การบำรุงรักษา (+imagePath)
-│   │       ├── 📄 ExpenseEntity.kt        # Entity — ค่าใช้จ่าย (+liters, mileageAtFill, imagePath)
-│   │       ├── 📄 TripEntity.kt           # Entity — การเดินทาง (NEW)
-│   │       └── 📄 SummaryEntities.kt      # Data Class — สรุปรายเดือน/รายปี
+├── data/                               # -- Data Layer --
+│   ├── local/
+│   │   ├── CarDatabase.kt              # Room Database v2 (Singleton)
+│   │   ├── CarDao.kt, MaintenanceDao.kt, ExpenseDao.kt, TripDao.kt
+│   │   ├── SettingsDataStore.kt        # DataStore Preferences
+│   │   └── entity/                     # Entities (Car, Maintenance, Expense, Trip)
 │   │
-│   ├── 📂 service/
-│   │   ├── 📄 ActivityRecognitionReceiver.kt  # BroadcastReceiver — ตรวจจับ IN_VEHICLE/STILL
-│   │   └── 📄 TripTrackingService.kt          # Foreground Service — จับ GPS ระหว่างขับ
+│   ├── service/
+│   │   ├── ActivityRecognitionReceiver.kt
+│   │   └── TripTrackingService.kt      # Foreground Service
 │   │
-│   ├── 📂 worker/
-│   │   └── 📄 MaintenanceCheckWorker.kt   # WorkManager — ตรวจสอบทุก 24 ชม. + Notification
+│   ├── worker/
+│   │   └── MaintenanceCheckWorker.kt   # WorkManager Notification
 │   │
-│   └── 📂 export/
-│       ├── 📄 CsvExporter.kt              # ส่งออกข้อมูลเป็น CSV
-│       └── 📄 ShareHelper.kt              # สร้าง Text Summary + แชร์
+│   └── export/
+│       ├── CsvExporter.kt              # CSV Export
+│       └── ShareHelper.kt              # Share Intent
 │
-└── 📂 ui/                                 # ── Presentation Layer ──
-    ├── 📂 navigation/
-    │   ├── 📄 AppNavigation.kt            # NavHost + Route ทั้งหมด (12 routes)
-    │   └── 📄 AppViewModelFactory.kt      # ViewModel Factory (7 ViewModels)
+└── ui/                                 # -- Presentation Layer --
+    ├── navigation/
+    │   ├── AppNavigation.kt            # NavHost
+    │   └── AppViewModelFactory.kt
     │
-    ├── 📂 screens/
-    │   ├── 📂 home/
-    │   │   ├── 📄 MainHomeScreen.kt       # หน้าแรก — Landing Page
-    │   │   ├── 📄 DashboardScreen.kt      # Dashboard + Garage + Fuel Economy
-    │   │   └── 📄 DashboardViewModel.kt   # ViewModel — Logic Dashboard + Alert + Fuel
-    │   │
-    │   ├── 📂 add_car/
-    │   │   ├── 📄 AddCarScreen.kt         # เพิ่ม/แก้ไขรถยนต์
-    │   │   └── 📄 CarViewModel.kt         # ViewModel — Logic เพิ่มรถ
-    │   │
-    │   ├── 📂 add_record/
-    │   │   ├── 📄 AddRecordScreen.kt      # บันทึก/แก้ไขข้อมูล + Fuel + Photo
-    │   │   └── 📄 AddRecordViewModel.kt   # ViewModel — Logic บันทึก + Edit Mode
-    │   │
-    │   ├── 📂 history/
-    │   │   ├── 📄 HistoryScreen.kt        # ประวัติทั้งหมด + กราฟ + ค้นหา/กรอง (NEW)
-    │   │   └── 📄 HistoryViewModel.kt     # ViewModel — History Logic (NEW)
-    │   │
-    │   ├── 📂 trips/
-    │   │   ├── 📄 TripScreen.kt           # ประวัติการเดินทาง (NEW)
-    │   │   └── 📄 TripViewModel.kt        # ViewModel — Trip Logic (NEW)
-    │   │
-    │   ├── 📂 calendar/
-    │   │   ├── 📄 CalendarScreen.kt       # ปฏิทินดูแลรักษา (NEW)
-    │   │   └── 📄 CalendarViewModel.kt    # ViewModel — Calendar Logic (NEW)
-    │   │
-    │   ├── 📂 settings/
-    │   │   ├── 📄 SettingsScreen.kt       # ตั้งค่า + Intervals + Export
-    │   │   └── 📄 SettingsViewModel.kt    # ViewModel — Logic ตั้งค่า
-    │   │
-    │   └── 📂 tutorial/
-    │       └── 📄 TutorialScreen.kt       # หน้าสอนการใช้งาน
+    ├── screens/
+    │   ├── home/           # MainHomeScreen, DashboardScreen, ViewModel
+    │   ├── add_car/        # AddCarScreen, ViewModel
+    │   ├── add_record/     # AddRecordScreen, ViewModel
+    │   ├── history/        # HistoryScreen, ViewModel
+    │   ├── trips/          # TripScreen, ViewModel
+    │   ├── calendar/       # CalendarScreen, ViewModel
+    │   ├── settings/       # SettingsScreen, ViewModel
+    │   └── tutorial/       # TutorialScreen
     │
-    └── 📂 theme/
-        ├── 📄 Color.kt                    # 🎨 Color Palette: "Sporty Premium"
-        ├── 📄 Theme.kt                    # Material 3 Theme (Light/Dark)
-        └── 📄 Type.kt                     # Typography
+    └── theme/
+        ├── Color.kt        # Color Palette: "Sporty Premium"
+        ├── Theme.kt        # Material 3 Theme (Light/Dark)
+        └── Type.kt         # Typography
 ```
 
 ---
 
-## Design Concept — *"Sporty Premium"*
+## Design Concept — "Sporty Premium"
 
 ธีมสีของแอปได้รับแรงบันดาลใจจากรถสปอร์ตระดับพรีเมียม:
 
@@ -301,9 +262,39 @@ git clone https://github.com/<your-username>/CP213_176_LearnAndroid.git
 
 ## Wireframe / App Flow
 
-<<<<<<< Updated upstream
-[คลิกเพื่อดู Wireframe การออกแบบแอปบน Figma](https://www.figma.com/make/Y4TiGHUkDXxkPVDzhKaipi/%E0%B8%AA%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%87-Wireframe-%E0%B9%81%E0%B8%AD%E0%B8%9B-Android?t=Y0yITvN72i8iJzzC-1)
-=======
+[คลิกเพื่อดู Wireframe การออกแบบแอปบน Figma (AI Generated)](https://www.figma.com/make/Y4TiGHUkDXxkPVDzhKaipi/%E0%B8%AA%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%87-Wireframe-%E0%B9%81%E0%B8%AD%E0%B8%9B-Android?t=PbRGAL5cuc74Za5c-1)
+
+แม้ว่าในแบบร่าง Figma (AI Generated) เบื้องต้นอาจจะแสดงเพียงบางส่วน แต่ **ระบบจริงของแอปพลิเคชัน iDrive มีการทำงานที่ครบถ้วน โดยสามารถแบ่งกลุ่มออกเป็น 6 User Flows หลัก (รวมกว่า 15 Micro-flows)** ดังนี้:
+
+### 1. Onboarding & Setup Flow (ระบบเริ่มต้นใช้งาน)
+- **Tutorial Flow**: การแสดงหน้าแนะนำการใช้งานแอปพลิเคชัน 3 ขั้นตอนสำหรับผู้ใช้ใหม่
+- **Settings Flow**: การตั้งค่าแอปพลิเคชัน (ปรับ Dark Mode, เปลี่ยนภาษา ไทย/English, ตั้งค่ารอบระยะการแจ้งเตือน)
+
+### 2. Car Management Flow (ระบบจัดการรถยนต์)
+- **Add Car Flow**: หน้า Welcome -> Garage View -> กรอกข้อมูลรถยนต์และเลขไมล์เริ่มต้น -> แนบรูปภาพ -> บันทึก
+- **Edit/Delete Car Flow**: การแก้ไขข้อมูลรถยนต์ หรือลบรถยนต์ (ลบข้อมูลที่เกี่ยวข้องทั้งหมดอัตโนมัติด้วยเงื่อนไข CASCADE)
+- **Switch Car Flow**: การกดสลับดูข้อมูลและประวัติของรถแต่ละคันอย่างรวดเร็วผ่านหน้า Garage
+
+### 3. Record & Tracking Flow (ระบบบันทึกค่าใช้จ่ายและบำรุงรักษา)
+- **Maintenance Flow**: หน้า Dashboard -> Add Record -> เลือกประเภทซ่อมบำรุง -> กรอกราคา, เลขไมล์, แนบรูปภาพใบเสร็จ
+- **Expense & Fuel Flow**: บันทึกค่าใช้จ่าย (ค่าน้ำมัน, ค่าทางด่วน) พร้อมระบบคำนวณอัตราสิ้นเปลืองน้ำมัน (km/L) อัตโนมัติเมื่อกรอกจำนวนลิตร
+- **Edit/Delete Record Flow**: การเรียกดูรายการย้อนหลังในประวัติเพื่อทำการแก้ไขหรือลบรายการ
+
+### 4. Analytics & History Flow (ระบบสรุปผลและดูประวัติ)
+- **Dashboard Flow**: การแสดงยอดสรุปค่าใช้จ่ายแบบรายเดือนและรายปี พร้อมกราฟแท่งเปรียบเทียบ
+- **History Filter/Search Flow**: การค้นหาประวัติจากคำอธิบาย หรือใช้ Filter กรองดูเฉพาะหมวดหมู่ที่ต้องการ
+- **Calendar Flow**: หน้าปฏิทินแสดงจุดสีแจ้งเตือนในวันที่มีการบันทึกข้อมูล (ดูประวัติเป็นรายเดือน)
+
+### 5. Automation & Alert Flow (ระบบอัตโนมัติและการแจ้งเตือน)
+- **Auto-Trip Tracking Flow**: ระบบ Activity Recognition ตรวจจับการเคลื่อนที่ (IN_VEHICLE) -> จับระยะทาง GPS เบื้องหลัง -> สรุปประวัติการเดินทางเมื่อสิ้นสุด
+- **Predictive Alert Flow**: ระบบ WorkManager ทำงานเบื้องหลังคำนวณข้อมูลไมล์/วัน -> ส่ง Push Notification แจ้งเตือนล่วงหน้าเมื่อใกล้ถึงกำหนดเข้าศูนย์บริการ
+
+### 6. Export & Data Sharing Flow (ระบบส่งออกและแชร์ข้อมูล)
+- **CSV Export Flow**: ฟังก์ชันส่งออกฐานข้อมูลทั้งหมดมาเป็นไฟล์ .csv สำหรับเปิดใน Excel
+- **Share Summary Flow**: การสร้างข้อความสรุปค่าใช้จ่ายของรถคันนั้นๆ แล้วแชร์ไปยังแอปพลิเคชันอื่น เช่น LINE, Email
+
+**ภาพรวมการทำงานของแอป (App Flow Diagram):**
+
 ```
 ┌───────────────┐
 │  Home Screen  │  ← Landing Page (iDrive Branding)
@@ -317,49 +308,37 @@ git clone https://github.com/<your-username>/CP213_176_LearnAndroid.git
 │ ┌───────────┐ │ │ │  [+ Add]     │    │              │
 │ │ Settings  │─┼┐│ └──────────────┘    │ - Hero Image │
 │ └───────────┘ │││                     │ - Alert Card │
-└───────────────┘│││                     │ - Fuel Econ. │
-                 │││                     │ - Quick Nav  │─┬──►┌──────────┐
-                 │││                     │ - Expenses   │ │   │ History  │ ← กราฟ + ค้นหา + กรอง
-                 │││                     │ - Tx History │ │   └──────────┘
-                 │││                     │              │ ├──►┌──────────┐
-                 │││                     │ [+ Add Record]│ │   │  Trips   │ ← auto-tracked
-                 │││                     └──────┬───────┘ │   └──────────┘
-                 │││                            │         └──►┌──────────┐
-                 │││                    ┌───────▼───────┐     │ Calendar │ ← ปฏิทิน
-                 │││                    │ Add/Edit Record│     └──────────┘
-                 │││                    │               │
-                 │││                    │ Tab: Maint.   │
-                 │││                    │ Tab: Expense  │
-                 │││                    │ [Fuel Fields] │
-                 │││                    │ [Photo Pick]  │
-                 │││                    │ [Save Button] │
-                 │││                    └───────────────┘
-                 ││└►┌──────────────┐
-                 ││  │  Tutorial    │  ← 3 ขั้นตอนการใช้งาน
-                 ││  └──────────────┘
-                 │└─►┌──────────────┐
-                 │   │  Settings    │
-                 │   │              │
-                 │   │ Dark Mode    │
-                 │   │ Language     │
-                 │   │ Intervals    │
-                 │   │ AutoTrack    │
-                 │   │ Export CSV   │
-                 │   │ Version      │
-                 │   └──────────────┘
-                 │
-                 └──►┌──────────────┐
-                     │  Add Car     │  ← เพิ่มรถใหม่
-                     │              │
-                     │ [Photo/URL]  │
-                     │ [Brand]      │
-                     │ [Model]      │
-                     │ [Year]       │
-                     │ [Mileage]    │
-                     │ [Save]       │
-                     └──────────────┘
+└───────────────┘││                     │ - Fuel Econ. │
+                 ││                     │ - Quick Nav  │─┬──►┌──────────┐
+                 ││                     │ - Expenses   │ │   │ History  │ ← กราฟ + ค้นหา + กรอง
+                 ││                     │ - Tx History │ │   └──────────┘
+                 ││                     │              │ ├──►┌──────────┐
+                 ││                     │ [+ Add Record]│ │   │  Trips   │ ← auto-tracked
+                 ││                     └──────┬───────┘ │   └──────────┘
+                 ││                            │         └──►┌──────────┐
+                 ││                    ┌───────▼───────┐     │ Calendar │ ← ปฏิทิน
+                 ││                    │ Add/Edit Record│     └──────────┘
+                 ││                    │               │
+                 ││                    │ Tab: Maint.   │
+                 ││                    │ Tab: Expense  │
+                 ││                    │ [Fuel Fields] │
+                 ││                    │ [Photo Pick]  │
+                 ││                    │ [Save Button] │
+                 ││                    └───────────────┘
+                 │└►┌──────────────┐
+                 │  │  Tutorial    │  ← 3 ขั้นตอนการใช้งาน
+                 │  └──────────────┘
+                 └─►┌──────────────┐
+                    │  Settings    │
+                    │              │
+                    │ Dark Mode    │
+                    │ Language     │
+                    │ Intervals    │
+                    │ AutoTrack    │
+                    │ Export CSV   │
+                    │ Version      │
+                    └──────────────┘
 ```
->>>>>>> Stashed changes
 
 ---
 
@@ -370,14 +349,14 @@ git clone https://github.com/<your-username>/CP213_176_LearnAndroid.git
 3. **MVVM Architecture** — แยก Business Logic ออกจาก UI ด้วย ViewModel + StateFlow
 4. **Kotlin Coroutines & Flow** — จัดการ Async Operations และ Reactive Data Stream
 5. **Navigation Compose** — จัดการ Route และ Argument Passing ระหว่างหน้าจอ
-6. **DataStore Preferences** — บันทึกค่าตั้งค่าอย่างปลอดภัย (แทน SharedPreferences)
+6. **DataStore Preferences** — บันทึกค่าตั้งค่าอย่างปลอดภัย
 7. **Material Design 3** — ใช้ Theme System, Dynamic Color Scheme, FilterChip, DatePicker
-8. **Localization (i18n)** — รองรับหลายภาษาด้วย `values/strings.xml` และ `values-th/strings.xml`
+8. **Localization (i18n)** — รองรับหลายภาษาด้วย `values/strings.xml`
 9. **Coil** — โหลดรูปภาพแบบ Async ใน Compose
 10. **Photo Picker API** — เลือกรูปภาพจากอุปกรณ์อย่างปลอดภัย พร้อม Persistable URI Permission
-11. **WorkManager** — ตรวจสอบ Maintenance ทุก 24 ชม. + ส่ง Push Notification
+11. **WorkManager** — ตรวจสอบ Maintenance ทุก 24 ชม. และส่ง Push Notification
 12. **Activity Recognition API** — ตรวจจับ IN_VEHICLE / STILL จาก Google Play Services
 13. **Foreground Service** — จับ GPS Location ระหว่างขับรถด้วย FusedLocationProvider
-14. **Canvas Drawing** — วาดกราฟแท่ง (Bar Chart) ด้วย Compose Canvas
+14. **Canvas Drawing** — วาดกราฟแท่งด้วย Compose Canvas
 15. **CSV Export** — สร้างไฟล์ CSV ด้วย Intent.ACTION_CREATE_DOCUMENT
-16. **Intent Sharing** — แชร์ข้อมูลรถผ่าน Share Sheet (LINE, Messenger, Email ฯลฯ)
+16. **Intent Sharing** — แชร์ข้อมูลรถผ่าน Share Sheet
