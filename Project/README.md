@@ -1,4 +1,4 @@
-# iDrive 🚗
+<h1 align="center">iDrive</h1>
 
 ![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)
 ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
@@ -12,7 +12,7 @@
 
 ---
 
-## 🌟 เกี่ยวกับโปรเจกต์ (About The Project)
+## เกี่ยวกับโปรเจกต์ (About The Project)
 
 **iDrive** คือแอปพลิเคชัน Android ที่ช่วยให้ผู้ใช้สามารถบริหารจัดการรถยนต์ส่วนตัวได้อย่างมีประสิทธิภาพ ไม่ว่าจะเป็นการบันทึกข้อมูลการบำรุงรักษา (เปลี่ยนน้ำมันเครื่อง, ผ้าเบรก, ยาง, แบตเตอรี่) การบันทึกค่าใช้จ่ายทั่วไป (ค่าน้ำมัน, ค่าทางด่วน, ค่าที่จอดรถ) รวมถึง **ระบบ Predictive Alert** ที่จะวิเคราะห์เลขไมล์สะสมและจำนวนวันเพื่อแจ้งเตือนผู้ใช้ล่วงหน้าว่าถึงเวลาเข้าศูนย์บริการ
 
@@ -22,38 +22,38 @@
 
 ---
 
-## ✨ ฟีเจอร์หลัก (Key Features)
+## ฟีเจอร์หลัก (Key Features)
 
-### 🚗 การจัดการรถยนต์ (Car Management)
+### การจัดการรถยนต์ (Car Management)
 - เพิ่มรถยนต์ได้หลายคัน พร้อมข้อมูลยี่ห้อ รุ่น ปีจดทะเบียน เลขไมล์ปัจจุบัน
 - อัปโหลดรูปภาพรถจากอุปกรณ์ผ่าน Photo Picker API หรือแนบ URL รูปภาพ
 - ระบบ Garage View แสดงรายการรถทั้งหมดในรูปแบบ Card พร้อมรูปภาพ Hero
 - ลบรถยนต์ (พร้อมลบข้อมูลที่เกี่ยวข้องทั้งหมดอัตโนมัติ ด้วย CASCADE Delete)
 
-### 🔧 บันทึกการดูแลรักษา (Maintenance Tracking)
+### บันทึกการดูแลรักษา (Maintenance Tracking)
 - เลือกประเภทการบำรุงรักษา: น้ำมันเครื่อง, ผ้าเบรก, ยาง, แบตเตอรี่, อื่นๆ
 - บันทึกเลขไมล์ ณ วันที่เข้าเช็ค, ราคาค่าบริการ, และวันที่
 - ใช้ Material 3 DatePicker สำหรับเลือกวันที่ (ไม่อนุญาตเลือกวันในอนาคต)
 - แนบรูปภาพใบเสร็จหรือสภาพรถได้ผ่าน Photo Picker
 
-### 💰 บันทึกค่าใช้จ่าย (Expense Tracking)
+### บันทึกค่าใช้จ่าย (Expense Tracking)
 - เลือกหมวดหมู่ค่าใช้จ่าย: ค่าน้ำมัน, ค่าทางด่วน, ค่าที่จอดรถ, อื่นๆ
 - บันทึกจำนวนเงิน, วันที่, และบันทึกเพิ่มเติม
 - **Fuel Economy:** เมื่อเลือก "ค่าน้ำมัน" สามารถกรอกจำนวนลิตรและเลขไมล์ตอนเติม เพื่อคำนวณอัตราสิ้นเปลือง (km/L)
 - รองรับ Undo เลิกทำหลังบันทึกผ่าน Snackbar
 
-### 📊 Dashboard อัจฉริยะ
+### Dashboard อัจฉริยะ
 - แสดง Hero Image Card ของรถพร้อมชื่อยี่ห้อ รุ่น และเลขไมล์สะสม
 - สรุปค่าใช้จ่ายรายเดือนและรายปี พร้อม 5 รายการธุรกรรมล่าสุด
 - Fuel Economy Card: แสดงอัตราสิ้นเปลืองเฉลี่ยและล่าสุด (km/L)
 - ปุ่มลัดเข้าสู่ History, Trips และ Calendar ได้ทันที
 
-### ⚠️ Predictive Alert — ระบบแจ้งเตือนพยากรณ์
+### Predictive Alert — ระบบแจ้งเตือนพยากรณ์
 - วิเคราะห์ระยะทางที่วิ่งและจำนวนวันตั้งแต่เปลี่ยนน้ำมันเครื่องครั้งล่าสุด
 - แจ้งเตือน 3 ระดับด้วยระบบสี: 🟢 GOOD, 🟠 WARNING, 🔴 DANGER
 - **Push Notification:** แจ้งเตือนอัตโนมัติทุก 24 ชั่วโมงผ่าน WorkManager
 
-### 📍 การเดินทางอัตโนมัติ (Trip Tracking) & ฟีเจอร์อื่นๆ
+### การเดินทางอัตโนมัติ (Trip Tracking) & ฟีเจอร์อื่นๆ
 - **Auto-Trip Tracking:** ใช้ Activity Recognition API ตรวจจับการขับรถ และ Foreground Service จับ GPS
 - **History & Calendar:** ดูกราฟแท่ง ค้นหาประวัติ และดูปฏิทินบันทึกการซ่อมบำรุง
 - **Settings:** รองรับ Dark Mode, Multi-language (ไทย/Eng), ตั้งค่าระยะ Maintenance แจ้งเตือน
@@ -61,7 +61,7 @@
 
 ---
 
-## 💻 เทคโนโลยีที่ใช้ (Tech Stack)
+## เทคโนโลยีที่ใช้ (Tech Stack)
 
 | หมวดหมู่ | เทคโนโลยี / ไลบรารี |
 |---|---|
@@ -82,7 +82,7 @@
 
 ---
 
-## 🎨 การออกแบบ (Design Concept) — "Sporty Premium"
+## การออกแบบ (Design Concept) — "Sporty Premium"
 
 ธีมสีของแอปได้รับแรงบันดาลใจจากรถสปอร์ตระดับพรีเมียม:
 
@@ -97,7 +97,7 @@
 
 ---
 
-## 🏗 โครงสร้างโปรเจกต์ (Project Architecture)
+## โครงสร้างโปรเจกต์ (Project Architecture)
 
 โปรเจกต์นี้ใช้สถาปัตยกรรม **MVVM (Model-View-ViewModel)** โดยแบ่ง Layer ออกจากกันอย่างชัดเจน:
 
@@ -141,7 +141,7 @@ com.example.project_app
 
 ---
 
-## 🗄 Database Schema (ERD)
+## Database Schema (ERD)
 
 <details>
 <summary><b>คลิกเพื่อดูแผนภาพ ERD</b></summary>
@@ -198,7 +198,7 @@ erDiagram
 
 ---
 
-## 🔄 App Flow Diagram
+## App Flow Diagram
 
 [คลิกเพื่อดู Wireframe บน Figma](https://www.figma.com/make/Y4TiGHUkDXxkPVDzhKaipi/%E0%B8%AA%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%87-Wireframe-%E0%B9%81%E0%B8%AD%E0%B8%9B-Android?t=PbRGAL5cuc74Za5c-1)
 
@@ -266,7 +266,7 @@ graph TD
 
 ---
 
-## 🚀 วิธีการติดตั้งและใช้งาน (Installation)
+## วิธีการติดตั้งและใช้งาน (Installation)
 
 ### Prerequisites
 - **Android Studio** Ladybug (2024.2+) หรือใหม่กว่า
@@ -301,11 +301,11 @@ git clone https://github.com/<your-username>/CP213_176_LearnAndroid.git
 
 ---
 
-## 🎓 สิ่งที่ได้เรียนรู้ (Lessons Learned)
-- 💡 **Jetpack Compose** (Declarative UI)
-- 💡 **Room Database** (Entity, DAO, Foreign Key, Migration)
-- 💡 **MVVM Architecture** (ViewModel + StateFlow)
-- 💡 **Kotlin Coroutines & Flow** (Asynchronous operations)
-- 💡 **Navigation Compose** (Screen Routing)
-- 💡 **Material Design 3** (Dynamic Colors, Theming)
-- 💡 **WorkManager & Background Services** (Periodic Tasks & Location Tracking)
+## สิ่งที่ได้เรียนรู้ (Lessons Learned)
+- **Jetpack Compose** (Declarative UI)
+- **Room Database** (Entity, DAO, Foreign Key, Migration)
+- **MVVM Architecture** (ViewModel + StateFlow)
+- **Kotlin Coroutines & Flow** (Asynchronous operations)
+- **Navigation Compose** (Screen Routing)
+- **Material Design 3** (Dynamic Colors, Theming)
+- **WorkManager & Background Services** (Periodic Tasks & Location Tracking)
