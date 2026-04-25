@@ -67,6 +67,7 @@ fun DashboardScreen(
     onNavigateToAddCar: () -> Unit,
     onNavigateToEditCar: (carId: Int) -> Unit,
     onNavigateToSettings: () -> Unit,
+    onNavigateToHome: () -> Unit = {},
     onNavigateToHistory: (carId: Int) -> Unit = {},
     onNavigateToTrips: (carId: Int) -> Unit = {},
     onNavigateToCalendar: (carId: Int) -> Unit = {},
@@ -111,6 +112,11 @@ fun DashboardScreen(
             topBar = {
                 TopAppBar(
                     title = { Text(stringResource(R.string.dashboard_title), fontWeight = FontWeight.Bold) },
+                    navigationIcon = {
+                        IconButton(onClick = onNavigateToHome) {
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back to Home")
+                        }
+                    },
                     actions = {
                         IconButton(onClick = onNavigateToSettings) {
                             Icon(Icons.Default.Settings, contentDescription = "Settings")
@@ -132,7 +138,8 @@ fun DashboardScreen(
             onNavigateToAddCar = onNavigateToAddCar,
             isDarkMode = isDarkMode,
             onToggleDarkMode = { settingsViewModel.toggleDarkMode() },
-            onNavigateToSettings = onNavigateToSettings
+            onNavigateToSettings = onNavigateToSettings,
+            onNavigateToHome = onNavigateToHome
         )
     } else {
         // ---------------- Dashboard State ----------------
@@ -143,10 +150,10 @@ fun DashboardScreen(
                         Text("${car!!.year} ${car!!.brand} ${car!!.model}", fontWeight = FontWeight.Bold)
                     },
                     navigationIcon = {
-                        if (allCars.size > 1) {
-                            IconButton(onClick = { viewModel.openGarage() }) {
-                                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back to Garage")
-                            }
+                        IconButton(onClick = {
+                            if (allCars.size > 1) viewModel.openGarage() else onNavigateToHome()
+                        }) {
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                         }
                     },
                     actions = {
@@ -553,12 +560,18 @@ fun GarageListScreen(
     onNavigateToAddCar: () -> Unit,
     isDarkMode: Boolean,
     onToggleDarkMode: () -> Unit,
-    onNavigateToSettings: () -> Unit
+    onNavigateToSettings: () -> Unit,
+    onNavigateToHome: () -> Unit = {}
 ) {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(R.string.dashboard_title), fontWeight = FontWeight.Bold) },
+                navigationIcon = {
+                    IconButton(onClick = onNavigateToHome) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back to Home")
+                    }
+                },
                 actions = {
                     IconButton(onClick = onNavigateToAddCar) {
                         Box(contentAlignment = Alignment.BottomEnd) {

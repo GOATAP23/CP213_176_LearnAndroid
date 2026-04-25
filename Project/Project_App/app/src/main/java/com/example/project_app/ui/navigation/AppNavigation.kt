@@ -89,6 +89,11 @@ fun AppNavigation(
                 onNavigateToSettings = {
                     navController.navigate("settings")
                 },
+                onNavigateToHome = {
+                    navController.navigate("home") {
+                        popUpTo("home") { inclusive = true }
+                    }
+                },
                 onNavigateToHistory = { carId ->
                     navController.navigate("history/$carId")
                 },
