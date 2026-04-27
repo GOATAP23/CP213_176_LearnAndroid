@@ -34,11 +34,21 @@ fun CalendarScreen(
     var currentYear by remember { mutableIntStateOf(Calendar.getInstance().get(Calendar.YEAR)) }
     var currentMonth by remember { mutableIntStateOf(Calendar.getInstance().get(Calendar.MONTH)) }
 
-    val monthNames = arrayOf(
-        "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
-        "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
-    )
-    val dayNames = arrayOf("อา", "จ", "อ", "พ", "พฤ", "ศ", "ส")
+    val currentLocale = androidx.compose.ui.platform.LocalConfiguration.current.locales.get(0) ?: java.util.Locale.getDefault()
+    val monthNames = remember(currentLocale) {
+        (0..11).map { month ->
+            java.text.SimpleDateFormat("MMMM", currentLocale).format(
+                Calendar.getInstance().apply { set(Calendar.MONTH, month) }.time
+            )
+        }.toTypedArray()
+    }
+    val dayNames = remember(currentLocale) {
+        arrayOf(Calendar.SUNDAY, Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY, Calendar.SATURDAY).map { day ->
+            java.text.SimpleDateFormat("E", currentLocale).format(
+                Calendar.getInstance().apply { set(Calendar.DAY_OF_WEEK, day) }.time
+            )
+        }.toTypedArray()
+    }
 
     Scaffold(
         topBar = {

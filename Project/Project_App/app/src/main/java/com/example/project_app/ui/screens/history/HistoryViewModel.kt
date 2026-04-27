@@ -35,7 +35,8 @@ data class HistoryRecord(
  * ข้อมูลสรุปค่าใช้จ่ายรายเดือน (สำหรับ Chart)
  */
 data class MonthlyChartData(
-    val monthLabel: String,
+    val year: Int,
+    val month: Int,
     val maintenanceTotal: Double,
     val expenseTotal: Double
 )
@@ -84,7 +85,6 @@ class HistoryViewModel(
     fun getMonthlyChartData(allRecords: List<HistoryRecord>): List<MonthlyChartData> {
         val calendar = Calendar.getInstance()
         val months = mutableListOf<MonthlyChartData>()
-        val monthNames = arrayOf("ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.")
 
         for (i in 5 downTo 0) {
             val cal = Calendar.getInstance()
@@ -106,7 +106,7 @@ class HistoryViewModel(
                 }
             }.sumOf { it.amount }
 
-            months.add(MonthlyChartData(monthNames[month], maintTotal, expTotal))
+            months.add(MonthlyChartData(year, month, maintTotal, expTotal))
         }
         return months
     }

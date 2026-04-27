@@ -153,8 +153,9 @@ fun HistoryRecordCard(
     onEdit: () -> Unit,
     onDelete: () -> Unit
 ) {
-    val dateFormatter = SimpleDateFormat("dd MMM yyyy", Locale("th", "TH"))
-    val currencyFormatter = NumberFormat.getCurrencyInstance(Locale("th", "TH"))
+    val currentLocale = androidx.compose.ui.platform.LocalConfiguration.current.locales.get(0) ?: java.util.Locale.getDefault()
+    val dateFormatter = SimpleDateFormat("dd MMM yyyy", currentLocale)
+    val currencyFormatter = NumberFormat.getCurrencyInstance(currentLocale)
     var showDeleteDialog by remember { mutableStateOf(false) }
 
     if (showDeleteDialog) {
@@ -216,6 +217,7 @@ fun HistoryRecordCard(
 
 @Composable
 fun ExpenseChartSection(data: List<MonthlyChartData>) {
+    val currentLocale = androidx.compose.ui.platform.LocalConfiguration.current.locales.get(0) ?: java.util.Locale.getDefault()
     val maxValue = data.maxOfOrNull { it.maintenanceTotal + it.expenseTotal }?.coerceAtLeast(1.0) ?: 1.0
 
     Card(
@@ -260,7 +262,14 @@ fun ExpenseChartSection(data: List<MonthlyChartData>) {
                             .background(MaterialTheme.colorScheme.outlineVariant))
                     }
                     Spacer(modifier = Modifier.height(4.dp))
-                    Text(month.monthLabel, style = MaterialTheme.typography.labelSmall)
+                    
+                    val cal = java.util.Calendar.getInstance().apply {
+                        set(java.util.Calendar.YEAR, month.year)
+                        set(java.util.Calendar.MONTH, month.month)
+                        set(java.util.Calendar.DAY_OF_MONTH, 1)
+                    }
+                    val monthLabel = java.text.SimpleDateFormat("MMM", currentLocale).format(cal.time)
+                    Text(monthLabel, style = MaterialTheme.typography.labelSmall)
                 }
             }
         }
