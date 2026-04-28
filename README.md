@@ -54,10 +54,46 @@
 - **Push Notification:** แจ้งเตือนอัตโนมัติทุก 24 ชั่วโมงผ่าน WorkManager
 
 ### การเดินทางอัตโนมัติ (Trip Tracking) & ฟีเจอร์อื่นๆ
-- **Auto-Trip Tracking:** ใช้ Activity Recognition API ตรวจจับการขับรถ และ Foreground Service จับ GPS
+- **Auto-Trip Tracking (Bluetooth):** ระบบจับระยะทางอัจฉริยะที่แม่นยำ ผู้ใช้สามารถ "ผูก" รถที่สร้างไว้ในแอปกับ Bluetooth ของรถคันนั้น เมื่อขึ้นรถและเกิดการเชื่อมต่อ Bluetooth แอปจะเริ่มบันทึกการเดินทาง (Trip) และเก็บระยะทาง GPS อยู่เบื้องหลังทันที และจะสรุปทริปอัตโนมัติเมื่อลงจากรถ (Bluetooth ตัดการเชื่อมต่อ)
+- **Auto-Trip Tracking (Activity Recognition):** ทางเลือกเสริมสำหรับรถที่ไม่มี Bluetooth โดยใช้ระบบวิเคราะห์การเคลื่อนที่แบบ IN_VEHICLE
 - **History & Calendar:** ดูกราฟแท่ง ค้นหาประวัติ และดูปฏิทินบันทึกการซ่อมบำรุง
 - **Settings:** รองรับ Dark Mode, Multi-language (ไทย/Eng), ตั้งค่าระยะ Maintenance แจ้งเตือน
 - **Export & Share:** ส่งออกข้อมูลเป็น CSV และแชร์สรุปค่าใช้จ่ายผ่านแอปอื่น
+
+---
+
+## การทำงานของระบบ Auto Tracking (Bluetooth)
+
+<details>
+<summary><b>คลิกเพื่อดู Sequence Diagram การทำงานเบื้องหลังของ Bluetooth Auto Tracking</b></summary>
+
+```mermaid
+sequenceDiagram
+    participant Car as 🚗 รถยนต์ (Bluetooth)
+    participant Phone as 📱 มือถือ (Android OS)
+    participant Receiver as 📡 BluetoothConnectionReceiver
+    participant Service as ⚙️ TripTrackingService
+    participant DB as 💾 Room Database
+
+    Note over Phone,DB: ผู้ใช้ทำการ "Link" Bluetooth ของรถเข้ากับประวัติรถในแอปเรียบร้อยแล้ว
+    
+    Car->>Phone: สตาร์ทรถ (Bluetooth เชื่อมต่ออัตโนมัติ)
+    Phone->>Receiver: ระบบ OS ส่ง Broadcast (ACL_CONNECTED)
+    Receiver->>DB: ค้นหาว่า MAC Address นี้ผูกกับรถคันไหน?
+    DB-->>Receiver: คืนค่า Car ID (เช่น ID=1, Toyota)
+    Receiver->>Service: สั่ง Start Foreground Service (ส่ง Car ID ไปด้วย)
+    Service->>Phone: แสดง Notification แจ้งผู้ใช้ว่า "กำลังบันทึกการเดินทาง..."
+    Note over Service: เริ่มดึงพิกัด GPS เพื่อนำมาคำนวณระยะทาง
+    
+    Car-->>Phone: ดับเครื่องยนต์ (Bluetooth ตัดการเชื่อมต่อ)
+    Phone->>Receiver: ระบบ OS ส่ง Broadcast (ACL_DISCONNECTED)
+    Receiver->>Service: สั่ง Stop Trip
+    Service->>DB: บันทึกระยะทางและเวลาเดินทางทั้งหมดลงฐานข้อมูล
+    Service->>Service: ปิด Foreground Service ทันทีเพื่อประหยัดแบตเตอรี่
+```
+</details>
+
+> 💡 **ประหยัดแบตเตอรี่:** แอปไม่ได้ทำงานกินทรัพยากรตลอดเวลา แต่ใช้ `BroadcastReceiver` ในการรอดักฟังจังหวะที่ Bluetooth ทำการเชื่อมต่อเท่านั้น เมื่อมีการเชื่อมต่อจึงเริ่มทำงานเป็น `ForegroundService` ทำให้ระบบ Android ไม่ทำการปิด (Kill) การทำงานของแอประหว่างที่คุณกำลังขับรถ
 
 ---
 
@@ -297,6 +333,7 @@ git clone https://github.com/<your-username>/CP213_176_LearnAndroid.git
 | `ACCESS_FINE_LOCATION` | ประมวลผลระยะทางผ่าน GPS |
 | `ACCESS_COARSE_LOCATION` | ระบบตำแหน่งที่ตั้งโดยประมาณ |
 | `FOREGROUND_SERVICE` | ให้บริการ Trip Tracking ทำงานเบื้องหลังได้ |
+| `BLUETOOTH_CONNECT` | ดึงรายชื่อ Bluetooth และรับแจ้งเหตุการณ์เมื่ออุปกรณ์มีการเชื่อมต่อ |
 </details>
 
 ---
