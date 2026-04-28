@@ -36,6 +36,7 @@ class TripTrackingService : Service() {
     companion object {
         const val ACTION_START_TRIP = "ACTION_START_TRIP"
         const val ACTION_STOP_TRIP = "ACTION_STOP_TRIP"
+        const val EXTRA_CAR_ID = "EXTRA_CAR_ID"
         const val CHANNEL_ID = "trip_tracking"
         const val NOTIFICATION_ID = 2001
     }
@@ -46,6 +47,7 @@ class TripTrackingService : Service() {
     private var totalDistance: Double = 0.0
     private var currentTripId: Long = -1
     private var isTracking = false
+    private var trackingCarName: String? = null
 
     private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(result: LocationResult) {
@@ -70,13 +72,16 @@ class TripTrackingService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when (intent?.action) {
-            ACTION_START_TRIP -> startTrip()
+            ACTION_START_TRIP -> {
+                val carId = intent.getIntExtra(EXTRA_CAR_ID, -1)
+                startTrip(carId)
+            }
             ACTION_STOP_TRIP -> stopTrip()
         }
         return START_STICKY
     }
 
-    private fun startTrip() {
+    private fun startTrip(carId: Int = -1) {
         if (isTracking) return
         isTracking = true
         totalDistance = 0.0
@@ -91,10 +96,20 @@ class TripTrackingService : Service() {
         // บันทึก Trip เริ่มต้นใน DB
         serviceScope.launch {
             val database = CarDatabase.getDatabase(applicationContext)
-            val firstCar = database.carDao().getAllCars().first().firstOrNull()
-            if (firstCar != null) {
+            // ถ้ามี carId จาก Bluetooth ให้ใช้ ถ้าไม่มีให้ใช้รถคันแรก
+            val targetCar = if (carId > 0) {
+                database.carDao().getCarByIdSync(carId)
+            } else {
+                database.carDao().getAllCars().first().firstOrNull()
+            }
+            if (targetCar != null) {
+                trackingCarName = "${targetCar.brand} ${targetCar.model}"
+                // อัปเดต Notification ให้แสดงชื่อรถ
+                val nm = getSystemService(NotificationManager::class.java)
+                nm.notify(NOTIFICATION_ID, createNotification())
+
                 val trip = TripEntity(
-                    carId = firstCar.id,
+                    carId = targetCar.id,
                     startTime = System.currentTimeMillis(),
                     isActive = true
                 )
@@ -169,10 +184,17 @@ class TripTrackingService : Service() {
             this, 0, intent, PendingIntent.FLAG_IMMUTABLE
         )
 
+        // แสดงชื่อรถใน Notification ถ้ามี
+        val bodyText = if (trackingCarName != null) {
+            getString(R.string.trip_tracking_body_car, trackingCarName!!)
+        } else {
+            getString(R.string.trip_tracking_body)
+        }
+
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle(getString(R.string.trip_tracking_title))
-            .setContentText(getString(R.string.trip_tracking_body))
+            .setContentText(bodyText)
             .setOngoing(true)
             .setContentIntent(pendingIntent)
             .build()

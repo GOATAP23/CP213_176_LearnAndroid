@@ -98,7 +98,7 @@
     <string name="oil_change_km_label">Oil change every %1$d km</string>
     <string name="oil_change_day_label">Oil change every %1$d days</string>
     <string name="auto_track_title">Auto-Track Distance</string>
-    <string name="auto_track_desc">Automatically record distance using Activity Recognition</string>
+    <string name="auto_track_desc">Automatically record distance via Bluetooth or Activity Recognition</string>
     <string name="export_data_title">Export Data</string>
     <string name="export_data_desc">Export all records to CSV file</string>
     <string name="export_btn">Export</string>
@@ -159,4 +159,16 @@
     <string name="trip_channel_name">Trip Tracking</string>
     <string name="trip_tracking_title">Recording your trip</string>
     <string name="trip_tracking_body">iDrive is tracking your distance…</string>
+    <string name="trip_tracking_body_car">Recording trip for %1$s…</string>
+
+    <!-- Bluetooth Auto-Track -->
+    <string name="bt_link_title">Link Car Bluetooth</string>
+    <string name="bt_link_desc">Link to car\'s Bluetooth for auto trip tracking</string>
+    <string name="bt_select_device">Select Bluetooth Device</string>
+    <string name="bt_no_paired_devices">No paired Bluetooth devices found. Please pair your car\'s Bluetooth in phone Settings first.</string>
+    <string name="bt_linked_to">Linked to: %1$s</string>
+    <string name="bt_unlink">Unlink</string>
+    <string name="bt_link_saved">Bluetooth linked successfully!</string>
+    <string name="bt_unlinked">Bluetooth unlinked</string>
+    <string name="bt_permission_required">Bluetooth permission is required to use this feature</string>
 </resources>

@@ -21,6 +21,10 @@ class CarViewModel(private val carDao: CarDao) : ViewModel() {
     var imageUri by mutableStateOf<Uri?>(null)
     var imageUrl by mutableStateOf("")
 
+    // Bluetooth linking state
+    var bluetoothMacAddress by mutableStateOf<String?>(null)
+    var bluetoothDeviceName by mutableStateOf<String?>(null)
+
     // Validation error states
     var brandError by mutableStateOf(false)
     var modelError by mutableStateOf(false)
@@ -51,8 +55,20 @@ class CarViewModel(private val carDao: CarDao) : ViewModel() {
                 year = car.year.toString()
                 mileage = car.currentMileage.toString()
                 imageUrl = car.imagePath ?: ""
+                bluetoothMacAddress = car.bluetoothMacAddress
+                bluetoothDeviceName = car.bluetoothDeviceName
             }
         }
+    }
+
+    fun linkBluetooth(macAddress: String, deviceName: String) {
+        bluetoothMacAddress = macAddress
+        bluetoothDeviceName = deviceName
+    }
+
+    fun unlinkBluetooth() {
+        bluetoothMacAddress = null
+        bluetoothDeviceName = null
     }
 
     fun saveCar(onSuccess: () -> Unit) {
@@ -69,7 +85,9 @@ class CarViewModel(private val carDao: CarDao) : ViewModel() {
             model = model,
             year = yearInt,
             currentMileage = mileageInt,
-            imagePath = imagePathToSave
+            imagePath = imagePathToSave,
+            bluetoothMacAddress = bluetoothMacAddress,
+            bluetoothDeviceName = bluetoothDeviceName
         )
 
         viewModelScope.launch {
@@ -82,3 +100,4 @@ class CarViewModel(private val carDao: CarDao) : ViewModel() {
         }
     }
 }
+

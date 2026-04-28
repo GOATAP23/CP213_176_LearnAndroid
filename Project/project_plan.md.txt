@@ -23,6 +23,7 @@ graph TD
     C --> C1["1. Trip Log"]
     C1 --> C1a["Record Drives"]
     C1 --> C1b["Calculate Fuel Usage"]
+    C1 --> C1c["Auto Tracking (Bluetooth)"]
     
     C --> C2["2. Cloud Sync"]
     C2 --> C2a["Login"]

@@ -1,5 +1,9 @@
 package com.example.project_app.ui.screens.add_car
 
+import android.Manifest
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothManager
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -14,6 +18,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AddAPhoto
+import androidx.compose.material.icons.filled.Bluetooth
+import androidx.compose.material.icons.filled.BluetoothConnected
+import androidx.compose.material.icons.filled.LinkOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -41,6 +48,32 @@ fun AddCarScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
 
+    // Bluetooth state
+    var showBluetoothDialog by remember { mutableStateOf(false) }
+    var pairedDevices by remember { mutableStateOf<List<BluetoothDevice>>(emptyList()) }
+    var btPermissionGranted by remember { mutableStateOf(false) }
+
+    val btPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission(),
+        onResult = { granted ->
+            btPermissionGranted = granted
+            if (granted) {
+                try {
+                    val btManager = context.getSystemService(BluetoothManager::class.java)
+                    val adapter = btManager?.adapter
+                    pairedDevices = adapter?.bondedDevices?.toList() ?: emptyList()
+                    showBluetoothDialog = true
+                } catch (_: SecurityException) { }
+            } else {
+                coroutineScope.launch {
+                    snackbarHostState.showSnackbar(
+                        context.getString(R.string.bt_permission_required)
+                    )
+                }
+            }
+        }
+    )
+
     LaunchedEffect(carId) {
         viewModel.loadCar(carId)
     }
@@ -55,6 +88,78 @@ fun AddCarScreen(
             }
         }
     )
+
+    // ========================================
+    // Bluetooth Device Picker Dialog
+    // ========================================
+    if (showBluetoothDialog) {
+        AlertDialog(
+            onDismissRequest = { showBluetoothDialog = false },
+            title = { Text(stringResource(R.string.bt_select_device)) },
+            text = {
+                if (pairedDevices.isEmpty()) {
+                    Text(stringResource(R.string.bt_no_paired_devices))
+                } else {
+                    Column {
+                        pairedDevices.forEach { device ->
+                            val deviceName = try {
+                                device.name ?: device.address
+                            } catch (_: SecurityException) {
+                                device.address
+                            }
+                            val deviceMac = device.address
+
+                            Surface(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 4.dp)
+                                    .clickable {
+                                        viewModel.linkBluetooth(deviceMac, deviceName)
+                                        showBluetoothDialog = false
+                                        coroutineScope.launch {
+                                            snackbarHostState.showSnackbar(
+                                                context.getString(R.string.bt_link_saved)
+                                            )
+                                        }
+                                    },
+                                shape = RoundedCornerShape(12.dp),
+                                color = MaterialTheme.colorScheme.surfaceVariant
+                            ) {
+                                Row(
+                                    modifier = Modifier.padding(16.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Icon(
+                                        Icons.Default.Bluetooth,
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.primary,
+                                        modifier = Modifier.size(24.dp)
+                                    )
+                                    Spacer(modifier = Modifier.width(12.dp))
+                                    Column {
+                                        Text(
+                                            text = deviceName,
+                                            fontWeight = FontWeight.Medium
+                                        )
+                                        Text(
+                                            text = deviceMac,
+                                            style = MaterialTheme.typography.bodySmall,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { showBluetoothDialog = false }) {
+                    Text(stringResource(R.string.cancel_btn))
+                }
+            }
+        )
+    }
 
     Scaffold(
         topBar = {
@@ -246,8 +351,107 @@ fun AddCarScreen(
                     } else null
                 )
             }
-            
+
+            // ==========================================
+            // 🔗 Bluetooth Linking Section
+            // ==========================================
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant
+                )
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(20.dp)
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            if (viewModel.bluetoothMacAddress != null)
+                                Icons.Default.BluetoothConnected
+                            else
+                                Icons.Default.Bluetooth,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.size(28.dp)
+                        )
+                        Spacer(modifier = Modifier.width(16.dp))
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = stringResource(R.string.bt_link_title),
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 16.sp
+                            )
+                            Text(
+                                text = stringResource(R.string.bt_link_desc),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    if (viewModel.bluetoothMacAddress != null) {
+                        // แสดงชื่ออุปกรณ์ที่ผูกไว้ + ปุ่ม Unlink
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = stringResource(
+                                    R.string.bt_linked_to,
+                                    viewModel.bluetoothDeviceName ?: viewModel.bluetoothMacAddress!!
+                                ),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.primary,
+                                fontWeight = FontWeight.Medium,
+                                modifier = Modifier.weight(1f)
+                            )
+                            FilledTonalButton(
+                                onClick = {
+                                    viewModel.unlinkBluetooth()
+                                    coroutineScope.launch {
+                                        snackbarHostState.showSnackbar(
+                                            context.getString(R.string.bt_unlinked)
+                                        )
+                                    }
+                                }
+                            ) {
+                                Icon(
+                                    Icons.Default.LinkOff,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(18.dp)
+                                )
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Text(stringResource(R.string.bt_unlink))
+                            }
+                        }
+                    } else {
+                        // ปุ่มเปิด Bluetooth picker
+                        OutlinedButton(
+                            onClick = {
+                                btPermissionLauncher.launch(Manifest.permission.BLUETOOTH_CONNECT)
+                            },
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(12.dp)
+                        ) {
+                            Icon(
+                                Icons.Default.Bluetooth,
+                                contentDescription = null,
+                                modifier = Modifier.size(20.dp)
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(stringResource(R.string.bt_link_title))
+                        }
+                    }
+                }
+            }
+
             Spacer(modifier = Modifier.height(48.dp))
         }
     }
 }
+

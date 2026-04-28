@@ -31,4 +31,7 @@ interface CarDao {
 
     @Query("SELECT * FROM cars ORDER BY id DESC LIMIT 1")
     fun getLatestCar(): Flow<CarEntity?>
+
+    @Query("SELECT * FROM cars WHERE bluetoothMacAddress = :macAddress LIMIT 1")
+    suspend fun getCarByBluetoothMac(macAddress: String): CarEntity?
 }

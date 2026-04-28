@@ -98,7 +98,7 @@
     <string name="oil_change_km_label">เปลี่ยนน้ำมันเครื่องทุก %1$d กม.</string>
     <string name="oil_change_day_label">เปลี่ยนน้ำมันเครื่องทุก %1$d วัน</string>
     <string name="auto_track_title">จับระยะทางอัตโนมัติ</string>
-    <string name="auto_track_desc">บันทึกระยะทางอัตโนมัติด้วย Activity Recognition</string>
+    <string name="auto_track_desc">บันทึกระยะทางอัตโนมัติผ่าน Bluetooth หรือ Activity Recognition</string>
     <string name="export_data_title">ส่งออกข้อมูล</string>
     <string name="export_data_desc">ส่งออกข้อมูลทั้งหมดเป็นไฟล์ CSV</string>
     <string name="export_btn">ส่งออก</string>
@@ -159,4 +159,16 @@
     <string name="trip_channel_name">การบันทึกการเดินทาง</string>
     <string name="trip_tracking_title">กำลังบันทึกการเดินทาง</string>
     <string name="trip_tracking_body">iDrive กำลังวัดระยะทางของคุณ…</string>
+    <string name="trip_tracking_body_car">กำลังบันทึกการเดินทางสำหรับ %1$s…</string>
+
+    <!-- Bluetooth Auto-Track -->
+    <string name="bt_link_title">เชื่อมต่อ Bluetooth รถ</string>
+    <string name="bt_link_desc">ผูก Bluetooth ของรถเพื่อบันทึกการเดินทางอัตโนมัติ</string>
+    <string name="bt_select_device">เลือกอุปกรณ์ Bluetooth</string>
+    <string name="bt_no_paired_devices">ไม่พบอุปกรณ์ Bluetooth ที่จับคู่ไว้ กรุณาจับคู่ Bluetooth ของรถในตั้งค่ามือถือก่อน</string>
+    <string name="bt_linked_to">เชื่อมต่อกับ: %1$s</string>
+    <string name="bt_unlink">ยกเลิกการเชื่อมต่อ</string>
+    <string name="bt_link_saved">เชื่อมต่อ Bluetooth เรียบร้อย!</string>
+    <string name="bt_unlinked">ยกเลิกการเชื่อมต่อ Bluetooth แล้ว</string>
+    <string name="bt_permission_required">ต้องอนุญาตสิทธิ์ Bluetooth เพื่อใช้ฟีเจอร์นี้</string>
 </resources>

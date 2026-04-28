@@ -10,5 +10,7 @@ data class CarEntity(
     val model: String,
     val year: Int,
     val currentMileage: Int,
-    val imagePath: String?
+    val imagePath: String?,
+    val bluetoothMacAddress: String? = null,
+    val bluetoothDeviceName: String? = null
 )

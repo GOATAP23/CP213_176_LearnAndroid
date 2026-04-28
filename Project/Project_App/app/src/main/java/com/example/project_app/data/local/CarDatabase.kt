@@ -16,7 +16,7 @@ import com.example.project_app.data.local.entity.TripEntity
         ExpenseEntity::class,
         TripEntity::class
     ],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 abstract class CarDatabase : RoomDatabase() {
